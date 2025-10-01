@@ -13,6 +13,8 @@ var classrp_1_1standalone_1_1aurora_1_1RemoteController =
     [ "isDeviceConnectionAlive", "classrp_1_1standalone_1_1aurora_1_1RemoteController.html#a5edfd006a6df17c1ee6d8f1af97f2ecd", null ],
     [ "isEnhancedImagingSubscribed", "classrp_1_1standalone_1_1aurora_1_1RemoteController.html#ab2a18ede54c43a8d7f22764c390965c8", null ],
     [ "isRawDataSubscribed", "classrp_1_1standalone_1_1aurora_1_1RemoteController.html#a7a48c637ef2b1e9e9334d45dbe91c810", null ],
+    [ "requireLocalMapMerge", "classrp_1_1standalone_1_1aurora_1_1RemoteController.html#a5086918f74036ef81b0920527260a8b1", null ],
+    [ "requireLocalRelocalization", "classrp_1_1standalone_1_1aurora_1_1RemoteController.html#ad99b1d4271c9743a47a18e3fcf2a537d", null ],
     [ "requireMappingMode", "classrp_1_1standalone_1_1aurora_1_1RemoteController.html#a1ca76fd99c47ca3917d45efc3fd9e5b1", null ],
     [ "requireMapReset", "classrp_1_1standalone_1_1aurora_1_1RemoteController.html#add505a0c532f76f57b2d00caa0e238c7", null ],
     [ "requirePureLocalizationMode", "classrp_1_1standalone_1_1aurora_1_1RemoteController.html#a73928218cff85ce00f0bc77fb36f44e8", null ],

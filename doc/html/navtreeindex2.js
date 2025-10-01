@@ -1,5 +1,9 @@
 var NAVTREEINDEX2 =
 {
+"group__SDK__Basic__Data__Types.html#gga1d71fa469656986247d1604d8c690b86a66a29b80bde6ad6987a2a9c1beaaa648":[2,1,91,6],
+"group__SDK__Basic__Data__Types.html#gga1d71fa469656986247d1604d8c690b86a6704dc206c7a0a1c2dd19efcc356f426":[2,1,91,7],
+"group__SDK__Basic__Data__Types.html#gga1d71fa469656986247d1604d8c690b86a72e45f1c3f6533a532355b4236c918e0":[2,1,91,10],
+"group__SDK__Basic__Data__Types.html#gga1d71fa469656986247d1604d8c690b86a7c2ab140badcbe6098abae273069ea37":[2,1,91,0],
 "group__SDK__Basic__Data__Types.html#gga1d71fa469656986247d1604d8c690b86a98143e85be42c69637383b714cde005a":[2,1,91,1],
 "group__SDK__Basic__Data__Types.html#gga1d71fa469656986247d1604d8c690b86a9c60c172d51e645cc733ade2de708e9c":[2,1,91,9],
 "group__SDK__Basic__Data__Types.html#gga1d71fa469656986247d1604d8c690b86aa8b3d0c546faacd555e7389b4ccdfe5b":[2,1,91,16],
@@ -245,9 +249,5 @@ var NAVTREEINDEX2 =
 "struct__slamtec__aurora__sdk__map__data__visitor__t.html#a5253ea2441c1e0403f5e6b2e84fdc169":[2,1,44,0],
 "struct__slamtec__aurora__sdk__map__data__visitor__t.html#acbc13e808d7aa54c64b3816bbab955d7":[2,1,44,2],
 "struct__slamtec__aurora__sdk__map__data__visitor__t.html#ad34fddc1cca42625c3b0fd6b9b714a1c":[2,1,44,1],
-"struct__slamtec__aurora__sdk__map__desc__t.html":[2,1,30],
-"struct__slamtec__aurora__sdk__map__desc__t.html#a0ae926d32c3b5d62a38c320f7ce42cb2":[2,1,30,6],
-"struct__slamtec__aurora__sdk__map__desc__t.html#a5089a201ecc91067e570f28af37cbbc7":[2,1,30,7],
-"struct__slamtec__aurora__sdk__map__desc__t.html#a5891d80ba89738ee156ccf372075cfe9":[2,1,30,4],
-"struct__slamtec__aurora__sdk__map__desc__t.html#a9716004aa5e3ecdbd8b5f6f5d32a26c7":[2,1,30,2]
+"struct__slamtec__aurora__sdk__map__desc__t.html":[2,1,30]
 };

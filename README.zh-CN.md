@@ -71,93 +71,88 @@
 - 对于Linux平台，还需确保glibc版本为2.31或更高。
 
 ## 关于演示程序
-### map_render
-![map_render](res/demo_vertical_map.gif)
-- 这个演示展示了如何渲染来自Aurora设备的VSLAM地图数据。
-- 它将订阅设备的地图数据、关键帧数据和地图点数据，并在屏幕上渲染地图、关键帧和地图点。
-- 地图将以垂直视图渲染，关键帧将渲染在地图上。
-- 此演示需要OpenCV。
 
-### frame_preview
+### 核心功能演示
+
+#### simple_pose
+- 基础演示，展示如何获取设备姿态（位置和方向）。
+- [📖 详细说明](demo/simple_pose/README.zh-CN.md)
+
+#### relocalization  
+- 演示如何触发重定位以在已知地图中建立设备位置。
+- [📖 详细说明](demo/relocalization/README.zh-CN.md)
+
+#### pure_c_demo
+- 不使用 C++ 包装器依赖的纯 C 实现。
+- [📖 详细说明](demo/pure_c_demo/README.zh-CN.md)
+
+
+### 增强成像演示（SDK 2.0）
+
+#### depthcam_view
+- 深度相机可视化，具有 3D 点云导出功能。
+- 需要 OpenCV。
+- [📖 详细说明](demo/depthcam_view/README.zh-CN.md)
+
+#### semantic_segmentation
+![Semantic Segmentation Demo](res/demo_sematic_seg.gif)
+- 实时语义分割，具有交互式可视化和模型切换。
+- 需要 OpenCV。
+- [📖 详细说明](demo/semantic_segmentation/README.zh-CN.md)
+
+
+### 传感器数据演示
+
+#### imu_fetcher
+- 实时 IMU（加速度计和陀螺仪）数据检索和显示。
+- [📖 详细说明](demo/imu_fetcher/README.zh-CN.md)
+
+#### frame_preview
 ![frame_preview](res/demo_tracking_prev_full.png)
-- 这个演示展示了如何从Aurora设备订阅跟踪帧和原始相机图像。
-- 此演示需要OpenCV。
+- 捕获和显示跟踪帧和原始立体相机图像。
+- 需要 OpenCV。
+- [📖 详细说明](demo/frame_preview/README.zh-CN.md)
 
+#### lidar_scan_plot
+![lidar_scan_plot](res/demo.lidar.scan.rendering.gif)  
+- 实时 LiDAR 扫描可视化，包含距离和质量数据。
+- 需要 OpenCV。
+- [📖 详细说明](demo/lidar_scan_plot/README.zh-CN.md)
 
+### 地图和可视化演示
 
-### lidar_scan_plot
-![lidar_scan_plot](res/demo.lidar.scan.rendering.gif)
-- 这个演示展示了如何获取Aurora自带的2D激光雷达的扫描数据并进行渲染显示。
-- 提供了两种数据获取方式
-   1. 通过回调函数
-   2. 通过轮询
-- 激光雷达扫描点的信号强度信息（RSSI）也可以被获取并进行了显示
-- 此演示需要OpenCV。
+#### map_render
+![map_render](res/demo_vertical_map.gif)
+- 渲染 VSLAM 地图数据，包括关键帧和地图点。
+- 需要 OpenCV。
+- [📖 详细说明](demo/map_render/README.zh-CN.md)
 
-
-### lidar_2dmap_render
+#### lidar_2dmap_render
 ![lidar_2dmap_render](res/demo_lidar_2dmap.gif)
-- 这个演示展示了如何从Aurora设备获取同步的激光2D栅格地图并进行实时渲染显示。
-- 同时，自动楼层检测功能也被启用。
-- 此演示需要OpenCV。
+- 从 LiDAR 数据生成和可视化 2D 占用栅格地图。
+- 需要 OpenCV。
+- [📖 详细说明](demo/lidar_2dmap_render/README.zh-CN.md)
+
+#### vslam_map_saveload
+- 用于下载/上传 VSLAM 地图到/从设备的命令行工具。
+- [📖 详细说明](demo/vslam_map_saveload/README.zh-CN.md)
 
 
+### 校准和设备信息演示（SDK 2.0）
 
-### simple_pose
-```
-Aurora SDK Version: 1.1.0-rc1
-Device connection string not provided, try to discover aurora devices...
-Waiting for aurora devices...
-Found 1 aurora devices
-Device 0
-  option 0: tcp/[fe80::ad94:89de:cef2:dcb4]:7447
-  option 1: tcp/192.168.1.212:7447
-Selected first device: 
-Connecting to the selected device...
-Connected to the selected device
-Current pose: 0, 0, 0 Euler: 0, 0, 0
-Current pose: -33.4066, 72.7162, 0.946953 Euler: -1.55303, -0.0350474, -0.506329
-Current pose: -33.3551, 72.8021, 0.941662 Euler: -1.5259, -0.0374291, -0.504501
-Current pose: -33.3551, 72.8021, 0.941662 Euler: -1.5259, -0.0374291, -0.504501
-Current pose: -33.2553, 72.9822, 0.962029 Euler: -1.49077, -0.0652254, -0.45777
-Current pose: -33.2125, 73.0723, 0.976967 Euler: -1.52022, -0.0478041, -0.425694
-Current pose: -33.1693, 73.1591, 0.983566 Euler: -1.54432, -0.0495824, -0.389488
-Current pose: -33.1236, 73.2395, 0.972832 Euler: -1.51365, -0.0605495, -0.412273
-```
+#### calibration_exporter
+- 用于导出相机和变换校准数据的命令行工具。
+- 需要 OpenCV。
+- [📖 详细说明](demo/calibration_exporter/README.zh-CN.md)
 
-- 这个演示展示了如何从Aurora设备获取当前位姿。
+#### device_info_monitor
+- 设备基本信息和状态的实时监控。
+- [📖 详细说明](demo/device_info_monitor/README.zh-CN.md)
 
-### vslam_map_saveload
-```
-Defaulting to download
-Trying to discover and select aurora device...
-Found 1 aurora devices
-Device 0
-  option 0: tcp/[fe80::ad94:89de:cef2:dcb4]:7447
-  option 1: tcp/192.168.1.212:7447
-Selected first device: 
-Downloading vslam map to auroramap.asb
-Downloading vslam map 6.67%
-```
-- 这个演示展示了如何从Aurora设备保存和加载地图。
-- 它可以作为一个命令行工具来保存和加载地图。
+### 数据集记录演示（SDK 2.0）
 
-
-### imu_fetcher
-```
-IMU Data: Accel: -0.941162, 0.406982, -0.0390625 Gyro: 1.95312, 4.08936, -1.2207
-IMU Data: Accel: -0.9375, 0.407593, -0.0388184 Gyro: 2.2583, 3.84521, -1.64795
-IMU Data: Accel: -0.936646, 0.407715, -0.0360107 Gyro: 2.68555, 3.35693, -2.19727
-IMU Data: Accel: -0.934448, 0.405762, -0.0372314 Gyro: 2.86865, 3.11279, -2.62451
-IMU Data: Accel: -0.933716, 0.40686, -0.0350342 Gyro: 3.05176, 2.80762, -2.74658
-IMU Data: Accel: -0.934082, 0.406494, -0.0325928 Gyro: 3.11279, 2.74658, -2.62451
-IMU Data: Accel: -0.938843, 0.407959, -0.0310059 Gyro: 3.11279, 2.99072, -2.44141
-IMU Data: Accel: -0.936157, 0.406006, -0.0313721 Gyro: 3.23486, 3.23486, -2.31934
-IMU Data: Accel: -0.938721, 0.402832, -0.026123 Gyro: 3.35693, 3.54004, -2.0752
-IMU Data: Accel: -0.936279, 0.403931, -0.0252686 Gyro: 3.17383, 3.78418, -2.01416
-IMU Data: Accel: -0.936768, 0.40332, -0.0247803 Gyro: 3.05176, 4.02832, -1.77002
-```
-- 这个演示展示了如何从Aurora设备订阅IMU数据。
-
-### pure_c_demo
-- 这个演示展示了如何使用Aurora Remote SDK的纯C代码。
+#### colmap_recorder
+- 记录 COLMAP 兼容数据集用于运动结构恢复和 3D 重建。
+- 可配置记录选项，包括图像质量、文件格式和处理参数。
+- 支持立体录制、图像去畸变和各种输出格式。
+- [📖 详细说明](demo/colmap_recorder/README.zh-CN.md)

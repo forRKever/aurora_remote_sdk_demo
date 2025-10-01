@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="slamtec.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SLAMTEC Aurora Public Remote SDK
-   &#160;<span id="projectnumber">2.0.1-rc2</span>
+   &#160;<span id="projectnumber">2.1.0-rc1</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -168,6 +168,12 @@ Functions</h2></td></tr>
 <tr class="memitem:ga5b844a511e4e67bb487778ec3d53ff01"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> AURORA_SDK_API&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Controller__Operations.html#ga5b844a511e4e67bb487778ec3d53ff01">slamtec_aurora_sdk_controller_cancel_relocalization</a> (<a class="el" href="group__SDK__Basic__Data__Types.html#ga28b02b17902e8c35063bba0df20bd715">slamtec_aurora_sdk_session_handle_t</a> handle, uint64_t timeout_ms)</td></tr>
 <tr class="memdesc:ga5b844a511e4e67bb487778ec3d53ff01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Require the remote Device to cancel the relocalization process.  <a href="group__Controller__Operations.html#ga5b844a511e4e67bb487778ec3d53ff01">More...</a><br /></td></tr>
 <tr class="separator:ga5b844a511e4e67bb487778ec3d53ff01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0916490b1ecfeaaa4fa089b8f3d2f2fe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> AURORA_SDK_API&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Controller__Operations.html#ga0916490b1ecfeaaa4fa089b8f3d2f2fe">slamtec_aurora_sdk_controller_require_local_relocalization</a> (<a class="el" href="group__SDK__Basic__Data__Types.html#ga28b02b17902e8c35063bba0df20bd715">slamtec_aurora_sdk_session_handle_t</a> handle, const <a class="el" href="group__SDK__Basic__Data__Types.html#ga01840dc21269a490c9c337e9b723d0df">slamtec_aurora_sdk_pose_se3_t</a> *center_pose, float search_radius, uint64_t timeout_ms)</td></tr>
+<tr class="memdesc:ga0916490b1ecfeaaa4fa089b8f3d2f2fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Require the remote Device to perform local relocalization within a specified area.  <a href="group__Controller__Operations.html#ga0916490b1ecfeaaa4fa089b8f3d2f2fe">More...</a><br /></td></tr>
+<tr class="separator:ga0916490b1ecfeaaa4fa089b8f3d2f2fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga865597e5a3f1363baf23027c45326951"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> AURORA_SDK_API&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Controller__Operations.html#ga865597e5a3f1363baf23027c45326951">slamtec_aurora_sdk_controller_require_local_map_merge</a> (<a class="el" href="group__SDK__Basic__Data__Types.html#ga28b02b17902e8c35063bba0df20bd715">slamtec_aurora_sdk_session_handle_t</a> handle, const <a class="el" href="group__SDK__Basic__Data__Types.html#ga01840dc21269a490c9c337e9b723d0df">slamtec_aurora_sdk_pose_se3_t</a> *center_pose, float search_radius, uint64_t timeout_ms)</td></tr>
+<tr class="memdesc:ga865597e5a3f1363baf23027c45326951"><td class="mdescLeft">&#160;</td><td class="mdescRight">Require the remote Device to perform local map merge within a specified area.  <a href="group__Controller__Operations.html#ga865597e5a3f1363baf23027c45326951">More...</a><br /></td></tr>
+<tr class="separator:ga865597e5a3f1363baf23027c45326951"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga46dfe79e7f5c9bedd616d91d8b51532e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> AURORA_SDK_API&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Controller__Operations.html#ga46dfe79e7f5c9bedd616d91d8b51532e">slamtec_aurora_sdk_controller_get_last_relocalization_status</a> (<a class="el" href="group__SDK__Basic__Data__Types.html#ga28b02b17902e8c35063bba0df20bd715">slamtec_aurora_sdk_session_handle_t</a> handle, <a class="el" href="group__SDK__Basic__Data__Types.html#gaa2e5bfb04d8284ae0e23d7d5b0c646d5">slamtec_aurora_sdk_device_relocalization_status_t</a> *status_out, uint64_t timeout_ms)</td></tr>
 <tr class="memdesc:ga46dfe79e7f5c9bedd616d91d8b51532e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the last relocalization status.  <a href="group__Controller__Operations.html#ga46dfe79e7f5c9bedd616d91d8b51532e">More...</a><br /></td></tr>
 <tr class="separator:ga46dfe79e7f5c9bedd616d91d8b51532e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -589,6 +595,111 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>non-zero means subscribed </dd></dl>
+
+</div>
+</div>
+<a id="ga865597e5a3f1363baf23027c45326951"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga865597e5a3f1363baf23027c45326951">&#9670;&nbsp;</a></span>slamtec_aurora_sdk_controller_require_local_map_merge()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> AURORA_SDK_API slamtec_aurora_sdk_controller_require_local_map_merge </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__SDK__Basic__Data__Types.html#ga28b02b17902e8c35063bba0df20bd715">slamtec_aurora_sdk_session_handle_t</a>&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="group__SDK__Basic__Data__Types.html#ga01840dc21269a490c9c337e9b723d0df">slamtec_aurora_sdk_pose_se3_t</a> *&#160;</td>
+          <td class="paramname"><em>center_pose</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>search_radius</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>timeout_ms</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Require the remote Device to perform local map merge within a specified area. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>- the session handle </td></tr>
+    <tr><td class="paramname">center_pose</td><td>- the center pose for the search area in SE3 format <br  />
+ </td></tr>
+    <tr><td class="paramname">search_radius</td><td>- the search radius in meters </td></tr>
+    <tr><td class="paramname">timeout_ms</td><td>- the timeout in milliseconds </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the error code </dd></dl>
+
+</div>
+</div>
+<a id="ga0916490b1ecfeaaa4fa089b8f3d2f2fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0916490b1ecfeaaa4fa089b8f3d2f2fe">&#9670;&nbsp;</a></span>slamtec_aurora_sdk_controller_require_local_relocalization()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> AURORA_SDK_API slamtec_aurora_sdk_controller_require_local_relocalization </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__SDK__Basic__Data__Types.html#ga28b02b17902e8c35063bba0df20bd715">slamtec_aurora_sdk_session_handle_t</a>&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="group__SDK__Basic__Data__Types.html#ga01840dc21269a490c9c337e9b723d0df">slamtec_aurora_sdk_pose_se3_t</a> *&#160;</td>
+          <td class="paramname"><em>center_pose</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>search_radius</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>timeout_ms</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Require the remote Device to perform local relocalization within a specified area. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>- the session handle </td></tr>
+    <tr><td class="paramname">center_pose</td><td>- the center pose for the search area in SE3 format </td></tr>
+    <tr><td class="paramname">search_radius</td><td>- the search radius in meters </td></tr>
+    <tr><td class="paramname">timeout_ms</td><td>- the timeout in milliseconds </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the error code </dd></dl>
 
 </div>
 </div>

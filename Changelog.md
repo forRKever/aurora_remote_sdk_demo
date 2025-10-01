@@ -31,7 +31,31 @@ The SDK supports the following platforms and architectures:
 
 - Added support for neo pure localization mode
 
+### V2.0.0-alpha:
+
+- Added support for FW 2.0 features
+  - Depth Camera
+  - Semantic Segmentation
+  - Camera Calibration Exporting
+  - Basic Device Info Monitor
+
+### V2.0.0-beta1:
+
+- Added Timestamp enabled get pose API
+
+### V2.0.1-beta1:
+
+- Added depth camera post filtering support
+- Added Keyframe/Map point fetching control APIs- Added support for neo pure localization mode
+
 ### V2.0.1-rc2:
 
 - Refined some APIs
 - added reloc status retriving interface
+
+
+### V2.1.0-rc1:
+
+- updated the demo code to support RGB image
+- Refined local relocalization API
+- Merged with the enhanced imaging demo code

@@ -12,6 +12,8 @@ var group__Controller__Operations =
     [ "slamtec_aurora_sdk_controller_is_device_connection_alive", "group__Controller__Operations.html#ga41d77061c7f95bea5149fe266543c3c2", null ],
     [ "slamtec_aurora_sdk_controller_is_enhanced_imaging_subscribed", "group__Controller__Operations.html#gacf6930fee2037ac56bc49383ee10ef11", null ],
     [ "slamtec_aurora_sdk_controller_is_raw_data_subscribed", "group__Controller__Operations.html#gad67b6edee6b1cb4f6a1adc2836638738", null ],
+    [ "slamtec_aurora_sdk_controller_require_local_map_merge", "group__Controller__Operations.html#ga865597e5a3f1363baf23027c45326951", null ],
+    [ "slamtec_aurora_sdk_controller_require_local_relocalization", "group__Controller__Operations.html#ga0916490b1ecfeaaa4fa089b8f3d2f2fe", null ],
     [ "slamtec_aurora_sdk_controller_require_map_reset", "group__Controller__Operations.html#ga71f4f3d78e8866f34ce66cb2b7e31560", null ],
     [ "slamtec_aurora_sdk_controller_require_mapping_mode", "group__Controller__Operations.html#ga3bb74dc822917f007a50b7276c5b99e7", null ],
     [ "slamtec_aurora_sdk_controller_require_pure_localization_mode", "group__Controller__Operations.html#gafe325655c94990bcef143f30ff5eeca1", null ],

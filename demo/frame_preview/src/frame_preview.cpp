@@ -145,9 +145,13 @@ int main(int argc, const char* argv[]) {
         cv::Mat merged;
         if (!(left.empty() || right.empty())) {
            
-            // convert to BGR
-            cv::cvtColor(left, left, cv::COLOR_GRAY2BGR);
-            cv::cvtColor(right, right, cv::COLOR_GRAY2BGR);
+            if (left.channels() == 1) {
+                // convert to BGR
+                cv::cvtColor(left, left, cv::COLOR_GRAY2BGR);
+            }
+            if (right.channels() == 1) {
+                cv::cvtColor(right, right, cv::COLOR_GRAY2BGR);
+            }
 
             // draw keypoints
             for (size_t i = 0; i < gTrackingFrame.getKeypointsLeftCount(); i++) {
@@ -200,9 +204,13 @@ int main(int argc, const char* argv[]) {
         trackingFrame.leftImage.toMat(left);
         trackingFrame.rightImage.toMat(right);
 
-        // convert to BGR
-        cv::cvtColor(left, left, cv::COLOR_GRAY2BGR);
-        cv::cvtColor(right, right, cv::COLOR_GRAY2BGR);
+        if (left.channels() == 1) {
+            // convert to BGR
+            cv::cvtColor(left, left, cv::COLOR_GRAY2BGR);
+        }
+        if (right.channels() == 1) {
+            cv::cvtColor(right, right, cv::COLOR_GRAY2BGR);
+        }
 
         // draw keypoints
         for (size_t i = 0; i < trackingFrame.getKeypointsLeftCount(); i++) {

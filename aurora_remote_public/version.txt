@@ -1,6 +1,7 @@
 SLAMTEC Aurora
-Public Remote SDK
+Aurora Cpp SDK
 
-2.0.1-rc2
+2.1.0-rc1
+2025-09-30 23:33:01
 
-visit www.slamte.com for more info
+visit www.slamtec.com for more info
