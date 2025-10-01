@@ -23,11 +23,6 @@
 - 一些Aurora特有的功能在ROS包装节点中不受支持，例如自动楼层检测。
 - 如果您想使用Aurora特有的功能，您需要使用Remote SDK。
 
-## 关于 Remote SDK 和 SLAMWARE SDK
-- Remote SDK 是一个独立的库,可用于检索 SLAMTEC Aurora 特有的数据,如点云、地图和里程计。
-- SLAMWARE SDK 是一个更通用的库,可用于控制所有 SLAMTEC 产品,如 SLAMKIT、SLAMWARE、Apollo 机器人平台、A1/A2/A3 系列,并为建图、定位和导航等任务提供更高级的 API。
-- 目前,如果您想从 SLAMTEC Aurora 检索 3D 点云数据,您需要使用 Remote SDK。
-- 对于未来的 SLAMWARE SDK 版本,我们将在 SLAMWARE SDK 中添加 Aurora 的 API。
 
 ## 您是否尝试过 SLAMTEC 官方工具?
 我们强烈建议您首先使用 SLAMTEC 官方工具以获得更好的评估和开发体验。
@@ -69,6 +64,7 @@
 ## 如何在目标机器上部署SDK
 - 预编译的库仅依赖于C++标准库，因此可以部署在任何支持C++14的机器上。
 - 对于Linux平台，还需确保glibc版本为2.31或更高。
+- 对于MacOS平台，仅支持M系列芯片的机器（M1/M2/M3等）。
 
 ## 关于演示程序
 

@@ -24,11 +24,6 @@ This repository contains the Demo code and project skeleton for using the SLAMTE
 - Some Aurora specific features are not supported in the ROS wrapper nodes, such as the auto floor detection.
 - If you want to use the Aurora specific features, you need to use the Remote SDK.
 
-## About the Remote SDK and SLAMWARE SDK
-- The Remote SDK is a standalone library that can be used to retrieve data specific to SLAMTEC Aurora, such as point cloud, map, and odometry.
-- The SLAMWARE SDK is a more general purpose library that can be used to control all SLAMTEC products, such as the SLAMKIT, SLAMWARE, Apollo Robot Platforms, A1/A2/A3 series, and also provides higher level APIs for tasks like mapping, localization, and navigation. 
-- Currently, if you want to retrieve 3D point cloud data from SLAMTEC Aurora, you need to use the Remote SDK.
-- For future SLAMWARE SDK releases, we will add APIs for Aurora in the SLAMWARE SDK.
 
 ## Have you tried the SLAMTEC Official Tool?
 We are highly recommend you to use the SLAMTEC Official Tool first for better evaluation and development experience.
@@ -70,6 +65,7 @@ This is the API reference for the Remote SDK. It contains the function prototype
 ## How to deploy the SDK on target machines
 - The precompiled libraries only depend on the C++ standard library, so it can be deployed on any machine that supports C++14.
 - For Linux platforms, also make sure the glibc version is 2.31 or above.
+- For MacOS platforms, only apple silicon based machines (M1/M2/M3 etc.) are supported.
 
 ## About the Demos
 
