@@ -59,3 +59,8 @@ The SDK supports the following platforms and architectures:
 - updated the demo code to support RGB image
 - Refined local relocalization API
 - Merged with the enhanced imaging demo code
+
+### V2.1.0-rtm
+
+- improved  the vslam map saving and loading operation speed by about ~2x
+- minor bug fixes
