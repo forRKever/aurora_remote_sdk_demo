@@ -138,7 +138,7 @@ static void printUsage(const char* programName) {
     std::cout << "If no connection string is provided, it will auto-discover devices." << std::endl;
     std::cout << "\nExamples:" << std::endl;
     std::cout << "  " << programName << "                    # Auto-discover device" << std::endl;
-    std::cout << "  " << programName << " tcp://192.168.1.100:8090  # Connect to specific device" << std::endl;
+    std::cout << "  " << programName << " tcp://192.168.11.1  # Connect to specific device" << std::endl;
     std::cout << std::endl;
 }
 
@@ -154,13 +154,20 @@ int main(int argc, const char* argv[]) {
         if (arg == "-h" || arg == "--help") {
             printUsage(argv[0]);
             return 0;
-        } else if (arg.find("://") != std::string::npos) {
-            connectionString = argv[1];
-        } else {
-            std::cerr << "Error: Invalid argument '" << arg << "'" << std::endl;
-            printUsage(argv[0]);
-            return 1;
-        }
+        } 
+        else
+        {
+            int tag = arg.find("://");
+            if(tag != std::string::npos)
+            {
+                connectionString = &argv[1][tag+3];
+            }
+            else {
+                std::cerr << "Error: Invalid argument '" << arg << "'" << std::endl;
+                printUsage(argv[0]);
+                return 1;
+            }
+        }       
     }
 
     std::cout << "Aurora Device Info Monitor" << std::endl;

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="slamtec.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SLAMTEC Aurora Public Remote SDK
-   &#160;<span id="projectnumber">2.1.0-rtm</span>
+   &#160;<span id="projectnumber">2.1.1-rc1</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -96,6 +96,18 @@ $(document).ready(function(){initNavTree('functions_o.html',''); initResizable()
 <div class="textblock">Here is a list of all documented class members with links to the class documentation for each member:</div>
 
 <h3><a id="index_o"></a>- o -</h3><ul>
+<li>offset_error_ns
+: <a class="el" href="structslamtec__aurora__sdk__wallclock__accuracy__result__t.html#a658520c07c2d9a2ec4f773840abe3cf6">slamtec_aurora_sdk_wallclock_accuracy_result_t</a>
+</li>
+<li>offset_ns
+: <a class="el" href="structslamtec__aurora__sdk__timesync__quality__t.html#a9fe6926181d6fd108f0604811b5dcf62">slamtec_aurora_sdk_timesync_quality_t</a>
+, <a class="el" href="structslamtec__aurora__sdk__wallclock__offset__result__t.html#afec6bfd4dc003fe0454bc9c646bda3bb">slamtec_aurora_sdk_wallclock_offset_result_t</a>
+, <a class="el" href="structTimeSyncQuality.html#a6295b9c1e8e9f010168ba188c80c8112">TimeSyncQuality</a>
+</li>
+<li>offset_std_dev_ns
+: <a class="el" href="structslamtec__aurora__sdk__timesync__quality__t.html#a62a2ed05624231171a74ccc94020ea91">slamtec_aurora_sdk_timesync_quality_t</a>
+, <a class="el" href="structTimeSyncQuality.html#a0e3c9dc14dc4d989a700558d949f67e5">TimeSyncQuality</a>
+</li>
 <li>on_camera_preview_image
 : <a class="el" href="struct__slamtec__aurora__sdk__listener__t.html#aaa4b32ba750bcef1591e8e47c7188de2">_slamtec_aurora_sdk_listener_t</a>
 </li>
@@ -125,6 +137,12 @@ $(document).ready(function(){initNavTree('functions_o.html',''); initResizable()
 </li>
 <li>on_mapping_flags
 : <a class="el" href="struct__slamtec__aurora__sdk__listener__t.html#acecff8c1235ac878480d9f279b5d025e">_slamtec_aurora_sdk_listener_t</a>
+</li>
+<li>on_pose_augmentation_result
+: <a class="el" href="struct__slamtec__aurora__sdk__listener__t.html#aad7033e9543311bea92eedd5ad94aa5e">_slamtec_aurora_sdk_listener_t</a>
+</li>
+<li>on_pose_covariance
+: <a class="el" href="struct__slamtec__aurora__sdk__listener__t.html#a549c93b4f3741cb880b377e45032c55e">_slamtec_aurora_sdk_listener_t</a>
 </li>
 <li>on_raw_image_data
 : <a class="el" href="struct__slamtec__aurora__sdk__listener__t.html#a7a48a7a14bfda0f8b2ef8439446b1059">_slamtec_aurora_sdk_listener_t</a>
@@ -156,6 +174,12 @@ $(document).ready(function(){initNavTree('functions_o.html',''); initResizable()
 <li>onNewMappingFlags()
 : <a class="el" href="group__SDK__Callback__Types.html#gae9979adab964b4a28bfb1223967dfde9">rp::standalone::aurora::RemoteSDKListener</a>
 </li>
+<li>onPoseAugmentationResult()
+: <a class="el" href="group__SDK__Callback__Types.html#ga3997397c691aa6e205f2150d048d07ef">rp::standalone::aurora::RemoteSDKListener</a>
+</li>
+<li>onPoseCovariance()
+: <a class="el" href="group__SDK__Callback__Types.html#ga9ffd439515e852169a2caec419690a86">rp::standalone::aurora::RemoteSDKListener</a>
+</li>
 <li>onRawCamImageData()
 : <a class="el" href="group__SDK__Callback__Types.html#ga6110a910f89b6d6ab8a4602e812d801a">rp::standalone::aurora::RemoteSDKListener</a>
 </li>
@@ -165,8 +189,29 @@ $(document).ready(function(){initNavTree('functions_o.html',''); initResizable()
 <li>onTrackingData()
 : <a class="el" href="group__SDK__Callback__Types.html#gab9d11cbcfa6d2c27cb26d15d58c840b4">rp::standalone::aurora::RemoteSDKListener</a>
 </li>
+<li>operator bool()
+: <a class="el" href="classrp_1_1standalone_1_1aurora_1_1RemoteDashcamStorageInfo.html#abed94a82671f8a75cb96b552704fdb6d">rp::standalone::aurora::RemoteDashcamStorageInfo</a>
+</li>
+<li>operator slamtec_aurora_sdk_pose_covariance_t()
+: <a class="el" href="classrp_1_1standalone_1_1aurora_1_1PoseCovariance.html#ab0c12065d8cefe03b2024fe889689165">rp::standalone::aurora::PoseCovariance</a>
+</li>
+<li>operator()()
+: <a class="el" href="classrp_1_1standalone_1_1aurora_1_1PoseCovariance.html#a2d02499c14e19bd8b3272778b7313605">rp::standalone::aurora::PoseCovariance</a>
+</li>
+<li>operator=()
+: <a class="el" href="classrp_1_1standalone_1_1aurora_1_1ConfigData.html#a1edc4a17a9d44d9f3c795cad03ad86fa">rp::standalone::aurora::ConfigData</a>
+, <a class="el" href="classrp_1_1standalone_1_1aurora_1_1PoseCovariance.html#a1b4fd80595b1fdf91479b522aaeee040">rp::standalone::aurora::PoseCovariance</a>
+, <a class="el" href="classrp_1_1standalone_1_1aurora_1_1RemoteDashcamStorageInfo.html#aebee59dc2832617f137a14d6e656ec9e">rp::standalone::aurora::RemoteDashcamStorageInfo</a>
+</li>
 <li>operator[]()
 : <a class="el" href="classrp_1_1standalone_1_1aurora_1_1SDKServerConnectionDesc.html#a9dd74af1a9d62c3fa26602fd3aa58fb2">rp::standalone::aurora::SDKServerConnectionDesc</a>
+</li>
+<li>outlier_threshold
+: <a class="el" href="structslamtec__aurora__sdk__timesync__options__t.html#a7c7e549d71a9bc0176e0b800a6cc7a80">slamtec_aurora_sdk_timesync_options_t</a>
+, <a class="el" href="structTimeSyncOptions.html#a5ee7a23d773a8368d21b475ace2bfca6">TimeSyncOptions</a>
+</li>
+<li>output_frequency
+: <a class="el" href="struct__slamtec__aurora__sdk__pose__augmentation__config__t.html#a2a55a895a0656424b608dbc1520e594a">_slamtec_aurora_sdk_pose_augmentation_config_t</a>
 </li>
 </ul>
 </div><!-- contents -->

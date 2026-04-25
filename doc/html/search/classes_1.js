@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['datarecorder_626',['DataRecorder',['../classrp_1_1standalone_1_1aurora_1_1DataRecorder.html',1,'rp::standalone::aurora']]],
-  ['datarecorder_3c_20slamtec_5faurora_5fdatarecorder_5ftype_5fcolmap_5fdataset_20_3e_627',['DataRecorder&lt; SLAMTEC_AURORA_DATARECORDER_TYPE_COLMAP_DATASET &gt;',['../classrp_1_1standalone_1_1aurora_1_1DataRecorder.html',1,'rp::standalone::aurora']]],
-  ['datarecorder_3c_20slamtec_5faurora_5fdatarecorder_5ftype_5fraw_5fdataset_20_3e_628',['DataRecorder&lt; SLAMTEC_AURORA_DATARECORDER_TYPE_RAW_DATASET &gt;',['../classrp_1_1standalone_1_1aurora_1_1DataRecorder.html',1,'rp::standalone::aurora']]]
+  ['cameramaskmanager_916',['CameraMaskManager',['../classrp_1_1standalone_1_1aurora_1_1CameraMaskManager.html',1,'rp::standalone::aurora']]],
+  ['configdata_917',['ConfigData',['../classrp_1_1standalone_1_1aurora_1_1ConfigData.html',1,'rp::standalone::aurora']]]
 ];

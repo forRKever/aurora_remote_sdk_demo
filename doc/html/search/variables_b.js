@@ -1,14 +1,15 @@
 var searchData=
 [
-  ['lastkfcounttofetch_944',['lastKFCountToFetch',['../struct__slamtec__aurora__sdk__global__map__desc__t.html#a5d1ff5fb4c610ca9645a0baa30815c2e',1,'_slamtec_aurora_sdk_global_map_desc_t']]],
-  ['lastkfretrieved_945',['lastKFRetrieved',['../struct__slamtec__aurora__sdk__global__map__desc__t.html#ad8a7875306abf62db075e24885b2730f',1,'_slamtec_aurora_sdk_global_map_desc_t']]],
-  ['lastmapcounttofetch_946',['lastMapCountToFetch',['../struct__slamtec__aurora__sdk__global__map__desc__t.html#a95e651eeab4d074137a681ab593036c9',1,'_slamtec_aurora_sdk_global_map_desc_t']]],
-  ['lastmpcounttofetch_947',['lastMPCountToFetch',['../struct__slamtec__aurora__sdk__global__map__desc__t.html#a990698d0b11b938e5f2f3d020aedaa77',1,'_slamtec_aurora_sdk_global_map_desc_t']]],
-  ['lastmpretrieved_948',['lastMPRetrieved',['../struct__slamtec__aurora__sdk__global__map__desc__t.html#ad805effa699dbcbb3eecf0cd9af7e9d9',1,'_slamtec_aurora_sdk_global_map_desc_t']]],
-  ['layer_5fid_949',['layer_id',['../struct__slamtec__aurora__sdk__lidar__singlelayer__scandata__info__t.html#ab660cc57057d21e58efbd75a5ac56e16',1,'_slamtec_aurora_sdk_lidar_singlelayer_scandata_info_t']]],
-  ['left_5fimage_5fdesc_950',['left_image_desc',['../struct__slamtec__aurora__sdk__tracking__info.html#a4ce62fedc867e3244f4a0bc7d273907b',1,'_slamtec_aurora_sdk_tracking_info::left_image_desc()'],['../struct__slamtec__aurora__sdk__stereo__image__pair__desc__t.html#ad363a4edc0aedb82f22fb558620b4460',1,'_slamtec_aurora_sdk_stereo_image_pair_desc_t::left_image_desc()']]],
-  ['leftimage_951',['leftImage',['../classrp_1_1standalone_1_1aurora_1_1RemoteTrackingFrameInfo.html#a5e41a721b09d67f0ba35aac174874cfb',1,'rp::standalone::aurora::RemoteTrackingFrameInfo']]],
-  ['lidar2dmapbuilder_952',['lidar2DMapBuilder',['../classrp_1_1standalone_1_1aurora_1_1RemoteSDK.html#aaec692cc68218881d6af5ae16135035f',1,'rp::standalone::aurora::RemoteSDK']]],
-  ['looped_5fframe_5fcount_953',['looped_frame_count',['../struct__slamtec__aurora__sdk__keyframe__desc__t.html#a6d677e6eb5e42c773132352580ec93ba',1,'_slamtec_aurora_sdk_keyframe_desc_t']]],
-  ['loopedkeyframeids_954',['loopedKeyFrameIDs',['../classrp_1_1standalone_1_1aurora_1_1RemoteKeyFrameData.html#a2b3e1e6bb8ee97b2974b4125ff2ddd61',1,'rp::standalone::aurora::RemoteKeyFrameData']]]
+  ['last_5fupdate_5ftime_1425',['last_update_time',['../struct__slamtec__aurora__sdk__dashcam__storage__status__t.html#ae6e7c93be21c0510144685e52a8ccf28',1,'_slamtec_aurora_sdk_dashcam_storage_status_t']]],
+  ['lastkfcounttofetch_1426',['lastKFCountToFetch',['../struct__slamtec__aurora__sdk__global__map__desc__t.html#a5d1ff5fb4c610ca9645a0baa30815c2e',1,'_slamtec_aurora_sdk_global_map_desc_t']]],
+  ['lastkfretrieved_1427',['lastKFRetrieved',['../struct__slamtec__aurora__sdk__global__map__desc__t.html#ad8a7875306abf62db075e24885b2730f',1,'_slamtec_aurora_sdk_global_map_desc_t']]],
+  ['lastmapcounttofetch_1428',['lastMapCountToFetch',['../struct__slamtec__aurora__sdk__global__map__desc__t.html#a95e651eeab4d074137a681ab593036c9',1,'_slamtec_aurora_sdk_global_map_desc_t']]],
+  ['lastmpcounttofetch_1429',['lastMPCountToFetch',['../struct__slamtec__aurora__sdk__global__map__desc__t.html#a990698d0b11b938e5f2f3d020aedaa77',1,'_slamtec_aurora_sdk_global_map_desc_t']]],
+  ['lastmpretrieved_1430',['lastMPRetrieved',['../struct__slamtec__aurora__sdk__global__map__desc__t.html#ad805effa699dbcbb3eecf0cd9af7e9d9',1,'_slamtec_aurora_sdk_global_map_desc_t']]],
+  ['layer_5fid_1431',['layer_id',['../struct__slamtec__aurora__sdk__lidar__singlelayer__scandata__info__t.html#ab660cc57057d21e58efbd75a5ac56e16',1,'_slamtec_aurora_sdk_lidar_singlelayer_scandata_info_t']]],
+  ['left_5fimage_5fdesc_1432',['left_image_desc',['../struct__slamtec__aurora__sdk__tracking__info.html#a4ce62fedc867e3244f4a0bc7d273907b',1,'_slamtec_aurora_sdk_tracking_info::left_image_desc()'],['../struct__slamtec__aurora__sdk__stereo__image__pair__desc__t.html#ad363a4edc0aedb82f22fb558620b4460',1,'_slamtec_aurora_sdk_stereo_image_pair_desc_t::left_image_desc()']]],
+  ['leftimage_1433',['leftImage',['../classrp_1_1standalone_1_1aurora_1_1RemoteTrackingFrameInfo.html#a5e41a721b09d67f0ba35aac174874cfb',1,'rp::standalone::aurora::RemoteTrackingFrameInfo']]],
+  ['lidar2dmapbuilder_1434',['lidar2DMapBuilder',['../classrp_1_1standalone_1_1aurora_1_1RemoteSDK.html#aaec692cc68218881d6af5ae16135035f',1,'rp::standalone::aurora::RemoteSDK']]],
+  ['looped_5fframe_5fcount_1435',['looped_frame_count',['../struct__slamtec__aurora__sdk__keyframe__desc__t.html#a6d677e6eb5e42c773132352580ec93ba',1,'_slamtec_aurora_sdk_keyframe_desc_t']]],
+  ['loopedkeyframeids_1436',['loopedKeyFrameIDs',['../classrp_1_1standalone_1_1aurora_1_1RemoteKeyFrameData.html#a2b3e1e6bb8ee97b2974b4125ff2ddd61',1,'rp::standalone::aurora::RemoteKeyFrameData']]]
 ];

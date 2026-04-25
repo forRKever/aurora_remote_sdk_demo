@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="slamtec.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SLAMTEC Aurora Public Remote SDK
-   &#160;<span id="projectnumber">2.1.0-rtm</span>
+   &#160;<span id="projectnumber">2.1.1-rc1</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -140,6 +140,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ga382a5c71600a7f1f2a147b0ddef40c4f"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SDK__Callback__Types.html#ga382a5c71600a7f1f2a147b0ddef40c4f">onSemanticSegmentationDataArrived</a> (uint64_t timestamp_ns)</td></tr>
 <tr class="memdesc:ga382a5c71600a7f1f2a147b0ddef40c4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The callback for the semantic segmentation data.  <a href="group__SDK__Callback__Types.html#ga382a5c71600a7f1f2a147b0ddef40c4f">More...</a><br /></td></tr>
 <tr class="separator:ga382a5c71600a7f1f2a147b0ddef40c4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9ffd439515e852169a2caec419690a86"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SDK__Callback__Types.html#ga9ffd439515e852169a2caec419690a86">onPoseCovariance</a> (uint64_t timestamp_ns, const <a class="el" href="classrp_1_1standalone_1_1aurora_1_1PoseCovariance.html">PoseCovariance</a> &amp;covariance)</td></tr>
+<tr class="memdesc:ga9ffd439515e852169a2caec419690a86"><td class="mdescLeft">&#160;</td><td class="mdescRight">The callback for the pose covariance update.  <a href="group__SDK__Callback__Types.html#ga9ffd439515e852169a2caec419690a86">More...</a><br /></td></tr>
+<tr class="separator:ga9ffd439515e852169a2caec419690a86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3997397c691aa6e205f2150d048d07ef"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SDK__Callback__Types.html#ga3997397c691aa6e205f2150d048d07ef">onPoseAugmentationResult</a> (uint64_t timestamp_ns, <a class="el" href="group__SDK__Basic__Data__Types.html#ga972808a748f55869f8e85bbb49cdd5ca">slamtec_aurora_sdk_pose_augmentation_mode_t</a> mode, const <a class="el" href="group__SDK__Basic__Data__Types.html#ga01840dc21269a490c9c337e9b723d0df">slamtec_aurora_sdk_pose_se3_t</a> &amp;pose)</td></tr>
+<tr class="memdesc:ga3997397c691aa6e205f2150d048d07ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback for pose augmentation result.  <a href="group__SDK__Callback__Types.html#ga3997397c691aa6e205f2150d048d07ef">More...</a><br /></td></tr>
+<tr class="separator:ga3997397c691aa6e205f2150d048d07ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>

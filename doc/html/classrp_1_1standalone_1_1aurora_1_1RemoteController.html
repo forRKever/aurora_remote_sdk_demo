@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="slamtec.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SLAMTEC Aurora Public Remote SDK
-   &#160;<span id="projectnumber">2.1.0-rtm</span>
+   &#160;<span id="projectnumber">2.1.1-rc1</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -203,9 +203,24 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a07ecddc3f6a25a1be4f984984bb1e1ed"><td class="memItemLeft" align="right" valign="top"><a id="a07ecddc3f6a25a1be4f984984bb1e1ed"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>forceMapGlobalOptimization</b> (uint64_t timeout_ms=SLAMTEC_AURORA_SDK_REMOTE_SERVER_DEFAULT_TIMEOUT, <a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> *errcode=nullptr)</td></tr>
 <tr class="separator:a07ecddc3f6a25a1be4f984984bb1e1ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1cb18cff0058c604ff4c382ee08e612c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrp_1_1standalone_1_1aurora_1_1RemoteController.html#a1cb18cff0058c604ff4c382ee08e612c">requestPowerOperation</a> (<a class="el" href="group__SDK__Basic__Data__Types.html#gaa0c91037d8977e85d7cbbe700d117acb">slamtec_aurora_sdk_power_operation_t</a> operation, uint64_t timeout_ms=SLAMTEC_AURORA_SDK_REMOTE_SERVER_DEFAULT_TIMEOUT, const void *reserved=nullptr, size_t reserved_size=0, <a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> *errcode=nullptr)</td></tr>
+<tr class="memdesc:a1cb18cff0058c604ff4c382ee08e612c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Request the remote device to perform a power operation (reboot or shutdown)  <a href="classrp_1_1standalone_1_1aurora_1_1RemoteController.html#a1cb18cff0058c604ff4c382ee08e612c">More...</a><br /></td></tr>
+<tr class="separator:a1cb18cff0058c604ff4c382ee08e612c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac53fa6a32c4d0d8cf2dfccf09c6729f0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrp_1_1standalone_1_1aurora_1_1RemoteController.html#ac53fa6a32c4d0d8cf2dfccf09c6729f0">sendCustomCommand</a> (uint64_t timeout_ms, uint64_t cmd, const void *data=nullptr, size_t data_size=0, void *response=nullptr, size_t response_buffer_size=0, size_t *response_retrieved_size=nullptr, <a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> *errcode=nullptr)</td></tr>
 <tr class="memdesc:ac53fa6a32c4d0d8cf2dfccf09c6729f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a custom command to the remote device.  <a href="classrp_1_1standalone_1_1aurora_1_1RemoteController.html#ac53fa6a32c4d0d8cf2dfccf09c6729f0">More...</a><br /></td></tr>
 <tr class="separator:ac53fa6a32c4d0d8cf2dfccf09c6729f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7853f2ed2354f033a8dbc2ded542244"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrp_1_1standalone_1_1aurora_1_1RemoteController.html#ac7853f2ed2354f033a8dbc2ded542244">getSystemConfig</a> (const std::string &amp;filter_type, <a class="el" href="classrp_1_1standalone_1_1aurora_1_1ConfigData.html">ConfigData</a> &amp;config_data, uint64_t timeout_ms=SLAMTEC_AURORA_SDK_REMOTE_SERVER_DEFAULT_TIMEOUT, <a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> *errcode=nullptr)</td></tr>
+<tr class="memdesc:ac7853f2ed2354f033a8dbc2ded542244"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get system configuration from the remote device.  <a href="classrp_1_1standalone_1_1aurora_1_1RemoteController.html#ac7853f2ed2354f033a8dbc2ded542244">More...</a><br /></td></tr>
+<tr class="separator:ac7853f2ed2354f033a8dbc2ded542244"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae38e47fe0be4de4b27dfed1713b0c49a"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrp_1_1standalone_1_1aurora_1_1RemoteController.html#ae38e47fe0be4de4b27dfed1713b0c49a">getSystemConfig</a> (const std::string &amp;filter_type, uint64_t timeout_ms=SLAMTEC_AURORA_SDK_REMOTE_SERVER_DEFAULT_TIMEOUT, <a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> *errcode=nullptr)</td></tr>
+<tr class="memdesc:ae38e47fe0be4de4b27dfed1713b0c49a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get system configuration from the remote device as JSON string.  <a href="classrp_1_1standalone_1_1aurora_1_1RemoteController.html#ae38e47fe0be4de4b27dfed1713b0c49a">More...</a><br /></td></tr>
+<tr class="separator:ae38e47fe0be4de4b27dfed1713b0c49a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2bcfe5b5a05604576f1c60a3e2ee3ee"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrp_1_1standalone_1_1aurora_1_1RemoteController.html#aa2bcfe5b5a05604576f1c60a3e2ee3ee">setSystemConfig</a> (const std::string &amp;filter_type, const std::string &amp;key, const <a class="el" href="classrp_1_1standalone_1_1aurora_1_1ConfigData.html">ConfigData</a> &amp;config_data, uint64_t timeout_ms=SLAMTEC_AURORA_SDK_REMOTE_SERVER_DEFAULT_TIMEOUT, <a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> *errcode=nullptr)</td></tr>
+<tr class="memdesc:aa2bcfe5b5a05604576f1c60a3e2ee3ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set system configuration on the remote device.  <a href="classrp_1_1standalone_1_1aurora_1_1RemoteController.html#aa2bcfe5b5a05604576f1c60a3e2ee3ee">More...</a><br /></td></tr>
+<tr class="separator:aa2bcfe5b5a05604576f1c60a3e2ee3ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae44f0fee28c7153644577bb7c39f2d0f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrp_1_1standalone_1_1aurora_1_1RemoteController.html#ae44f0fee28c7153644577bb7c39f2d0f">setSystemConfig</a> (const std::string &amp;filter_type, const std::string &amp;key, const std::string &amp;config_json, uint64_t timeout_ms=SLAMTEC_AURORA_SDK_REMOTE_SERVER_DEFAULT_TIMEOUT, <a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> *errcode=nullptr)</td></tr>
+<tr class="memdesc:ae44f0fee28c7153644577bb7c39f2d0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set system configuration on the remote device with JSON string.  <a href="classrp_1_1standalone_1_1aurora_1_1RemoteController.html#ae44f0fee28c7153644577bb7c39f2d0f">More...</a><br /></td></tr>
+<tr class="separator:ae44f0fee28c7153644577bb7c39f2d0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -488,6 +503,119 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>RemoteSDK</b></td></
 
 </div>
 </div>
+<a id="ac7853f2ed2354f033a8dbc2ded542244"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac7853f2ed2354f033a8dbc2ded542244">&#9670;&nbsp;</a></span>getSystemConfig() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool rp::standalone::aurora::RemoteController::getSystemConfig </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>filter_type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classrp_1_1standalone_1_1aurora_1_1ConfigData.html">ConfigData</a> &amp;&#160;</td>
+          <td class="paramname"><em>config_data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>timeout_ms</em> = <code>SLAMTEC_AURORA_SDK_REMOTE_SERVER_DEFAULT_TIMEOUT</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> *&#160;</td>
+          <td class="paramname"><em>errcode</em> = <code>nullptr</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get system configuration from the remote device. </p>
+<p>Retrieves runtime configuration from the device (non-persistent) </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">filter_type</td><td>The filter type to get configuration for (e.g., "recorder.dashcam") </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">config_data</td><td>The config data object to populate </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">timeout_ms</td><td>The timeout in milliseconds, default is 5000ms </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">errcode</td><td>The error code, set to nullptr if not interested </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the configuration is retrieved successfully, false otherwise </dd></dl>
+
+</div>
+</div>
+<a id="ae38e47fe0be4de4b27dfed1713b0c49a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae38e47fe0be4de4b27dfed1713b0c49a">&#9670;&nbsp;</a></span>getSystemConfig() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string rp::standalone::aurora::RemoteController::getSystemConfig </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>filter_type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>timeout_ms</em> = <code>SLAMTEC_AURORA_SDK_REMOTE_SERVER_DEFAULT_TIMEOUT</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> *&#160;</td>
+          <td class="paramname"><em>errcode</em> = <code>nullptr</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get system configuration from the remote device as JSON string. </p>
+<p>Convenience method that returns configuration as JSON string </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">filter_type</td><td>The filter type to get configuration for (e.g., "recorder.dashcam") </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">timeout_ms</td><td>The timeout in milliseconds, default is 5000ms </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">errcode</td><td>The error code, set to nullptr if not interested </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The config JSON string, empty if failed </dd></dl>
+
+</div>
+</div>
 <a id="ad20a80ebfd122e06796cdc3fa9ba5e3a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad20a80ebfd122e06796cdc3fa9ba5e3a">&#9670;&nbsp;</a></span>isConnected()</h2>
 
@@ -606,6 +734,74 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>RemoteSDK</b></td></
 
 <p>Check if the raw data subscription is enabled. </p>
 <dl class="section return"><dt>Returns</dt><dd>True if the raw data subscription is enabled, false otherwise </dd></dl>
+
+</div>
+</div>
+<a id="a1cb18cff0058c604ff4c382ee08e612c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1cb18cff0058c604ff4c382ee08e612c">&#9670;&nbsp;</a></span>requestPowerOperation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool rp::standalone::aurora::RemoteController::requestPowerOperation </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__SDK__Basic__Data__Types.html#gaa0c91037d8977e85d7cbbe700d117acb">slamtec_aurora_sdk_power_operation_t</a>&#160;</td>
+          <td class="paramname"><em>operation</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>timeout_ms</em> = <code>SLAMTEC_AURORA_SDK_REMOTE_SERVER_DEFAULT_TIMEOUT</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const void *&#160;</td>
+          <td class="paramname"><em>reserved</em> = <code>nullptr</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>reserved_size</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> *&#160;</td>
+          <td class="paramname"><em>errcode</em> = <code>nullptr</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Request the remote device to perform a power operation (reboot or shutdown) </p>
+<p>Sends a power management command to the remote device.</p>
+<p>The connection will be lost after the operation is initiated. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">operation</td><td>The power operation to perform (SLAMTEC_AURORA_SDK_POWER_OP_REBOOT or SLAMTEC_AURORA_SDK_POWER_OP_SHUTDOWN) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">timeout_ms</td><td>The timeout in milliseconds, default is 5000ms </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">reserved</td><td>Reserved parameter for future use, pass nullptr </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">reserved_size</td><td>Reserved parameter for future use, pass 0 </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">errcode</td><td>The error code, set to nullptr if not interested </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the power operation request is sent and acknowledged successfully, false otherwise </dd></dl>
 
 </div>
 </div>
@@ -1359,6 +1555,140 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>RemoteSDK</b></td></
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="aa2bcfe5b5a05604576f1c60a3e2ee3ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa2bcfe5b5a05604576f1c60a3e2ee3ee">&#9670;&nbsp;</a></span>setSystemConfig() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool rp::standalone::aurora::RemoteController::setSystemConfig </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>filter_type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classrp_1_1standalone_1_1aurora_1_1ConfigData.html">ConfigData</a> &amp;&#160;</td>
+          <td class="paramname"><em>config_data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>timeout_ms</em> = <code>SLAMTEC_AURORA_SDK_REMOTE_SERVER_DEFAULT_TIMEOUT</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> *&#160;</td>
+          <td class="paramname"><em>errcode</em> = <code>nullptr</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set system configuration on the remote device. </p>
+<p>Sets runtime configuration on the device (non-persistent) </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">filter_type</td><td>The filter type to set configuration for (e.g., "recorder.dashcam") </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">key</td><td>The key for merging config, use "@overwrite" to overwrite the entire config </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">config_data</td><td>The config data object containing the configuration to set </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">timeout_ms</td><td>The timeout in milliseconds, default is 5000ms </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">errcode</td><td>The error code, set to nullptr if not interested </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the configuration is set successfully, false otherwise </dd></dl>
+
+</div>
+</div>
+<a id="ae44f0fee28c7153644577bb7c39f2d0f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae44f0fee28c7153644577bb7c39f2d0f">&#9670;&nbsp;</a></span>setSystemConfig() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool rp::standalone::aurora::RemoteController::setSystemConfig </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>filter_type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>config_json</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>timeout_ms</em> = <code>SLAMTEC_AURORA_SDK_REMOTE_SERVER_DEFAULT_TIMEOUT</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> *&#160;</td>
+          <td class="paramname"><em>errcode</em> = <code>nullptr</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set system configuration on the remote device with JSON string. </p>
+<p>Convenience method to set configuration using JSON string </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">filter_type</td><td>The filter type to set configuration for (e.g., "recorder.dashcam") </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">key</td><td>The key for merging config, use "@overwrite" to overwrite the entire config </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">config_json</td><td>The config in JSON string format </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">timeout_ms</td><td>The timeout in milliseconds, default is 5000ms </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">errcode</td><td>The error code, set to nullptr if not interested </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the configuration is set successfully, false otherwise </dd></dl>
 
 </div>
 </div>

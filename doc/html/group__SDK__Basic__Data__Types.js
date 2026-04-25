@@ -1,5 +1,36 @@
 var group__SDK__Basic__Data__Types =
 [
+    [ "_slamtec_aurora_sdk_camera_mask_image_buffer_t", "struct__slamtec__aurora__sdk__camera__mask__image__buffer__t.html", [
+      [ "image_data", "struct__slamtec__aurora__sdk__camera__mask__image__buffer__t.html#a9d709be29401a146ce5b32600e74c463", null ],
+      [ "image_data_size", "struct__slamtec__aurora__sdk__camera__mask__image__buffer__t.html#a39d9a1221c4796568a9e9fa67e187d7f", null ]
+    ] ],
+    [ "_slamtec_aurora_sdk_dashcam_status_t", "struct__slamtec__aurora__sdk__dashcam__status__t.html", [
+      [ "current_size_bytes", "struct__slamtec__aurora__sdk__dashcam__status__t.html#a0c1e0f9e40cc78ceecf5bfcd0fdb7e44", null ],
+      [ "enabled", "struct__slamtec__aurora__sdk__dashcam__status__t.html#ad26d0e7c0c50a77bf75c4f1795db09eb", null ],
+      [ "recording", "struct__slamtec__aurora__sdk__dashcam__status__t.html#a8519ce3a73f9d7131231e7b5879b3064", null ],
+      [ "size_limit_gb", "struct__slamtec__aurora__sdk__dashcam__status__t.html#a094d0e952c7c401e1a1ff74bce52a7ba", null ],
+      [ "working_message", "struct__slamtec__aurora__sdk__dashcam__status__t.html#a04e83f3004b9915e9b6eb4e12f4a9800", null ],
+      [ "working_state", "struct__slamtec__aurora__sdk__dashcam__status__t.html#ae1fb6db5d6c087d02f42f3fb9d85c0d7", null ],
+      [ "working_timestamp", "struct__slamtec__aurora__sdk__dashcam__status__t.html#ad4017757f443d75e48cb404f1c30be4c", null ]
+    ] ],
+    [ "_slamtec_aurora_sdk_dashcam_storage_status_t", "struct__slamtec__aurora__sdk__dashcam__storage__status__t.html", [
+      [ "external_storage_mounted", "struct__slamtec__aurora__sdk__dashcam__storage__status__t.html#a413e50ce81dc6f81f0950ebd756d9bde", null ],
+      [ "external_storage_present", "struct__slamtec__aurora__sdk__dashcam__storage__status__t.html#a8ba33b867c13df552f45ba4214881959", null ],
+      [ "free_space_bytes", "struct__slamtec__aurora__sdk__dashcam__storage__status__t.html#a019268cc7fe0ebf4c12ae1ef8c600f4a", null ],
+      [ "last_update_time", "struct__slamtec__aurora__sdk__dashcam__storage__status__t.html#ae6e7c93be21c0510144685e52a8ccf28", null ],
+      [ "total_space_bytes", "struct__slamtec__aurora__sdk__dashcam__storage__status__t.html#aa18b1ea96f1368a7b2eec777ef7d2a46", null ],
+      [ "used_by_dashcam_bytes", "struct__slamtec__aurora__sdk__dashcam__storage__status__t.html#aff3fe41a8a6f5bf9028b4908d074e1a0", null ],
+      [ "using_external_storage", "struct__slamtec__aurora__sdk__dashcam__storage__status__t.html#a0dc7aaeb98c2bc478557376baf27093a", null ]
+    ] ],
+    [ "_slamtec_aurora_sdk_dashcam_session_info_t", "struct__slamtec__aurora__sdk__dashcam__session__info__t.html", [
+      [ "blob_idx_count", "struct__slamtec__aurora__sdk__dashcam__session__info__t.html#a3beff9f136c8d4bd2ecac949bff4b03b", null ],
+      [ "end_blob_index", "struct__slamtec__aurora__sdk__dashcam__session__info__t.html#a412ebbad6579ba7a5715869ddea195c3", null ],
+      [ "end_time", "struct__slamtec__aurora__sdk__dashcam__session__info__t.html#a49125e04168c350c53e1ef71c20fdbd0", null ],
+      [ "session_id", "struct__slamtec__aurora__sdk__dashcam__session__info__t.html#a1627e59993a7405d33d09c5db38b94fe", null ],
+      [ "size", "struct__slamtec__aurora__sdk__dashcam__session__info__t.html#a5e34b8eefe85f544516e93fb8a33b64d", null ],
+      [ "start_blob_index", "struct__slamtec__aurora__sdk__dashcam__session__info__t.html#a521e15aafd2259221bcead59a2ce7cdb", null ],
+      [ "start_time", "struct__slamtec__aurora__sdk__dashcam__session__info__t.html#a3abbf5a9f189ac8f45b933a2ec6cb15d", null ]
+    ] ],
     [ "_slamtec_aurora_sdk_version_info_t", "struct__slamtec__aurora__sdk__version__info__t.html", [
       [ "sdk_build_time", "struct__slamtec__aurora__sdk__version__info__t.html#a91a268d7d8740d523d9eaa59b1d919ab", null ],
       [ "sdk_feature_flags", "struct__slamtec__aurora__sdk__version__info__t.html#ac0a77fb4726725f511e53ffca17d1982", null ],
@@ -46,6 +77,19 @@ var group__SDK__Basic__Data__Types =
     [ "_slamtec_aurora_sdk_pose_t", "struct__slamtec__aurora__sdk__pose__t.html", [
       [ "rpy", "struct__slamtec__aurora__sdk__pose__t.html#af13da7e73e79a69d43202dc4cf6ba7f2", null ],
       [ "translation", "struct__slamtec__aurora__sdk__pose__t.html#ab866f8843457e74751a63a848520658d", null ]
+    ] ],
+    [ "_slamtec_aurora_sdk_pose_covariance_t", "struct__slamtec__aurora__sdk__pose__covariance__t.html", [
+      [ "covariance_matrix", "struct__slamtec__aurora__sdk__pose__covariance__t.html#a1bb2763c8ddef996f8fd010bff41b05d", null ]
+    ] ],
+    [ "_slamtec_aurora_sdk_pose_covariance_readable_t", "struct__slamtec__aurora__sdk__pose__covariance__readable__t.html", [
+      [ "position_ellipsoid_95_xyz", "struct__slamtec__aurora__sdk__pose__covariance__readable__t.html#a98467d6b83f5a2654477f4cf16a38175", null ],
+      [ "position_radius_95_xy", "struct__slamtec__aurora__sdk__pose__covariance__readable__t.html#a95aaf32120bf342a15a3a6ed58771839", null ],
+      [ "rotation_1sigma_rpy_deg", "struct__slamtec__aurora__sdk__pose__covariance__readable__t.html#a52f66875009f9cd15c122906bfba089d", null ]
+    ] ],
+    [ "_slamtec_aurora_sdk_pose_augmentation_config_t", "struct__slamtec__aurora__sdk__pose__augmentation__config__t.html", [
+      [ "enable_smoothing", "struct__slamtec__aurora__sdk__pose__augmentation__config__t.html#a7155733d61c4bf2e91674179e6d94257", null ],
+      [ "output_frequency", "struct__slamtec__aurora__sdk__pose__augmentation__config__t.html#a2a55a895a0656424b608dbc1520e594a", null ],
+      [ "smoothing_factor", "struct__slamtec__aurora__sdk__pose__augmentation__config__t.html#ac9e803c66569362b76685b7191471f80", null ]
     ] ],
     [ "_slamtec_aurora_sdk_device_status_desc", "struct__slamtec__aurora__sdk__device__status__desc.html", [
       [ "status", "struct__slamtec__aurora__sdk__device__status__desc.html#a10fa8a077e0817145ed1b6d1cb1b62d1", null ],
@@ -282,6 +326,8 @@ var group__SDK__Basic__Data__Types =
       [ "on_imu_data", "struct__slamtec__aurora__sdk__listener__t.html#acd69219d54cbe86212e5447dfbf588c9", null ],
       [ "on_lidar_scan", "struct__slamtec__aurora__sdk__listener__t.html#a4bce1867c55517a70683a1550474de4c", null ],
       [ "on_mapping_flags", "struct__slamtec__aurora__sdk__listener__t.html#acecff8c1235ac878480d9f279b5d025e", null ],
+      [ "on_pose_augmentation_result", "struct__slamtec__aurora__sdk__listener__t.html#aad7033e9543311bea92eedd5ad94aa5e", null ],
+      [ "on_pose_covariance", "struct__slamtec__aurora__sdk__listener__t.html#a549c93b4f3741cb880b377e45032c55e", null ],
       [ "on_raw_image_data", "struct__slamtec__aurora__sdk__listener__t.html#a7a48a7a14bfda0f8b2ef8439446b1059", null ],
       [ "on_semantic_segmentation_image_arrived", "struct__slamtec__aurora__sdk__listener__t.html#a32d9ada6a8c305250316023f8561d3ce", null ],
       [ "on_tracking_data", "struct__slamtec__aurora__sdk__listener__t.html#afd79507bee83b3a3e514fa48d836bf22", null ],
@@ -297,7 +343,15 @@ var group__SDK__Basic__Data__Types =
     [ "slamtec_aurora_sdk_2d_gridmap_generation_options_t", "group__SDK__Basic__Data__Types.html#ga777f2199625a7a6ffc2548d0bb6a9ab6", null ],
     [ "slamtec_aurora_sdk_2dmap_dimension_t", "group__SDK__Basic__Data__Types.html#ga93b9dbddb9349dc1f1970ab6a949d573", null ],
     [ "slamtec_aurora_sdk_camera_calibration_t", "group__SDK__Basic__Data__Types.html#gafd3ab285bc40043a6a142a939ac91257", null ],
+    [ "slamtec_aurora_sdk_camera_mask_image_buffer_t", "group__SDK__Basic__Data__Types.html#ga40746158caadb607d036196b949fe71a", null ],
+    [ "slamtec_aurora_sdk_camera_mask_t", "group__SDK__Basic__Data__Types.html#ga61f511efa6adabf007f1f4e730ce68e6", null ],
+    [ "slamtec_aurora_sdk_config_data_t", "group__SDK__Basic__Data__Types.html#gaf7f275611fdf3957132421f2bcd0e99d", null ],
+    [ "slamtec_aurora_sdk_config_entry_list_t", "group__SDK__Basic__Data__Types.html#gad1444fddf00f1d555313d2f8e20d9c98", null ],
     [ "slamtec_aurora_sdk_connection_info_t", "group__SDK__Basic__Data__Types.html#gaa7a3568ff9b7e35d8558ea1e554359ec", null ],
+    [ "slamtec_aurora_sdk_dashcam_session_info_t", "group__SDK__Basic__Data__Types.html#ga9bb75f8c75d44db83a7744aebea7a694", null ],
+    [ "slamtec_aurora_sdk_dashcam_status_t", "group__SDK__Basic__Data__Types.html#ga1a2ee5af47ab4651213026f0e2cfa9ef", null ],
+    [ "slamtec_aurora_sdk_dashcam_storage_info_t", "group__SDK__Basic__Data__Types.html#gabe3149a034fc57619b38d9ab295a3600", null ],
+    [ "slamtec_aurora_sdk_dashcam_storage_status_t", "group__SDK__Basic__Data__Types.html#ga25fa0266d704d0bd54deca8cb84fe45c", null ],
     [ "slamtec_aurora_sdk_device_basic_info_t", "group__SDK__Basic__Data__Types.html#ga757da58b3033e4be42b2f47120d19d67", null ],
     [ "slamtec_aurora_sdk_device_relocalization_status_t", "group__SDK__Basic__Data__Types.html#gaa2e5bfb04d8284ae0e23d7d5b0c646d5", null ],
     [ "slamtec_aurora_sdk_device_status_desc_t", "group__SDK__Basic__Data__Types.html#gab8b542aeeebae795d3d18e88b1153b31", null ],
@@ -323,9 +377,15 @@ var group__SDK__Basic__Data__Types =
     [ "slamtec_aurora_sdk_mapstorage_session_status_t", "group__SDK__Basic__Data__Types.html#ga68260745317f8cd691482d1fa6171d38", null ],
     [ "slamtec_aurora_sdk_mapstorage_session_type_t", "group__SDK__Basic__Data__Types.html#ga9dc806524f0dd3405c9c12608c72c2b5", null ],
     [ "slamtec_aurora_sdk_occupancy_grid_2d_handle_t", "group__SDK__Basic__Data__Types.html#gaf37ddc326aa4b43bb4a40382c3549ccb", null ],
+    [ "slamtec_aurora_sdk_pose_augmentation_config_t", "group__SDK__Basic__Data__Types.html#gae27d2715646304120bbf574e859982ef", null ],
+    [ "slamtec_aurora_sdk_pose_augmentation_mode_t", "group__SDK__Basic__Data__Types.html#ga972808a748f55869f8e85bbb49cdd5ca", null ],
+    [ "slamtec_aurora_sdk_pose_covariance_readable_t", "group__SDK__Basic__Data__Types.html#ga514686bda28f190b700ec8347b456dc8", null ],
+    [ "slamtec_aurora_sdk_pose_covariance_t", "group__SDK__Basic__Data__Types.html#ga500134a3664f0e30e101236b714a7503", null ],
+    [ "slamtec_aurora_sdk_pose_output_frequency_t", "group__SDK__Basic__Data__Types.html#gaaedf854072f1ab3a5a25e8727b4354ab", null ],
     [ "slamtec_aurora_sdk_pose_se3_t", "group__SDK__Basic__Data__Types.html#ga01840dc21269a490c9c337e9b723d0df", null ],
     [ "slamtec_aurora_sdk_pose_t", "group__SDK__Basic__Data__Types.html#ga030139c15355bd7f2bea47ccce8b1f56", null ],
     [ "slamtec_aurora_sdk_position3d_t", "group__SDK__Basic__Data__Types.html#ga60d7026dc2801d7d398dda6a559840ac", null ],
+    [ "slamtec_aurora_sdk_power_operation_t", "group__SDK__Basic__Data__Types.html#gaa0c91037d8977e85d7cbbe700d117acb", null ],
     [ "slamtec_aurora_sdk_quaternion_t", "group__SDK__Basic__Data__Types.html#ga8a94a2a0d2d3dfb6b5a61a99eb45b7ce", null ],
     [ "slamtec_aurora_sdk_rect_t", "group__SDK__Basic__Data__Types.html#gaea022ec7cf2c1b002027f227fb403df0", null ],
     [ "slamtec_aurora_sdk_server_connection_info_t", "group__SDK__Basic__Data__Types.html#gaedf34c2a27ccf0969bc5705d47193ae7", null ],
@@ -336,7 +396,10 @@ var group__SDK__Basic__Data__Types =
     [ "slamtec_aurora_sdk_tracking_data_buffer_t", "group__SDK__Basic__Data__Types.html#gaa263216dfecdcc7c1757cba6d945c435", null ],
     [ "slamtec_aurora_sdk_tracking_info_t", "group__SDK__Basic__Data__Types.html#gae459a912b493897f96063b4fed4f44ec", null ],
     [ "slamtec_aurora_sdk_transform_calibration_t", "group__SDK__Basic__Data__Types.html#gaab2eca5d695bf9c0f0fe4a9bc3de1f7d", null ],
+    [ "slamtec_aurora_sdk_transform_manager_t", "group__SDK__Basic__Data__Types.html#ga1eb11b938b27a718a214a43d3d46d452", null ],
+    [ "slamtec_aurora_sdk_transform_name_list_t", "group__SDK__Basic__Data__Types.html#ga03f6ae9179d51e28a40a32b10a4ea03a", null ],
     [ "slamtec_aurora_sdk_version_info_t", "group__SDK__Basic__Data__Types.html#ga7f2d99f69e4465cf7d76630948fb6a38", null ],
+    [ "slamtec_aurora_sdk_dashcam_working_state_t", "group__SDK__Basic__Data__Types.html#ga47f505f69d757b3a047717b66758cdf9", null ],
     [ "slamtec_aurora_sdk_datarecorder_type", "group__SDK__Basic__Data__Types.html#ga1d5fd7b1ca76fd1eebab5fd0689d77f5", null ],
     [ "slamtec_aurora_sdk_device_relocalization_status_types", "group__SDK__Basic__Data__Types.html#gab182d9677705bba5f736a8accd64214f", null ],
     [ "slamtec_aurora_sdk_device_status_types", "group__SDK__Basic__Data__Types.html#ga1d71fa469656986247d1604d8c690b86", [
@@ -396,6 +459,20 @@ var group__SDK__Basic__Data__Types =
     [ "slamtec_aurora_sdk_mapstorage_session_type_types", "group__SDK__Basic__Data__Types.html#ga29524f2538e52e304eb1d21b98d9d57c", [
       [ "SLAMTEC_AURORA_SDK_MAPSTORAGE_SESSION_TYPE_UPLOAD", "group__SDK__Basic__Data__Types.html#gga29524f2538e52e304eb1d21b98d9d57cacfdeedc9f20631756908c4ab40734fd6", null ],
       [ "SLAMTEC_AURORA_SDK_MAPSTORAGE_SESSION_TYPE_DOWNLOAD", "group__SDK__Basic__Data__Types.html#gga29524f2538e52e304eb1d21b98d9d57ca0186833c93c538705246b1a3abcf94cc", null ]
+    ] ],
+    [ "slamtec_aurora_sdk_pose_augmentation_mode", "group__SDK__Basic__Data__Types.html#gabcd6caa2b17581749f0e307ff7824258", [
+      [ "SLAMTEC_AURORA_SDK_POSE_AUGMENTATION_MODE_VISUAL_ONLY", "group__SDK__Basic__Data__Types.html#ggabcd6caa2b17581749f0e307ff7824258a9c70b684074e55d82731514ae60177a9", null ],
+      [ "SLAMTEC_AURORA_SDK_POSE_AUGMENTATION_MODE_IMU_VISION_MIXED", "group__SDK__Basic__Data__Types.html#ggabcd6caa2b17581749f0e307ff7824258ad0a8c9035734d9aa44446556644f388c", null ]
+    ] ],
+    [ "slamtec_aurora_sdk_pose_output_frequency", "group__SDK__Basic__Data__Types.html#ga2de58ac0738ba200a676ea7ea81e8382", [
+      [ "SLAMTEC_AURORA_SDK_POSE_OUTPUT_FREQ_HIGHEST_POSSIBLE", "group__SDK__Basic__Data__Types.html#gga2de58ac0738ba200a676ea7ea81e8382af98fb66939507640f3247549b00f2046", null ],
+      [ "SLAMTEC_AURORA_SDK_POSE_OUTPUT_FREQ_200HZ", "group__SDK__Basic__Data__Types.html#gga2de58ac0738ba200a676ea7ea81e8382a9acf81bab9232e15210f77c086e678e5", null ],
+      [ "SLAMTEC_AURORA_SDK_POSE_OUTPUT_FREQ_100HZ", "group__SDK__Basic__Data__Types.html#gga2de58ac0738ba200a676ea7ea81e8382a78f2a53d080229e50a914f26b1cacda6", null ],
+      [ "SLAMTEC_AURORA_SDK_POSE_OUTPUT_FREQ_50HZ", "group__SDK__Basic__Data__Types.html#gga2de58ac0738ba200a676ea7ea81e8382a1d51d7a16c4318b5cd54258e5462f93d", null ]
+    ] ],
+    [ "slamtec_aurora_sdk_power_operation", "group__SDK__Basic__Data__Types.html#ga92bf200c619cdfebf929827ecad86c5a", [
+      [ "SLAMTEC_AURORA_SDK_POWER_OP_REBOOT", "group__SDK__Basic__Data__Types.html#gga92bf200c619cdfebf929827ecad86c5aaba3f2a5b7abdaaa295526fa02091e0fc", null ],
+      [ "SLAMTEC_AURORA_SDK_POWER_OP_SHUTDOWN", "group__SDK__Basic__Data__Types.html#gga92bf200c619cdfebf929827ecad86c5aa3a2c178efc872709fa9dd9630951b171", null ]
     ] ],
     [ "slamtec_aurora_sdk_tracking_status_t", "group__SDK__Basic__Data__Types.html#gaae5e700d46d37b869e6f7c03b034cf60", null ]
 ];

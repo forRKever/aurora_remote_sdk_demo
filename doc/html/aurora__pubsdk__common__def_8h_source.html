@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="slamtec.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SLAMTEC Aurora Public Remote SDK
-   &#160;<span id="projectnumber">2.1.0-rtm</span>
+   &#160;<span id="projectnumber">2.1.1-rc1</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -161,14 +161,24 @@ $(document).ready(function(){initNavTree('aurora__pubsdk__common__def_8h_source.
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    SLAMTEC_AURORA_SDK_ERRORCODE_TIMEOUT = -5,</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    SLAMTEC_AURORA_SDK_ERRORCODE_IO_ERROR = -6,</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    SLAMTEC_AURORA_SDK_ERRORCODE_NOT_READY = -7,</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;};</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160; </div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    SLAMTEC_AURORA_SDK_ERRORCODE_INSUFFICIENT_BUFFER = -8,</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;};</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
+<div class="line"><a name="l00090"></a><span class="lineno"><a class="line" href="group__SDK__Basic__Data__Types.html#ga92bf200c619cdfebf929827ecad86c5a">   90</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">enum</span> <a class="code" href="group__SDK__Basic__Data__Types.html#ga92bf200c619cdfebf929827ecad86c5a">slamtec_aurora_sdk_power_operation</a> {</div>
+<div class="line"><a name="l00091"></a><span class="lineno"><a class="line" href="group__SDK__Basic__Data__Types.html#gga92bf200c619cdfebf929827ecad86c5aaba3f2a5b7abdaaa295526fa02091e0fc">   91</a></span>&#160;    <a class="code" href="group__SDK__Basic__Data__Types.html#gga92bf200c619cdfebf929827ecad86c5aaba3f2a5b7abdaaa295526fa02091e0fc">SLAMTEC_AURORA_SDK_POWER_OP_REBOOT</a> = 0,   </div>
+<div class="line"><a name="l00092"></a><span class="lineno"><a class="line" href="group__SDK__Basic__Data__Types.html#gga92bf200c619cdfebf929827ecad86c5aa3a2c178efc872709fa9dd9630951b171">   92</a></span>&#160;    <a class="code" href="group__SDK__Basic__Data__Types.html#gga92bf200c619cdfebf929827ecad86c5aa3a2c178efc872709fa9dd9630951b171">SLAMTEC_AURORA_SDK_POWER_OP_SHUTDOWN</a> = 1, </div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;} <a class="code" href="group__SDK__Basic__Data__Types.html#gaa0c91037d8977e85d7cbbe700d117acb">slamtec_aurora_sdk_power_operation_t</a>;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160; </div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160; </div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
+<div class="ttc" id="agroup__SDK__Basic__Data__Types_html_gga92bf200c619cdfebf929827ecad86c5aa3a2c178efc872709fa9dd9630951b171"><div class="ttname"><a href="group__SDK__Basic__Data__Types.html#gga92bf200c619cdfebf929827ecad86c5aa3a2c178efc872709fa9dd9630951b171">SLAMTEC_AURORA_SDK_POWER_OP_SHUTDOWN</a></div><div class="ttdeci">@ SLAMTEC_AURORA_SDK_POWER_OP_SHUTDOWN</div><div class="ttdef"><b>Definition:</b> aurora_pubsdk_common_def.h:92</div></div>
+<div class="ttc" id="agroup__SDK__Basic__Data__Types_html_gga92bf200c619cdfebf929827ecad86c5aaba3f2a5b7abdaaa295526fa02091e0fc"><div class="ttname"><a href="group__SDK__Basic__Data__Types.html#gga92bf200c619cdfebf929827ecad86c5aaba3f2a5b7abdaaa295526fa02091e0fc">SLAMTEC_AURORA_SDK_POWER_OP_REBOOT</a></div><div class="ttdeci">@ SLAMTEC_AURORA_SDK_POWER_OP_REBOOT</div><div class="ttdef"><b>Definition:</b> aurora_pubsdk_common_def.h:91</div></div>
 <div class="ttc" id="agroup__SDK__Basic__Data__Types_html_gad2a362b177366365108872a09cad9fff"><div class="ttname"><a href="group__SDK__Basic__Data__Types.html#gad2a362b177366365108872a09cad9fff">slamtec_aurora_sdk_errorcode_types</a></div><div class="ttdeci">slamtec_aurora_sdk_errorcode_types</div><div class="ttdoc">The error code types.</div><div class="ttdef"><b>Definition:</b> aurora_pubsdk_common_def.h:74</div></div>
+<div class="ttc" id="agroup__SDK__Basic__Data__Types_html_ga92bf200c619cdfebf929827ecad86c5a"><div class="ttname"><a href="group__SDK__Basic__Data__Types.html#ga92bf200c619cdfebf929827ecad86c5a">slamtec_aurora_sdk_power_operation</a></div><div class="ttdeci">slamtec_aurora_sdk_power_operation</div><div class="ttdoc">The power operation types for system management.</div><div class="ttdef"><b>Definition:</b> aurora_pubsdk_common_def.h:90</div></div>
 <div class="ttc" id="agroup__SDK__Basic__Data__Types_html_ga594824a6dfa667c6bdd6c8f95b3a37a3"><div class="ttname"><a href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a></div><div class="ttdeci">uint32_t slamtec_aurora_sdk_errorcode_t</div><div class="ttdoc">The error code value type.</div><div class="ttdef"><b>Definition:</b> aurora_pubsdk_common_def.h:68</div></div>
+<div class="ttc" id="agroup__SDK__Basic__Data__Types_html_gaa0c91037d8977e85d7cbbe700d117acb"><div class="ttname"><a href="group__SDK__Basic__Data__Types.html#gaa0c91037d8977e85d7cbbe700d117acb">slamtec_aurora_sdk_power_operation_t</a></div><div class="ttdeci">enum slamtec_aurora_sdk_power_operation slamtec_aurora_sdk_power_operation_t</div><div class="ttdoc">The power operation types for system management.</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>

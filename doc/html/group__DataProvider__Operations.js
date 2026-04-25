@@ -2,6 +2,7 @@ var group__DataProvider__Operations =
 [
     [ "slamtec_aurora_sdk_dataprovider_access_map_data", "group__DataProvider__Operations.html#ga2b1e71a077de1e255b6d49e678026ead", null ],
     [ "slamtec_aurora_sdk_dataprovider_get_all_map_info", "group__DataProvider__Operations.html#gafe2bba706b135b776b7ef4e503a4636b", null ],
+    [ "slamtec_aurora_sdk_dataprovider_get_augmented_pose", "group__DataProvider__Operations.html#ga656b85d08ece56f29b87fc9d6b0a3040", null ],
     [ "slamtec_aurora_sdk_dataprovider_get_camera_calibration", "group__DataProvider__Operations.html#ga8e801dc0acc27df3a354d99985038602", null ],
     [ "slamtec_aurora_sdk_dataprovider_get_current_pose", "group__DataProvider__Operations.html#ga76a4b23ad1fc51122e332e3c0b8d050e", null ],
     [ "slamtec_aurora_sdk_dataprovider_get_current_pose_se3", "group__DataProvider__Operations.html#gaf7b9bfdd238ff9b10a63a13bdbe07238", null ],
@@ -12,11 +13,16 @@ var group__DataProvider__Operations =
     [ "slamtec_aurora_sdk_dataprovider_get_last_device_basic_info", "group__DataProvider__Operations.html#gab6c822c41755057565ed2e2a00066b21", null ],
     [ "slamtec_aurora_sdk_dataprovider_get_last_device_status", "group__DataProvider__Operations.html#ga72f817747bf697a3b6e9ed7e4628e519", null ],
     [ "slamtec_aurora_sdk_dataprovider_get_mapping_flags", "group__DataProvider__Operations.html#gafbb5becc761637ed5fe604b7ffbd7829", null ],
+    [ "slamtec_aurora_sdk_dataprovider_get_pose_augmentation_config", "group__DataProvider__Operations.html#gaf8d84c8a552a6e02d90b2e22a6f270ab", null ],
+    [ "slamtec_aurora_sdk_dataprovider_get_pose_augmentation_mode", "group__DataProvider__Operations.html#ga50656b12622441f644c3b9a5b6216df6", null ],
+    [ "slamtec_aurora_sdk_dataprovider_get_recent_pose_covariance", "group__DataProvider__Operations.html#ga34c52a269b4dc7c20036e3f4ebd12a38", null ],
     [ "slamtec_aurora_sdk_dataprovider_get_relocalization_status", "group__DataProvider__Operations.html#ga99796de1fc52475a04211f2e2fbbeea1", null ],
     [ "slamtec_aurora_sdk_dataprovider_get_transform_calibration", "group__DataProvider__Operations.html#gab12e30f703aa1f09fd3569835f28cda5", null ],
     [ "slamtec_aurora_sdk_dataprovider_peek_camera_preview_image", "group__DataProvider__Operations.html#gaa63eac86ea4c1fce3dff293ae96c6732", null ],
     [ "slamtec_aurora_sdk_dataprovider_peek_history_pose", "group__DataProvider__Operations.html#gabfef1692e5b6254ee3b69557e93abb24", null ],
     [ "slamtec_aurora_sdk_dataprovider_peek_imu_data", "group__DataProvider__Operations.html#gabc763395e4e45fbbd99a25971bd3b486", null ],
     [ "slamtec_aurora_sdk_dataprovider_peek_recent_lidar_scan_singlelayer", "group__DataProvider__Operations.html#gab650d24c5b251bd85bf9cfb9a16be7e4", null ],
-    [ "slamtec_aurora_sdk_dataprovider_peek_tracking_data", "group__DataProvider__Operations.html#ga99d67b19be8703ef3a5973205a763c92", null ]
+    [ "slamtec_aurora_sdk_dataprovider_peek_tracking_data", "group__DataProvider__Operations.html#ga99d67b19be8703ef3a5973205a763c92", null ],
+    [ "slamtec_aurora_sdk_dataprovider_start_pose_augmentation", "group__DataProvider__Operations.html#ga3e8fb16426de0f671d4b42379dd49f8e", null ],
+    [ "slamtec_aurora_sdk_dataprovider_stop_pose_augmentation", "group__DataProvider__Operations.html#ga75faf0f69a02fe4d311987196b27bab2", null ]
 ];

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="slamtec.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SLAMTEC Aurora Public Remote SDK
-   &#160;<span id="projectnumber">2.1.0-rtm</span>
+   &#160;<span id="projectnumber">2.1.1-rc1</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -108,6 +108,13 @@ $(document).ready(function(){initNavTree('functions_r.html',''); initResizable()
 <li>real_y
 : <a class="el" href="struct__slamtec__aurora__sdk__2d__gridmap__fetch__info__t.html#ac313d63e2655f0981c6c0143620430f9">_slamtec_aurora_sdk_2d_gridmap_fetch_info_t</a>
 </li>
+<li>recording
+: <a class="el" href="struct__slamtec__aurora__sdk__dashcam__status__t.html#a8519ce3a73f9d7131231e7b5879b3064">_slamtec_aurora_sdk_dashcam_status_t</a>
+</li>
+<li>refresh()
+: <a class="el" href="classrp_1_1standalone_1_1aurora_1_1CameraMaskManager.html#a13c8aa83525ec64e68ee95c27d597e23">rp::standalone::aurora::CameraMaskManager</a>
+, <a class="el" href="classrp_1_1standalone_1_1aurora_1_1TransformManager.html#a1708dc4e545fc9b9abfd15b144386f36">rp::standalone::aurora::TransformManager</a>
+</li>
 <li>related_mp_count
 : <a class="el" href="struct__slamtec__aurora__sdk__keyframe__desc__t.html#a7b59ada37485982bc96f6f483bcb60d3">_slamtec_aurora_sdk_keyframe_desc_t</a>
 </li>
@@ -117,8 +124,20 @@ $(document).ready(function(){initNavTree('functions_r.html',''); initResizable()
 <li>release()
 : <a class="el" href="classrp_1_1standalone_1_1aurora_1_1RemoteSDK.html#ad70b7a47ff51ac1515002df4d8d65703">rp::standalone::aurora::RemoteSDK</a>
 </li>
+<li>RemoteDashcamStorageInfo()
+: <a class="el" href="classrp_1_1standalone_1_1aurora_1_1RemoteDashcamStorageInfo.html#a9657039f219ebe4a402a0b88279ea4c4">rp::standalone::aurora::RemoteDashcamStorageInfo</a>
+</li>
+<li>RemoteTimeSyncClient()
+: <a class="el" href="classRemoteTimeSyncClient.html#a86e2411d93d404e40bf37e0ceba314ca">RemoteTimeSyncClient</a>
+</li>
 <li>RemoteTrackingFrameInfo()
-: <a class="el" href="classrp_1_1standalone_1_1aurora_1_1RemoteTrackingFrameInfo.html#a4d2952abbdd133db9cdc1fdf8ae2733a">rp::standalone::aurora::RemoteTrackingFrameInfo</a>
+: <a class="el" href="classrp_1_1standalone_1_1aurora_1_1RemoteTrackingFrameInfo.html#a8ce9dcbb91c2ea2d67be8ad2e09d1131">rp::standalone::aurora::RemoteTrackingFrameInfo</a>
+</li>
+<li>removeStaticCameraMaskImage()
+: <a class="el" href="classrp_1_1standalone_1_1aurora_1_1CameraMaskManager.html#afcbec1b61978a48eba915dcc51e08bb4">rp::standalone::aurora::CameraMaskManager</a>
+</li>
+<li>requestPowerOperation()
+: <a class="el" href="classrp_1_1standalone_1_1aurora_1_1RemoteController.html#a1cb18cff0058c604ff4c382ee08e612c">rp::standalone::aurora::RemoteController</a>
 </li>
 <li>requireLocalMapMerge()
 : <a class="el" href="classrp_1_1standalone_1_1aurora_1_1RemoteController.html#a5086918f74036ef81b0920527260a8b1">rp::standalone::aurora::RemoteController</a>
@@ -147,6 +166,15 @@ $(document).ready(function(){initNavTree('functions_r.html',''); initResizable()
 <li>reserved
 : <a class="el" href="struct__slamtec__aurora__sdk__session__config__t.html#a6ad74b6ff5ca864a9feeba628f02e656">_slamtec_aurora_sdk_session_config_t</a>
 </li>
+<li>resetAllConfig()
+: <a class="el" href="classrp_1_1standalone_1_1aurora_1_1PersistentConfigManager.html#a899a73db60b26e6a4515894477b471e4">rp::standalone::aurora::PersistentConfigManager</a>
+</li>
+<li>resetConfig()
+: <a class="el" href="classrp_1_1standalone_1_1aurora_1_1PersistentConfigManager.html#afbb0a8146f55bb1c825c8365bc6786c8">rp::standalone::aurora::PersistentConfigManager</a>
+</li>
+<li>resetTransform()
+: <a class="el" href="classrp_1_1standalone_1_1aurora_1_1TransformManager.html#a926e703e6433d9a514010a79dff8bf12">rp::standalone::aurora::TransformManager</a>
+</li>
 <li>resolution
 : <a class="el" href="struct__slamtec__aurora__sdk__2d__gridmap__generation__options__t.html#a69c3bd98554d092a5ea8371283995999">_slamtec_aurora_sdk_2d_gridmap_generation_options_t</a>
 </li>
@@ -160,11 +188,22 @@ $(document).ready(function(){initNavTree('functions_r.html',''); initResizable()
 <li>rightImage
 : <a class="el" href="classrp_1_1standalone_1_1aurora_1_1RemoteTrackingFrameInfo.html#ae74a8adfc41edea0e8f6fd514662d8c9">rp::standalone::aurora::RemoteTrackingFrameInfo</a>
 </li>
+<li>rmse_ms
+: <a class="el" href="structslamtec__aurora__sdk__timesync__quality__t.html#a606e3c3ac9fa649220d4935b26ba33f4">slamtec_aurora_sdk_timesync_quality_t</a>
+, <a class="el" href="structTimeSyncQuality.html#ad6b809f2fc8582206cb6754582975417">TimeSyncQuality</a>
+</li>
 <li>roll
 : <a class="el" href="struct__slamtec__aurora__sdk__euler__angle__t.html#a69591a2fa8546bf5c017997b99621fcf">_slamtec_aurora_sdk_euler_angle_t</a>
 </li>
+<li>rotation_1sigma_rpy_deg
+: <a class="el" href="struct__slamtec__aurora__sdk__pose__covariance__readable__t.html#a52f66875009f9cd15c122906bfba089d">_slamtec_aurora_sdk_pose_covariance_readable_t</a>
+</li>
 <li>rpy
 : <a class="el" href="struct__slamtec__aurora__sdk__pose__t.html#af13da7e73e79a69d43202dc4cf6ba7f2">_slamtec_aurora_sdk_pose_t</a>
+</li>
+<li>rtt_ns
+: <a class="el" href="structslamtec__aurora__sdk__wallclock__accuracy__result__t.html#a544da9e92f5936732466809e22c8fe61">slamtec_aurora_sdk_wallclock_accuracy_result_t</a>
+, <a class="el" href="structslamtec__aurora__sdk__wallclock__offset__result__t.html#aa85862e89f5451747ed037eda7fcde3a">slamtec_aurora_sdk_wallclock_offset_result_t</a>
 </li>
 </ul>
 </div><!-- contents -->

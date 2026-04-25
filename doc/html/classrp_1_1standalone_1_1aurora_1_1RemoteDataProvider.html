@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="slamtec.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SLAMTEC Aurora Public Remote SDK
-   &#160;<span id="projectnumber">2.1.0-rtm</span>
+   &#160;<span id="projectnumber">2.1.1-rc1</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -150,6 +150,24 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a2133fad2e279e1303836de273db1e3aa"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrp_1_1standalone_1_1aurora_1_1RemoteDataProvider.html#a2133fad2e279e1303836de273db1e3aa">peekHistoryPose</a> (<a class="el" href="group__SDK__Basic__Data__Types.html#ga01840dc21269a490c9c337e9b723d0df">slamtec_aurora_sdk_pose_se3_t</a> &amp;poseOut, uint64_t timestamp_ns, bool allowInterpolation=true, uint64_t max_time_diff_ns=1e9/2, <a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> *errcode=nullptr)</td></tr>
 <tr class="memdesc:a2133fad2e279e1303836de273db1e3aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Peek the history pose.  <a href="classrp_1_1standalone_1_1aurora_1_1RemoteDataProvider.html#a2133fad2e279e1303836de273db1e3aa">More...</a><br /></td></tr>
 <tr class="separator:a2133fad2e279e1303836de273db1e3aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8bea2ed9441f4113f2d943e4f4ac72d1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrp_1_1standalone_1_1aurora_1_1RemoteDataProvider.html#a8bea2ed9441f4113f2d943e4f4ac72d1">getRecentPoseCovariance</a> (<a class="el" href="classrp_1_1standalone_1_1aurora_1_1PoseCovariance.html">PoseCovariance</a> &amp;covarianceOut, uint64_t *timestamp_ns_out=nullptr, <a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> *errcode=nullptr)</td></tr>
+<tr class="memdesc:a8bea2ed9441f4113f2d943e4f4ac72d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the recent pose covariance.  <a href="classrp_1_1standalone_1_1aurora_1_1RemoteDataProvider.html#a8bea2ed9441f4113f2d943e4f4ac72d1">More...</a><br /></td></tr>
+<tr class="separator:a8bea2ed9441f4113f2d943e4f4ac72d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a73872c957f5a7ad538a5e99c373fc5c7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrp_1_1standalone_1_1aurora_1_1RemoteDataProvider.html#a73872c957f5a7ad538a5e99c373fc5c7">startPoseAugmentation</a> (<a class="el" href="group__SDK__Basic__Data__Types.html#ga972808a748f55869f8e85bbb49cdd5ca">slamtec_aurora_sdk_pose_augmentation_mode_t</a> mode, const <a class="el" href="group__SDK__Basic__Data__Types.html#gae27d2715646304120bbf574e859982ef">slamtec_aurora_sdk_pose_augmentation_config_t</a> &amp;config, <a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> *errcode=nullptr)</td></tr>
+<tr class="memdesc:a73872c957f5a7ad538a5e99c373fc5c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start pose augmentation.  <a href="classrp_1_1standalone_1_1aurora_1_1RemoteDataProvider.html#a73872c957f5a7ad538a5e99c373fc5c7">More...</a><br /></td></tr>
+<tr class="separator:a73872c957f5a7ad538a5e99c373fc5c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a506b99286325d0dd0416ef1a5109a0d4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrp_1_1standalone_1_1aurora_1_1RemoteDataProvider.html#a506b99286325d0dd0416ef1a5109a0d4">stopPoseAugmentation</a> (<a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> *errcode=nullptr)</td></tr>
+<tr class="memdesc:a506b99286325d0dd0416ef1a5109a0d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop pose augmentation.  <a href="classrp_1_1standalone_1_1aurora_1_1RemoteDataProvider.html#a506b99286325d0dd0416ef1a5109a0d4">More...</a><br /></td></tr>
+<tr class="separator:a506b99286325d0dd0416ef1a5109a0d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:affbcb99c8a3a79e4b71fc6e58dd1a8ae"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrp_1_1standalone_1_1aurora_1_1RemoteDataProvider.html#affbcb99c8a3a79e4b71fc6e58dd1a8ae">getPoseAugmentationMode</a> (<a class="el" href="group__SDK__Basic__Data__Types.html#ga972808a748f55869f8e85bbb49cdd5ca">slamtec_aurora_sdk_pose_augmentation_mode_t</a> &amp;modeOut, <a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> *errcode=nullptr)</td></tr>
+<tr class="memdesc:affbcb99c8a3a79e4b71fc6e58dd1a8ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current pose augmentation mode.  <a href="classrp_1_1standalone_1_1aurora_1_1RemoteDataProvider.html#affbcb99c8a3a79e4b71fc6e58dd1a8ae">More...</a><br /></td></tr>
+<tr class="separator:affbcb99c8a3a79e4b71fc6e58dd1a8ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae28e305a5e9c0aa8bbf5314a8d15ea81"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrp_1_1standalone_1_1aurora_1_1RemoteDataProvider.html#ae28e305a5e9c0aa8bbf5314a8d15ea81">getPoseAugmentationConfig</a> (<a class="el" href="group__SDK__Basic__Data__Types.html#gae27d2715646304120bbf574e859982ef">slamtec_aurora_sdk_pose_augmentation_config_t</a> &amp;configOut, <a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> *errcode=nullptr)</td></tr>
+<tr class="memdesc:ae28e305a5e9c0aa8bbf5314a8d15ea81"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current pose augmentation configuration.  <a href="classrp_1_1standalone_1_1aurora_1_1RemoteDataProvider.html#ae28e305a5e9c0aa8bbf5314a8d15ea81">More...</a><br /></td></tr>
+<tr class="separator:ae28e305a5e9c0aa8bbf5314a8d15ea81"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad25f53a44bb8ededce3c8e42ce9880d4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrp_1_1standalone_1_1aurora_1_1RemoteDataProvider.html#ad25f53a44bb8ededce3c8e42ce9880d4">getAugmentedPose</a> (<a class="el" href="group__SDK__Basic__Data__Types.html#ga01840dc21269a490c9c337e9b723d0df">slamtec_aurora_sdk_pose_se3_t</a> &amp;poseOut, uint64_t *timestamp_ns=nullptr, <a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> *errcode=nullptr)</td></tr>
+<tr class="memdesc:ad25f53a44bb8ededce3c8e42ce9880d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the augmented pose.  <a href="classrp_1_1standalone_1_1aurora_1_1RemoteDataProvider.html#ad25f53a44bb8ededce3c8e42ce9880d4">More...</a><br /></td></tr>
+<tr class="separator:ad25f53a44bb8ededce3c8e42ce9880d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a448d3da5892ddce8c9751f95a65e9c19"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrp_1_1standalone_1_1aurora_1_1RemoteDataProvider.html#a448d3da5892ddce8c9751f95a65e9c19">peekTrackingData</a> (<a class="el" href="classrp_1_1standalone_1_1aurora_1_1RemoteTrackingFrameInfo.html">RemoteTrackingFrameInfo</a> &amp;infoOut, <a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> *errcode=nullptr)</td></tr>
 <tr class="memdesc:a448d3da5892ddce8c9751f95a65e9c19"><td class="mdescLeft">&#160;</td><td class="mdescRight">Peek the tracking data.  <a href="classrp_1_1standalone_1_1aurora_1_1RemoteDataProvider.html#a448d3da5892ddce8c9751f95a65e9c19">More...</a><br /></td></tr>
 <tr class="separator:a448d3da5892ddce8c9751f95a65e9c19"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -381,6 +399,61 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>RemoteSDK</b></td></
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if the map info is retrieved successfully, false otherwise </dd></dl>
+
+</div>
+</div>
+<a id="ad25f53a44bb8ededce3c8e42ce9880d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad25f53a44bb8ededce3c8e42ce9880d4">&#9670;&nbsp;</a></span>getAugmentedPose()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool rp::standalone::aurora::RemoteDataProvider::getAugmentedPose </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__SDK__Basic__Data__Types.html#ga01840dc21269a490c9c337e9b723d0df">slamtec_aurora_sdk_pose_se3_t</a> &amp;&#160;</td>
+          <td class="paramname"><em>poseOut</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t *&#160;</td>
+          <td class="paramname"><em>timestamp_ns</em> = <code>nullptr</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> *&#160;</td>
+          <td class="paramname"><em>errcode</em> = <code>nullptr</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the augmented pose. </p>
+<p>Get the current augmented pose based on the pose augmentation mode</p>
+<p>In VISUAL_ONLY mode, this returns the same as getCurrentPoseSE3</p>
+<p>In IMU_VISION_MIXED mode, this returns the IMU-augmented pose at higher frequency </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">poseOut</td><td>The augmented pose in SE3 format </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">timestamp_ns</td><td>The timestamp, set to nullptr if not interested </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">errcode</td><td>The error code, set to nullptr if not interested </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the pose is retrieved successfully, false otherwise </dd></dl>
 
 </div>
 </div>
@@ -882,6 +955,154 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>RemoteSDK</b></td></
 
 </div>
 </div>
+<a id="ae28e305a5e9c0aa8bbf5314a8d15ea81"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae28e305a5e9c0aa8bbf5314a8d15ea81">&#9670;&nbsp;</a></span>getPoseAugmentationConfig()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool rp::standalone::aurora::RemoteDataProvider::getPoseAugmentationConfig </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__SDK__Basic__Data__Types.html#gae27d2715646304120bbf574e859982ef">slamtec_aurora_sdk_pose_augmentation_config_t</a> &amp;&#160;</td>
+          <td class="paramname"><em>configOut</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> *&#160;</td>
+          <td class="paramname"><em>errcode</em> = <code>nullptr</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the current pose augmentation configuration. </p>
+<p>Query the current pose augmentation configuration </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">configOut</td><td>The current configuration </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">errcode</td><td>The error code, set to nullptr if not interested </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the configuration is retrieved successfully, false otherwise </dd></dl>
+
+</div>
+</div>
+<a id="affbcb99c8a3a79e4b71fc6e58dd1a8ae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#affbcb99c8a3a79e4b71fc6e58dd1a8ae">&#9670;&nbsp;</a></span>getPoseAugmentationMode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool rp::standalone::aurora::RemoteDataProvider::getPoseAugmentationMode </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__SDK__Basic__Data__Types.html#ga972808a748f55869f8e85bbb49cdd5ca">slamtec_aurora_sdk_pose_augmentation_mode_t</a> &amp;&#160;</td>
+          <td class="paramname"><em>modeOut</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> *&#160;</td>
+          <td class="paramname"><em>errcode</em> = <code>nullptr</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the current pose augmentation mode. </p>
+<p>Query the current pose augmentation mode </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">modeOut</td><td>The current mode </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">errcode</td><td>The error code, set to nullptr if not interested </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the mode is retrieved successfully, false otherwise </dd></dl>
+
+</div>
+</div>
+<a id="a8bea2ed9441f4113f2d943e4f4ac72d1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8bea2ed9441f4113f2d943e4f4ac72d1">&#9670;&nbsp;</a></span>getRecentPoseCovariance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool rp::standalone::aurora::RemoteDataProvider::getRecentPoseCovariance </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classrp_1_1standalone_1_1aurora_1_1PoseCovariance.html">PoseCovariance</a> &amp;&#160;</td>
+          <td class="paramname"><em>covarianceOut</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t *&#160;</td>
+          <td class="paramname"><em>timestamp_ns_out</em> = <code>nullptr</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> *&#160;</td>
+          <td class="paramname"><em>errcode</em> = <code>nullptr</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the recent pose covariance. </p>
+<p>Caller can use this function to get the recent pose covariance data.</p>
+<p>The pose covariance data retrieved is the cached data from the tracking frame info.</p>
+<p>If the covariance data is not available for more than 10 seconds, the function will return false.</p>
+<p>For devices with legacy firmware, the covariance data may always be invalid. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">covarianceOut</td><td>The covariance data </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">timestamp_ns_out</td><td>The timestamp of the covariance data, can be nullptr if not needed </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">errcode</td><td>The error code, set to nullptr if not interested </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the covariance is retrieved successfully, false otherwise </dd></dl>
+
+</div>
+</div>
 <a id="a9afa19cb67eb813a1fdb3bfed7e493b6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9afa19cb67eb813a1fdb3bfed7e493b6">&#9670;&nbsp;</a></span>getTransformCalibration()</h2>
 
@@ -1333,6 +1554,96 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>RemoteSDK</b></td></
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if the VSLAM system status is retrieved successfully, false otherwise </dd></dl>
+
+</div>
+</div>
+<a id="a73872c957f5a7ad538a5e99c373fc5c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a73872c957f5a7ad538a5e99c373fc5c7">&#9670;&nbsp;</a></span>startPoseAugmentation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool rp::standalone::aurora::RemoteDataProvider::startPoseAugmentation </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__SDK__Basic__Data__Types.html#ga972808a748f55869f8e85bbb49cdd5ca">slamtec_aurora_sdk_pose_augmentation_mode_t</a>&#160;</td>
+          <td class="paramname"><em>mode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="group__SDK__Basic__Data__Types.html#gae27d2715646304120bbf574e859982ef">slamtec_aurora_sdk_pose_augmentation_config_t</a> &amp;&#160;</td>
+          <td class="paramname"><em>config</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> *&#160;</td>
+          <td class="paramname"><em>errcode</em> = <code>nullptr</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Start pose augmentation. </p>
+<p>Start the pose augmentation feature to increase pose output frequency using IMU data</p>
+<p>This function starts a background thread that performs IMU pre-integration to generate higher frequency pose outputs</p>
+<p>The pose augmentation results will be delivered through the onPoseAugmentationResult callback if registered </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">mode</td><td>The pose augmentation mode (VISUAL_ONLY or IMU_VISION_MIXED) </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">config</td><td>The pose augmentation configuration </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">errcode</td><td>The error code, set to nullptr if not interested </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if pose augmentation started successfully, false otherwise </dd></dl>
+
+</div>
+</div>
+<a id="a506b99286325d0dd0416ef1a5109a0d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a506b99286325d0dd0416ef1a5109a0d4">&#9670;&nbsp;</a></span>stopPoseAugmentation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool rp::standalone::aurora::RemoteDataProvider::stopPoseAugmentation </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> *&#160;</td>
+          <td class="paramname"><em>errcode</em> = <code>nullptr</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Stop pose augmentation. </p>
+<p>Stop the pose augmentation feature and terminate the background thread </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">errcode</td><td>The error code, set to nullptr if not interested </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if pose augmentation stopped successfully, false otherwise </dd></dl>
 
 </div>
 </div>

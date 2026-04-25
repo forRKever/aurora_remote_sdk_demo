@@ -153,3 +153,56 @@ This is the API reference for the Remote SDK. It contains the function prototype
 - Configurable recording options including image quality, file formats, and processing parameters.
 - Supports stereo recording, image undistortion, and various output formats.
 - [📖 Detailed README](demo/colmap_recorder/README.md)
+
+### Advanced Features
+
+#### time_sync
+- Software-based time synchronization between Aurora device and client system.
+- Sub-millisecond accuracy for accurate timestamp translation.
+- Essential for correlating Aurora data with external sensors or events.
+- [📖 Detailed README](demo/time_sync/README.md) | [📚 Tutorial](tutorials/TimeSync_Tutorial_EN.md)
+
+#### pose_augmentation
+- High-frequency pose output (up to 200+ Hz) using IMU data integration.
+- Increases pose update rate from typical 10-15 Hz to 200+ Hz.
+- Ideal for robotics navigation and AR/VR applications requiring low-latency pose estimates.
+- [📖 Detailed README](demo/pose_augmentation/README.md) | [📚 Tutorial](tutorials/PoseAugmentation_Tutorial_EN.md)
+
+#### pose_covariance
+- Retrieve pose uncertainty estimates (position and orientation covariance).
+- Assess localization confidence and quality in real-time.
+- Useful for adaptive navigation, quality monitoring, and multi-sensor fusion.
+- [📖 Detailed README](demo/pose_covariance/README.md) | [📚 Tutorial](tutorials/PoseCovariance_Tutorial_EN.md)
+
+### Device Configuration and Management (SDK 2.1.1)
+
+#### persistent_config
+- Manage device configuration entries via JSON-based API.
+- Enumerate, get, set, and reset device configurations.
+- Supports saving/loading configuration to/from files.
+- [📖 Detailed README](demo/persistent_config/README.md)
+
+#### transform_manager
+- Manage coordinate frame transforms (SE3 poses) on the device.
+- List, get, set, and reset transforms between coordinate frames.
+- Useful for calibration adjustments and custom coordinate frame definitions.
+- [📖 Detailed README](demo/transform_manager/README.md)
+
+#### camera_mask
+- Manage static camera masks for excluding regions from SLAM processing.
+- Enable/disable masking, upload/download mask images.
+- Useful for filtering out static obstacles, reflective surfaces, or moving objects.
+- Requires OpenCV for image I/O operations.
+- [📖 Detailed README](demo/camera_mask/README.md)
+
+#### dashcam_recorder (Datalogger)
+- Interactive console for monitoring and controlling the device datalogger.
+- Real-time dashboard with recording status, storage info, and session management.
+- Enable/disable recording, set size limits, and manage recording sessions.
+- [📖 Detailed README](demo/dashcam_recorder/README.md)
+
+#### system_power
+- Control Aurora device power operations (reboot and shutdown).
+- Display device status before power operations.
+- Safety confirmation required before executing power commands.
+- [📖 Detailed README](demo/system_power/README.md)

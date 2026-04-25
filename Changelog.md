@@ -64,3 +64,30 @@ The SDK supports the following platforms and architectures:
 
 - improved  the vslam map saving and loading operation speed by about ~2x
 - minor bug fixes
+
+### V2.1.1 (Upcoming)
+
+**New Features (SDK 2.1):**
+
+- **Time Synchronization**: Software-based time synchronization feature for accurate timestamp translation between Aurora device and client system
+  - Sub-millisecond accuracy under normal network conditions
+  - New demo: `time_sync` - demonstrates time sync setup and usage
+  - Tutorial: `tutorials/TimeSync_Tutorial_EN.md`
+
+- **Pose Augmentation**: High-frequency pose output using IMU data integration
+  - Increases pose update rate from 10-15 Hz to 200+ Hz
+  - IMU-Vision mixed mode for smooth, high-frequency pose estimates
+  - New demo: `pose_augmentation` - demonstrates high-frequency pose output
+  - Tutorial: `tutorials/PoseAugmentation_Tutorial_EN.md`
+
+- **Pose Covariance**: Retrieve pose uncertainty estimates for position and orientation
+  - 95% confidence ellipsoid for position uncertainty
+  - 1-sigma uncertainty for rotation (roll, pitch, yaw)
+  - Both polling and callback APIs supported
+  - New demo: `pose_covariance` - demonstrates covariance retrieval and interpretation
+  - Tutorial: `tutorials/PoseCovariance_Tutorial_EN.md`
+
+**Documentation:**
+- Added comprehensive tutorials for all three new features
+- Updated main README with Advanced Features (SDK 2.1) section
+- Added detailed READMEs for each new demo

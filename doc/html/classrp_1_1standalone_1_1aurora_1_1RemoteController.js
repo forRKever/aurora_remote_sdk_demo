@@ -9,10 +9,13 @@ var classrp_1_1standalone_1_1aurora_1_1RemoteController =
     [ "getKeyFrameFetchFlags", "classrp_1_1standalone_1_1aurora_1_1RemoteController.html#a06b17d1dea791cb65f1a60879f92ab7a", null ],
     [ "getLastRelocalizationStatus", "classrp_1_1standalone_1_1aurora_1_1RemoteController.html#afa8f42dcbbf828acac12cf57a6b096f4", null ],
     [ "getMapPointFetchFlags", "classrp_1_1standalone_1_1aurora_1_1RemoteController.html#a22f28999dee71ceb6d4d6950d856c1d1", null ],
+    [ "getSystemConfig", "classrp_1_1standalone_1_1aurora_1_1RemoteController.html#ac7853f2ed2354f033a8dbc2ded542244", null ],
+    [ "getSystemConfig", "classrp_1_1standalone_1_1aurora_1_1RemoteController.html#ae38e47fe0be4de4b27dfed1713b0c49a", null ],
     [ "isConnected", "classrp_1_1standalone_1_1aurora_1_1RemoteController.html#ad20a80ebfd122e06796cdc3fa9ba5e3a", null ],
     [ "isDeviceConnectionAlive", "classrp_1_1standalone_1_1aurora_1_1RemoteController.html#a5edfd006a6df17c1ee6d8f1af97f2ecd", null ],
     [ "isEnhancedImagingSubscribed", "classrp_1_1standalone_1_1aurora_1_1RemoteController.html#ab2a18ede54c43a8d7f22764c390965c8", null ],
     [ "isRawDataSubscribed", "classrp_1_1standalone_1_1aurora_1_1RemoteController.html#a7a48c637ef2b1e9e9334d45dbe91c810", null ],
+    [ "requestPowerOperation", "classrp_1_1standalone_1_1aurora_1_1RemoteController.html#a1cb18cff0058c604ff4c382ee08e612c", null ],
     [ "requireLocalMapMerge", "classrp_1_1standalone_1_1aurora_1_1RemoteController.html#a5086918f74036ef81b0920527260a8b1", null ],
     [ "requireLocalRelocalization", "classrp_1_1standalone_1_1aurora_1_1RemoteController.html#ad99b1d4271c9743a47a18e3fcf2a537d", null ],
     [ "requireMappingMode", "classrp_1_1standalone_1_1aurora_1_1RemoteController.html#a1ca76fd99c47ca3917d45efc3fd9e5b1", null ],
@@ -29,6 +32,8 @@ var classrp_1_1standalone_1_1aurora_1_1RemoteController =
     [ "setMapDataSyncing", "classrp_1_1standalone_1_1aurora_1_1RemoteController.html#a74919fe1ac3342f0b53b4443719d1947", null ],
     [ "setMapPointFetchFlags", "classrp_1_1standalone_1_1aurora_1_1RemoteController.html#a673ba9ea87d404a2a7f5c73544d4e0a6", null ],
     [ "setRawDataSubscription", "classrp_1_1standalone_1_1aurora_1_1RemoteController.html#af6adeab01bc8e4003fa713cf7128e2f1", null ],
+    [ "setSystemConfig", "classrp_1_1standalone_1_1aurora_1_1RemoteController.html#aa2bcfe5b5a05604576f1c60a3e2ee3ee", null ],
+    [ "setSystemConfig", "classrp_1_1standalone_1_1aurora_1_1RemoteController.html#ae44f0fee28c7153644577bb7c39f2d0f", null ],
     [ "RemoteSDK", "classrp_1_1standalone_1_1aurora_1_1RemoteController.html#a3d7224f06f82e9b871760e360315effe", null ],
     [ "_sdk", "classrp_1_1standalone_1_1aurora_1_1RemoteController.html#a015a252f9375febb01d9ed4b2348ab36", null ]
 ];

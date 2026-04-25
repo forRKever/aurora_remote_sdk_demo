@@ -9,6 +9,8 @@ var classrp_1_1standalone_1_1aurora_1_1RemoteSDKListener =
     [ "onIMUData", "group__SDK__Callback__Types.html#ga0e118ff8d359a8b731e0fb6538042fcb", null ],
     [ "onLIDARScan", "group__SDK__Callback__Types.html#ga8852582b5c1dee85866395dd5d09bbd0", null ],
     [ "onNewMappingFlags", "group__SDK__Callback__Types.html#gae9979adab964b4a28bfb1223967dfde9", null ],
+    [ "onPoseAugmentationResult", "group__SDK__Callback__Types.html#ga3997397c691aa6e205f2150d048d07ef", null ],
+    [ "onPoseCovariance", "group__SDK__Callback__Types.html#ga9ffd439515e852169a2caec419690a86", null ],
     [ "onRawCamImageData", "group__SDK__Callback__Types.html#ga6110a910f89b6d6ab8a4602e812d801a", null ],
     [ "onSemanticSegmentationDataArrived", "group__SDK__Callback__Types.html#ga382a5c71600a7f1f2a147b0ddef40c4f", null ],
     [ "onTrackingData", "group__SDK__Callback__Types.html#gab9d11cbcfa6d2c27cb26d15d58c840b4", null ],

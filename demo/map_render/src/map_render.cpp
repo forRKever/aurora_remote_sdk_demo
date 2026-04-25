@@ -73,7 +73,11 @@ static void renderTrackingFrame(RemoteSDK * sdk) {
 
     trackingFrame.leftImage.toMat(left);
     trackingFrame.rightImage.toMat(right);
-
+    if(left.empty() || right.empty())
+    {
+        std::cout<<"peek mepty trackingframe!"<<std::endl;
+        return;
+    }
     // convert to BGR
     if (left.channels() == 1) {
         cv::cvtColor(left, left, cv::COLOR_GRAY2BGR);

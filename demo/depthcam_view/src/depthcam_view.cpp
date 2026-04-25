@@ -11,6 +11,7 @@
 
 #include <chrono>
 #include <thread>
+#include <atomic>
 
 #include <opencv2/opencv.hpp>
 
@@ -33,6 +34,19 @@ struct Point3D {
 static void onCtrlC(int) {
     std::cout << "Ctrl-C pressed, exiting..." << std::endl;
     isCtrlC = 1;
+}
+
+bool g_flag=false;
+std::atomic<int> g_key(-1);
+void KeyDetect()
+{
+    while(!g_flag)
+    {
+        int key = cv::waitKey(20);
+        if(key != -1)
+            g_key = key;
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
+    }
 }
 
 static bool discoverAndSelectAuroraDevice(RemoteSDK * sdk, SDKServerConnectionDesc & selectedDeviceDesc)
@@ -248,12 +262,12 @@ int main(int argc, const char* argv[]) {
     // Main loop: peek depth camera frames and display them
     std::cout << "Controls: ESC to exit, 's' to save current frame as point cloud" << std::endl;
     
-    int key;
-    while ((key = cv::waitKey(10)) != 27) {  // ESC key to exit
-        if (isCtrlC) {
+    int key=0;
+    std::thread key_detect_thread(KeyDetect);
+    while (true) {  //press ESc to quit
+        if (isCtrlC || g_key==27) {
             break;
         }
-
         RemoteEnhancedImagingFrame depthFrame;
         slamtec_aurora_sdk_errorcode_t errorCode;
         
@@ -319,7 +333,8 @@ int main(int argc, const char* argv[]) {
             cv::imshow("Depth Map (Overlay)", imgColor);
             
             // Handle 's' key press to save point cloud
-            if (key == 's' || key == 'S') {
+            if (g_key == 's' || g_key == 'S') {
+                g_key = -1;
                 if (!textureMatBGR.empty()) {
                     std::cout << "Generating point cloud..." << std::endl;
                     auto pointCloud = generatePointCloud(point3dFrame, textureMatBGR);
@@ -361,6 +376,8 @@ int main(int argc, const char* argv[]) {
     sdk->disconnect();
     sdk->release();
 
+    g_flag=true;
+    key_detect_thread.join();
     std::cout << "Depth camera demo completed. Total frames processed: " << frameCount << std::endl;
     return 0;
 }

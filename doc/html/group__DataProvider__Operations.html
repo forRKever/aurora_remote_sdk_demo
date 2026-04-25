@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="slamtec.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SLAMTEC Aurora Public Remote SDK
-   &#160;<span id="projectnumber">2.1.0-rtm</span>
+   &#160;<span id="projectnumber">2.1.1-rc1</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -126,6 +126,24 @@ Functions</h2></td></tr>
 <tr class="memitem:gabfef1692e5b6254ee3b69557e93abb24"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> AURORA_SDK_API&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DataProvider__Operations.html#gabfef1692e5b6254ee3b69557e93abb24">slamtec_aurora_sdk_dataprovider_peek_history_pose</a> (<a class="el" href="group__SDK__Basic__Data__Types.html#ga28b02b17902e8c35063bba0df20bd715">slamtec_aurora_sdk_session_handle_t</a> handle, <a class="el" href="group__SDK__Basic__Data__Types.html#ga01840dc21269a490c9c337e9b723d0df">slamtec_aurora_sdk_pose_se3_t</a> *pose_out, uint64_t timestamp_ns, int allow_interpolation, uint64_t max_time_diff_ns)</td></tr>
 <tr class="memdesc:gabfef1692e5b6254ee3b69557e93abb24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Peek the history pose.  <a href="group__DataProvider__Operations.html#gabfef1692e5b6254ee3b69557e93abb24">More...</a><br /></td></tr>
 <tr class="separator:gabfef1692e5b6254ee3b69557e93abb24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga34c52a269b4dc7c20036e3f4ebd12a38"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> AURORA_SDK_API&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DataProvider__Operations.html#ga34c52a269b4dc7c20036e3f4ebd12a38">slamtec_aurora_sdk_dataprovider_get_recent_pose_covariance</a> (<a class="el" href="group__SDK__Basic__Data__Types.html#ga28b02b17902e8c35063bba0df20bd715">slamtec_aurora_sdk_session_handle_t</a> handle, <a class="el" href="group__SDK__Basic__Data__Types.html#ga500134a3664f0e30e101236b714a7503">slamtec_aurora_sdk_pose_covariance_t</a> *covariance_out, uint64_t *timestamp_ns_out)</td></tr>
+<tr class="memdesc:ga34c52a269b4dc7c20036e3f4ebd12a38"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the recent pose covariance.  <a href="group__DataProvider__Operations.html#ga34c52a269b4dc7c20036e3f4ebd12a38">More...</a><br /></td></tr>
+<tr class="separator:ga34c52a269b4dc7c20036e3f4ebd12a38"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3e8fb16426de0f671d4b42379dd49f8e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> AURORA_SDK_API&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DataProvider__Operations.html#ga3e8fb16426de0f671d4b42379dd49f8e">slamtec_aurora_sdk_dataprovider_start_pose_augmentation</a> (<a class="el" href="group__SDK__Basic__Data__Types.html#ga28b02b17902e8c35063bba0df20bd715">slamtec_aurora_sdk_session_handle_t</a> handle, <a class="el" href="group__SDK__Basic__Data__Types.html#ga972808a748f55869f8e85bbb49cdd5ca">slamtec_aurora_sdk_pose_augmentation_mode_t</a> mode, const <a class="el" href="group__SDK__Basic__Data__Types.html#gae27d2715646304120bbf574e859982ef">slamtec_aurora_sdk_pose_augmentation_config_t</a> *config)</td></tr>
+<tr class="memdesc:ga3e8fb16426de0f671d4b42379dd49f8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start pose augmentation.  <a href="group__DataProvider__Operations.html#ga3e8fb16426de0f671d4b42379dd49f8e">More...</a><br /></td></tr>
+<tr class="separator:ga3e8fb16426de0f671d4b42379dd49f8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga75faf0f69a02fe4d311987196b27bab2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> AURORA_SDK_API&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DataProvider__Operations.html#ga75faf0f69a02fe4d311987196b27bab2">slamtec_aurora_sdk_dataprovider_stop_pose_augmentation</a> (<a class="el" href="group__SDK__Basic__Data__Types.html#ga28b02b17902e8c35063bba0df20bd715">slamtec_aurora_sdk_session_handle_t</a> handle)</td></tr>
+<tr class="memdesc:ga75faf0f69a02fe4d311987196b27bab2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop pose augmentation.  <a href="group__DataProvider__Operations.html#ga75faf0f69a02fe4d311987196b27bab2">More...</a><br /></td></tr>
+<tr class="separator:ga75faf0f69a02fe4d311987196b27bab2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga50656b12622441f644c3b9a5b6216df6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> AURORA_SDK_API&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DataProvider__Operations.html#ga50656b12622441f644c3b9a5b6216df6">slamtec_aurora_sdk_dataprovider_get_pose_augmentation_mode</a> (<a class="el" href="group__SDK__Basic__Data__Types.html#ga28b02b17902e8c35063bba0df20bd715">slamtec_aurora_sdk_session_handle_t</a> handle, <a class="el" href="group__SDK__Basic__Data__Types.html#ga972808a748f55869f8e85bbb49cdd5ca">slamtec_aurora_sdk_pose_augmentation_mode_t</a> *mode_out)</td></tr>
+<tr class="memdesc:ga50656b12622441f644c3b9a5b6216df6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current pose augmentation mode.  <a href="group__DataProvider__Operations.html#ga50656b12622441f644c3b9a5b6216df6">More...</a><br /></td></tr>
+<tr class="separator:ga50656b12622441f644c3b9a5b6216df6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf8d84c8a552a6e02d90b2e22a6f270ab"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> AURORA_SDK_API&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DataProvider__Operations.html#gaf8d84c8a552a6e02d90b2e22a6f270ab">slamtec_aurora_sdk_dataprovider_get_pose_augmentation_config</a> (<a class="el" href="group__SDK__Basic__Data__Types.html#ga28b02b17902e8c35063bba0df20bd715">slamtec_aurora_sdk_session_handle_t</a> handle, <a class="el" href="group__SDK__Basic__Data__Types.html#gae27d2715646304120bbf574e859982ef">slamtec_aurora_sdk_pose_augmentation_config_t</a> *config_out)</td></tr>
+<tr class="memdesc:gaf8d84c8a552a6e02d90b2e22a6f270ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current pose augmentation configuration.  <a href="group__DataProvider__Operations.html#gaf8d84c8a552a6e02d90b2e22a6f270ab">More...</a><br /></td></tr>
+<tr class="separator:gaf8d84c8a552a6e02d90b2e22a6f270ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga656b85d08ece56f29b87fc9d6b0a3040"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> AURORA_SDK_API&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DataProvider__Operations.html#ga656b85d08ece56f29b87fc9d6b0a3040">slamtec_aurora_sdk_dataprovider_get_augmented_pose</a> (<a class="el" href="group__SDK__Basic__Data__Types.html#ga28b02b17902e8c35063bba0df20bd715">slamtec_aurora_sdk_session_handle_t</a> handle, <a class="el" href="group__SDK__Basic__Data__Types.html#ga01840dc21269a490c9c337e9b723d0df">slamtec_aurora_sdk_pose_se3_t</a> *pose_out, uint64_t *timestamp_ns)</td></tr>
+<tr class="memdesc:ga656b85d08ece56f29b87fc9d6b0a3040"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the augmented pose.  <a href="group__DataProvider__Operations.html#ga656b85d08ece56f29b87fc9d6b0a3040">More...</a><br /></td></tr>
+<tr class="separator:ga656b85d08ece56f29b87fc9d6b0a3040"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafbb5becc761637ed5fe604b7ffbd7829"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> AURORA_SDK_API&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DataProvider__Operations.html#gafbb5becc761637ed5fe604b7ffbd7829">slamtec_aurora_sdk_dataprovider_get_mapping_flags</a> (<a class="el" href="group__SDK__Basic__Data__Types.html#ga28b02b17902e8c35063bba0df20bd715">slamtec_aurora_sdk_session_handle_t</a> handle, <a class="el" href="group__SDK__Basic__Data__Types.html#ga313928fa7aa832f3eeca01c634e2d1bd">slamtec_aurora_sdk_mapping_flag_t</a> *flags_out)</td></tr>
 <tr class="memdesc:gafbb5becc761637ed5fe604b7ffbd7829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current mapping flags.  <a href="group__DataProvider__Operations.html#gafbb5becc761637ed5fe604b7ffbd7829">More...</a><br /></td></tr>
 <tr class="separator:gafbb5becc761637ed5fe604b7ffbd7829"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -270,6 +288,54 @@ Functions</h2></td></tr>
     <tr><td class="paramname">desc_buffer</td><td>- the buffer to store the map info </td></tr>
     <tr><td class="paramname">buffer_count</td><td>- the buffer count </td></tr>
     <tr><td class="paramname">actual_count_out</td><td>- the actual count of the map info </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the error code </dd></dl>
+
+</div>
+</div>
+<a id="ga656b85d08ece56f29b87fc9d6b0a3040"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga656b85d08ece56f29b87fc9d6b0a3040">&#9670;&nbsp;</a></span>slamtec_aurora_sdk_dataprovider_get_augmented_pose()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> AURORA_SDK_API slamtec_aurora_sdk_dataprovider_get_augmented_pose </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__SDK__Basic__Data__Types.html#ga28b02b17902e8c35063bba0df20bd715">slamtec_aurora_sdk_session_handle_t</a>&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__SDK__Basic__Data__Types.html#ga01840dc21269a490c9c337e9b723d0df">slamtec_aurora_sdk_pose_se3_t</a> *&#160;</td>
+          <td class="paramname"><em>pose_out</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t *&#160;</td>
+          <td class="paramname"><em>timestamp_ns</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the augmented pose. </p>
+<p>Get the current augmented pose based on the pose augmentation mode.</p>
+<p>In VISUAL_ONLY mode, this returns the same as get_current_pose_se3.</p>
+<p>In IMU_VISION_MIXED mode, this returns the IMU-augmented pose at higher frequency.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>- the session handle </td></tr>
+    <tr><td class="paramname">pose_out</td><td>- the augmented pose will be stored in this pointer </td></tr>
+    <tr><td class="paramname">timestamp_ns</td><td>- the timestamp will be stored in this pointer, can be NULL if not needed </td></tr>
   </table>
   </dd>
 </dl>
@@ -705,6 +771,133 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="gaf8d84c8a552a6e02d90b2e22a6f270ab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf8d84c8a552a6e02d90b2e22a6f270ab">&#9670;&nbsp;</a></span>slamtec_aurora_sdk_dataprovider_get_pose_augmentation_config()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> AURORA_SDK_API slamtec_aurora_sdk_dataprovider_get_pose_augmentation_config </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__SDK__Basic__Data__Types.html#ga28b02b17902e8c35063bba0df20bd715">slamtec_aurora_sdk_session_handle_t</a>&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__SDK__Basic__Data__Types.html#gae27d2715646304120bbf574e859982ef">slamtec_aurora_sdk_pose_augmentation_config_t</a> *&#160;</td>
+          <td class="paramname"><em>config_out</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the current pose augmentation configuration. </p>
+<p>Query the current pose augmentation configuration.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>- the session handle </td></tr>
+    <tr><td class="paramname">config_out</td><td>- the current configuration will be stored in this pointer </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the error code </dd></dl>
+
+</div>
+</div>
+<a id="ga50656b12622441f644c3b9a5b6216df6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga50656b12622441f644c3b9a5b6216df6">&#9670;&nbsp;</a></span>slamtec_aurora_sdk_dataprovider_get_pose_augmentation_mode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> AURORA_SDK_API slamtec_aurora_sdk_dataprovider_get_pose_augmentation_mode </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__SDK__Basic__Data__Types.html#ga28b02b17902e8c35063bba0df20bd715">slamtec_aurora_sdk_session_handle_t</a>&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__SDK__Basic__Data__Types.html#ga972808a748f55869f8e85bbb49cdd5ca">slamtec_aurora_sdk_pose_augmentation_mode_t</a> *&#160;</td>
+          <td class="paramname"><em>mode_out</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the current pose augmentation mode. </p>
+<p>Query the current pose augmentation mode.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>- the session handle </td></tr>
+    <tr><td class="paramname">mode_out</td><td>- the current mode will be stored in this pointer </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the error code </dd></dl>
+
+</div>
+</div>
+<a id="ga34c52a269b4dc7c20036e3f4ebd12a38"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga34c52a269b4dc7c20036e3f4ebd12a38">&#9670;&nbsp;</a></span>slamtec_aurora_sdk_dataprovider_get_recent_pose_covariance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> AURORA_SDK_API slamtec_aurora_sdk_dataprovider_get_recent_pose_covariance </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__SDK__Basic__Data__Types.html#ga28b02b17902e8c35063bba0df20bd715">slamtec_aurora_sdk_session_handle_t</a>&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__SDK__Basic__Data__Types.html#ga500134a3664f0e30e101236b714a7503">slamtec_aurora_sdk_pose_covariance_t</a> *&#160;</td>
+          <td class="paramname"><em>covariance_out</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t *&#160;</td>
+          <td class="paramname"><em>timestamp_ns_out</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the recent pose covariance. </p>
+<p>Caller can use this function to get the recent pose covariance data.</p>
+<p>The pose covariance data retrieved is the cached data from the tracking frame info.</p>
+<p>If the covariance data is not available for more than 10 seconds, the function will return SLAMTEC_AURORA_SDK_ERRORCODE_NOT_READY.</p>
+<p>For devices with legacy firmware, the covariance data may always be invalid.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>- the session handle </td></tr>
+    <tr><td class="paramname">covariance_out</td><td>- the covariance data will be stored in this pointer </td></tr>
+    <tr><td class="paramname">timestamp_ns_out</td><td>- the timestamp of the covariance data will be stored in this pointer, can be NULL if not needed </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the error code </dd></dl>
+
+</div>
+</div>
 <a id="ga99796de1fc52475a04211f2e2fbbeea1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga99796de1fc52475a04211f2e2fbbeea1">&#9670;&nbsp;</a></span>slamtec_aurora_sdk_dataprovider_get_relocalization_status()</h2>
 
@@ -1073,6 +1266,82 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the error code, SLAMTEC_AURORA_SDK_ERRORCODE_NOT_READY will be returned if there is no tracking data available </dd></dl>
+
+</div>
+</div>
+<a id="ga3e8fb16426de0f671d4b42379dd49f8e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3e8fb16426de0f671d4b42379dd49f8e">&#9670;&nbsp;</a></span>slamtec_aurora_sdk_dataprovider_start_pose_augmentation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> AURORA_SDK_API slamtec_aurora_sdk_dataprovider_start_pose_augmentation </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__SDK__Basic__Data__Types.html#ga28b02b17902e8c35063bba0df20bd715">slamtec_aurora_sdk_session_handle_t</a>&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__SDK__Basic__Data__Types.html#ga972808a748f55869f8e85bbb49cdd5ca">slamtec_aurora_sdk_pose_augmentation_mode_t</a>&#160;</td>
+          <td class="paramname"><em>mode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="group__SDK__Basic__Data__Types.html#gae27d2715646304120bbf574e859982ef">slamtec_aurora_sdk_pose_augmentation_config_t</a> *&#160;</td>
+          <td class="paramname"><em>config</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Start pose augmentation. </p>
+<p>Start the pose augmentation feature to increase pose output frequency using IMU data.</p>
+<p>This function starts a background thread that performs IMU pre-integration to generate higher frequency pose outputs.</p>
+<p>The pose augmentation results will be delivered through the on_pose_augmentation_result callback if registered.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>- the session handle </td></tr>
+    <tr><td class="paramname">mode</td><td>- the pose augmentation mode (VISUAL_ONLY or IMU_VISION_MIXED) </td></tr>
+    <tr><td class="paramname">config</td><td>- the pose augmentation configuration </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the error code </dd></dl>
+
+</div>
+</div>
+<a id="ga75faf0f69a02fe4d311987196b27bab2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga75faf0f69a02fe4d311987196b27bab2">&#9670;&nbsp;</a></span>slamtec_aurora_sdk_dataprovider_stop_pose_augmentation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> AURORA_SDK_API slamtec_aurora_sdk_dataprovider_stop_pose_augmentation </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__SDK__Basic__Data__Types.html#ga28b02b17902e8c35063bba0df20bd715">slamtec_aurora_sdk_session_handle_t</a>&#160;</td>
+          <td class="paramname"><em>handle</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Stop pose augmentation. </p>
+<p>Stop the pose augmentation feature and terminate the background thread.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>- the session handle </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the error code </dd></dl>
 
 </div>
 </div>

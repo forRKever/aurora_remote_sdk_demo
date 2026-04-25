@@ -1,15 +1,20 @@
 var searchData=
 [
-  ['slamtec_5faurora_5fsdk_5fdatarecorder_5ftype_1093',['slamtec_aurora_sdk_datarecorder_type',['../group__SDK__Basic__Data__Types.html#ga1d5fd7b1ca76fd1eebab5fd0689d77f5',1,'aurora_pubsdk_objects.h']]],
-  ['slamtec_5faurora_5fsdk_5fdevice_5frelocalization_5fstatus_5ftypes_1094',['slamtec_aurora_sdk_device_relocalization_status_types',['../group__SDK__Basic__Data__Types.html#gab182d9677705bba5f736a8accd64214f',1,'aurora_pubsdk_objects.h']]],
-  ['slamtec_5faurora_5fsdk_5fdevice_5fstatus_5ftypes_1095',['slamtec_aurora_sdk_device_status_types',['../group__SDK__Basic__Data__Types.html#ga1d71fa469656986247d1604d8c690b86',1,'aurora_pubsdk_objects.h']]],
-  ['slamtec_5faurora_5fsdk_5ferrorcode_5ftypes_1096',['slamtec_aurora_sdk_errorcode_types',['../group__SDK__Basic__Data__Types.html#gad2a362b177366365108872a09cad9fff',1,'aurora_pubsdk_common_def.h']]],
-  ['slamtec_5faurora_5fsdk_5fkeyframe_5ffetch_5fflags_5ft_1097',['slamtec_aurora_sdk_keyframe_fetch_flags_t',['../group__SDK__Basic__Data__Types.html#ga15346a37b62d4f550d7032c452670106',1,'aurora_pubsdk_objects.h']]],
-  ['slamtec_5faurora_5fsdk_5fkeyframe_5fflags_5ft_1098',['slamtec_aurora_sdk_keyframe_flags_t',['../group__SDK__Basic__Data__Types.html#gacbf28948f6f1c00633a123591ed97612',1,'aurora_pubsdk_objects.h']]],
-  ['slamtec_5faurora_5fsdk_5fmap_5fflags_5ft_1099',['slamtec_aurora_sdk_map_flags_t',['../group__SDK__Basic__Data__Types.html#ga68edecad837d258e1b32a41dd8aade93',1,'aurora_pubsdk_objects.h']]],
-  ['slamtec_5faurora_5fsdk_5fmap_5fpoint_5ffetch_5fflags_5ft_1100',['slamtec_aurora_sdk_map_point_fetch_flags_t',['../group__SDK__Basic__Data__Types.html#gad2200e5cedd1804bd497d39a3e98b54a',1,'aurora_pubsdk_objects.h']]],
-  ['slamtec_5faurora_5fsdk_5fmapping_5fflag_5ftypes_1101',['slamtec_aurora_sdk_mapping_flag_types',['../group__SDK__Basic__Data__Types.html#gaa7e147f0e0a8a79a4277351e3f6e5323',1,'aurora_pubsdk_objects.h']]],
-  ['slamtec_5faurora_5fsdk_5fmapstorage_5fsession_5fstatus_5fflags_5ft_1102',['slamtec_aurora_sdk_mapstorage_session_status_flags_t',['../group__SDK__Basic__Data__Types.html#ga6ea5fa690d7a225807fd31ca0fe1ef3b',1,'aurora_pubsdk_objects.h']]],
-  ['slamtec_5faurora_5fsdk_5fmapstorage_5fsession_5ftype_5ftypes_1103',['slamtec_aurora_sdk_mapstorage_session_type_types',['../group__SDK__Basic__Data__Types.html#ga29524f2538e52e304eb1d21b98d9d57c',1,'aurora_pubsdk_objects.h']]],
-  ['slamtec_5faurora_5fsdk_5ftracking_5fstatus_5ft_1104',['slamtec_aurora_sdk_tracking_status_t',['../group__SDK__Basic__Data__Types.html#gaae5e700d46d37b869e6f7c03b034cf60',1,'aurora_pubsdk_objects.h']]]
+  ['slamtec_5faurora_5fsdk_5fdashcam_5fworking_5fstate_5ft_1633',['slamtec_aurora_sdk_dashcam_working_state_t',['../group__SDK__Basic__Data__Types.html#ga47f505f69d757b3a047717b66758cdf9',1,'aurora_pubsdk_objects.h']]],
+  ['slamtec_5faurora_5fsdk_5fdatarecorder_5ftype_1634',['slamtec_aurora_sdk_datarecorder_type',['../group__SDK__Basic__Data__Types.html#ga1d5fd7b1ca76fd1eebab5fd0689d77f5',1,'aurora_pubsdk_objects.h']]],
+  ['slamtec_5faurora_5fsdk_5fdevice_5frelocalization_5fstatus_5ftypes_1635',['slamtec_aurora_sdk_device_relocalization_status_types',['../group__SDK__Basic__Data__Types.html#gab182d9677705bba5f736a8accd64214f',1,'aurora_pubsdk_objects.h']]],
+  ['slamtec_5faurora_5fsdk_5fdevice_5fstatus_5ftypes_1636',['slamtec_aurora_sdk_device_status_types',['../group__SDK__Basic__Data__Types.html#ga1d71fa469656986247d1604d8c690b86',1,'aurora_pubsdk_objects.h']]],
+  ['slamtec_5faurora_5fsdk_5ferrorcode_5ftypes_1637',['slamtec_aurora_sdk_errorcode_types',['../group__SDK__Basic__Data__Types.html#gad2a362b177366365108872a09cad9fff',1,'aurora_pubsdk_common_def.h']]],
+  ['slamtec_5faurora_5fsdk_5fkeyframe_5ffetch_5fflags_5ft_1638',['slamtec_aurora_sdk_keyframe_fetch_flags_t',['../group__SDK__Basic__Data__Types.html#ga15346a37b62d4f550d7032c452670106',1,'aurora_pubsdk_objects.h']]],
+  ['slamtec_5faurora_5fsdk_5fkeyframe_5fflags_5ft_1639',['slamtec_aurora_sdk_keyframe_flags_t',['../group__SDK__Basic__Data__Types.html#gacbf28948f6f1c00633a123591ed97612',1,'aurora_pubsdk_objects.h']]],
+  ['slamtec_5faurora_5fsdk_5fmap_5fflags_5ft_1640',['slamtec_aurora_sdk_map_flags_t',['../group__SDK__Basic__Data__Types.html#ga68edecad837d258e1b32a41dd8aade93',1,'aurora_pubsdk_objects.h']]],
+  ['slamtec_5faurora_5fsdk_5fmap_5fpoint_5ffetch_5fflags_5ft_1641',['slamtec_aurora_sdk_map_point_fetch_flags_t',['../group__SDK__Basic__Data__Types.html#gad2200e5cedd1804bd497d39a3e98b54a',1,'aurora_pubsdk_objects.h']]],
+  ['slamtec_5faurora_5fsdk_5fmapping_5fflag_5ftypes_1642',['slamtec_aurora_sdk_mapping_flag_types',['../group__SDK__Basic__Data__Types.html#gaa7e147f0e0a8a79a4277351e3f6e5323',1,'aurora_pubsdk_objects.h']]],
+  ['slamtec_5faurora_5fsdk_5fmapstorage_5fsession_5fstatus_5fflags_5ft_1643',['slamtec_aurora_sdk_mapstorage_session_status_flags_t',['../group__SDK__Basic__Data__Types.html#ga6ea5fa690d7a225807fd31ca0fe1ef3b',1,'aurora_pubsdk_objects.h']]],
+  ['slamtec_5faurora_5fsdk_5fmapstorage_5fsession_5ftype_5ftypes_1644',['slamtec_aurora_sdk_mapstorage_session_type_types',['../group__SDK__Basic__Data__Types.html#ga29524f2538e52e304eb1d21b98d9d57c',1,'aurora_pubsdk_objects.h']]],
+  ['slamtec_5faurora_5fsdk_5fpose_5faugmentation_5fmode_1645',['slamtec_aurora_sdk_pose_augmentation_mode',['../group__SDK__Basic__Data__Types.html#gabcd6caa2b17581749f0e307ff7824258',1,'aurora_pubsdk_objects.h']]],
+  ['slamtec_5faurora_5fsdk_5fpose_5foutput_5ffrequency_1646',['slamtec_aurora_sdk_pose_output_frequency',['../group__SDK__Basic__Data__Types.html#ga2de58ac0738ba200a676ea7ea81e8382',1,'aurora_pubsdk_objects.h']]],
+  ['slamtec_5faurora_5fsdk_5fpower_5foperation_1647',['slamtec_aurora_sdk_power_operation',['../group__SDK__Basic__Data__Types.html#ga92bf200c619cdfebf929827ecad86c5a',1,'aurora_pubsdk_common_def.h']]],
+  ['slamtec_5faurora_5fsdk_5ftimesync_5fdomain_5ft_1648',['slamtec_aurora_sdk_timesync_domain_t',['../group__Utility__Functions.html#gaf83b58c07624e3b3735f8d1d31bd1bdc',1,'aurora_pubsdk_timesync.h']]],
+  ['slamtec_5faurora_5fsdk_5ftracking_5fstatus_5ft_1649',['slamtec_aurora_sdk_tracking_status_t',['../group__SDK__Basic__Data__Types.html#gaae5e700d46d37b869e6f7c03b034cf60',1,'aurora_pubsdk_objects.h']]]
 ];

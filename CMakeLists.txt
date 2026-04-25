@@ -78,7 +78,7 @@ link_directories(${AURORA_LIB_PATH})
 message(STATUS "Aurora SDK library path: ${AURORA_LIB_PATH}")
 
 
-
+find_package(Threads REQUIRED)
 
 # Build Demos
 
@@ -122,6 +122,34 @@ target_link_libraries(device_info_monitor ${AURORA_LIB_NAME})
 add_executable(colmap_recorder demo/colmap_recorder/src/colmap_recorder.cpp)
 target_link_libraries(colmap_recorder ${AURORA_LIB_NAME})
 
+## time_sync
+add_executable(time_sync demo/time_sync/src/time_sync.cpp)
+target_link_libraries(time_sync ${AURORA_LIB_NAME})
+
+## pose_augmentation
+add_executable(pose_augmentation demo/pose_augmentation/src/pose_augmentation.cpp)
+target_link_libraries(pose_augmentation ${AURORA_LIB_NAME})
+
+## pose_covariance
+add_executable(pose_covariance demo/pose_covariance/src/pose_covariance.cpp)
+target_link_libraries(pose_covariance ${AURORA_LIB_NAME})
+
+## persistent_config
+add_executable(persistent_config demo/persistent_config/src/persistent_config.cpp)
+target_link_libraries(persistent_config ${AURORA_LIB_NAME})
+
+## transform_manager
+add_executable(transform_manager demo/transform_manager/src/transform_manager.cpp)
+target_link_libraries(transform_manager ${AURORA_LIB_NAME})
+
+## dashcam_recorder
+add_executable(dashcam_recorder demo/dashcam_recorder/src/dashcam_recorder.cpp)
+target_link_libraries(dashcam_recorder ${AURORA_LIB_NAME})
+
+## system_power
+add_executable(system_power demo/system_power/src/system_power.cpp)
+target_link_libraries(system_power ${AURORA_LIB_NAME})
+
 ## frame preview, only enabled when ENABLE_DEMOS_WITH_OPENCV is ON
 if(ENABLE_DEMOS_WITH_OPENCV)
 
@@ -148,7 +176,7 @@ target_link_libraries(lidar_2dmap_render ${AURORA_LIB_NAME}  ${OpenCV_LIBS})
 ## depth camera view
 add_executable(depthcam_view demo/depthcam_view/src/depthcam_view.cpp)
 target_include_directories(depthcam_view PRIVATE ${OpenCV_INCLUDE_DIRS})
-target_link_libraries(depthcam_view ${AURORA_LIB_NAME}  ${OpenCV_LIBS})
+target_link_libraries(depthcam_view ${AURORA_LIB_NAME}  ${OpenCV_LIBS} Threads::Threads)
 
 ## semantic segmentation
 add_executable(semantic_segmentation demo/semantic_segmentation/src/semantic_segmentation.cpp)
@@ -159,5 +187,11 @@ target_link_libraries(semantic_segmentation ${AURORA_LIB_NAME}  ${OpenCV_LIBS})
 add_executable(calibration_exporter demo/calibration_exporter/src/calibration_exporter.cpp)
 target_include_directories(calibration_exporter PRIVATE ${OpenCV_INCLUDE_DIRS})
 target_link_libraries(calibration_exporter ${AURORA_LIB_NAME}  ${OpenCV_LIBS})
+
+## camera_mask (with OpenCV support for image I/O)
+add_executable(camera_mask demo/camera_mask/src/camera_mask.cpp)
+target_include_directories(camera_mask PRIVATE ${OpenCV_INCLUDE_DIRS})
+target_compile_definitions(camera_mask PRIVATE AURORA_SDK_HAS_OPENCV)
+target_link_libraries(camera_mask ${AURORA_LIB_NAME}  ${OpenCV_LIBS})
 
 endif()

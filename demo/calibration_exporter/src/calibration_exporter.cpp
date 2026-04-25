@@ -37,7 +37,7 @@ static void printUsage(const char* programName) {
     std::cout << "  " << programName << "                    # Auto-discover device, save to current dir as XML" << std::endl;
     std::cout << "  " << programName << " -o ./calibration   # Save to ./calibration directory" << std::endl;
     std::cout << "  " << programName << " -f yml             # Save as YAML format" << std::endl;
-    std::cout << "  " << programName << " tcp://192.168.1.100:8090  # Connect to specific device" << std::endl;
+    std::cout << "  " << programName << " tcp://192.168.11.1  # Connect to specific device" << std::endl;
     std::cout << std::endl;
 }
 
@@ -306,7 +306,8 @@ int main(int argc, const char* argv[]) {
                 return 1;
             }
         } else if (arg.find("://") != std::string::npos) {
-            connectionString = argv[i];
+            int tag = arg.find("://");
+            connectionString = &argv[i][tag+3];
         } else {
             std::cerr << "Error: Unknown argument '" << arg << "'" << std::endl;
             printUsage(argv[0]);

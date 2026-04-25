@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="slamtec.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SLAMTEC Aurora Public Remote SDK
-   &#160;<span id="projectnumber">2.1.0-rtm</span>
+   &#160;<span id="projectnumber">2.1.1-rc1</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -94,6 +94,10 @@ $(document).ready(function(){initNavTree('group__Utility__Functions.html',''); i
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">Utility Functions<div class="ingroups"><a class="el" href="group__Aurora__SDK__Pure__C.html">Aurora Remote SDK Pure C Interface</a></div></div>  </div>
@@ -103,11 +107,54 @@ $(document).ready(function(){initNavTree('group__Utility__Functions.html',''); i
 <p>Utility functions.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structslamtec__aurora__sdk__timesync__options__t.html">slamtec_aurora_sdk_timesync_options_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Time synchronization client options.  <a href="structslamtec__aurora__sdk__timesync__options__t.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structslamtec__aurora__sdk__timesync__quality__t.html">slamtec_aurora_sdk_timesync_quality_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Time synchronization quality metrics.  <a href="structslamtec__aurora__sdk__timesync__quality__t.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structslamtec__aurora__sdk__wallclock__offset__result__t.html">slamtec_aurora_sdk_wallclock_offset_result_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wall clock offset result structure.  <a href="structslamtec__aurora__sdk__wallclock__offset__result__t.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structslamtec__aurora__sdk__wallclock__sync__result__t.html">slamtec_aurora_sdk_wallclock_sync_result_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wall clock sync result structure.  <a href="structslamtec__aurora__sdk__wallclock__sync__result__t.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structslamtec__aurora__sdk__wallclock__accuracy__result__t.html">slamtec_aurora_sdk_wallclock_accuracy_result_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wall clock sync accuracy result structure.  <a href="structslamtec__aurora__sdk__wallclock__accuracy__result__t.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga7e458e89290d42281727051233e5929c"><td class="memItemLeft" align="right" valign="top"><a id="ga7e458e89290d42281727051233e5929c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Utility__Functions.html#ga7e458e89290d42281727051233e5929c">SLAMTEC_AURORA_SDK_TIMESYNC_DEFAULT_PORT</a>&#160;&#160;&#160;9527</td></tr>
+<tr class="memdesc:ga7e458e89290d42281727051233e5929c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default port for time synchronization server. <br /></td></tr>
+<tr class="separator:ga7e458e89290d42281727051233e5929c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gad3f88ed43b84d444ae85b83661f24c35"><td class="memItemLeft" align="right" valign="top"><a id="gad3f88ed43b84d444ae85b83661f24c35"></a>
+typedef void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Utility__Functions.html#gad3f88ed43b84d444ae85b83661f24c35">slamtec_aurora_sdk_timesync_handle_t</a></td></tr>
+<tr class="memdesc:gad3f88ed43b84d444ae85b83661f24c35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle to a time synchronization client instance. <br /></td></tr>
+<tr class="separator:gad3f88ed43b84d444ae85b83661f24c35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:gaf83b58c07624e3b3735f8d1d31bd1bdc"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Utility__Functions.html#gaf83b58c07624e3b3735f8d1d31bd1bdc">slamtec_aurora_sdk_timesync_domain_t</a> { <a class="el" href="group__Utility__Functions.html#ggaf83b58c07624e3b3735f8d1d31bd1bdcaddfd0cddbda5ec1aa10b7ae79da3e64a">SLAMTEC_AURORA_SDK_TIMESYNC_DOMAIN_STEADY_CLOCK</a> = 0, 
+<a class="el" href="group__Utility__Functions.html#ggaf83b58c07624e3b3735f8d1d31bd1bdcacaa0a0c8c6f30d21e93f0fe4488694bf">SLAMTEC_AURORA_SDK_TIMESYNC_DOMAIN_WALL_CLOCK</a> = 1
+ }</td></tr>
+<tr class="memdesc:gaf83b58c07624e3b3735f8d1d31bd1bdc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Time domain types for synchronization.  <a href="group__Utility__Functions.html#gaf83b58c07624e3b3735f8d1d31bd1bdc">More...</a><br /></td></tr>
+<tr class="separator:gaf83b58c07624e3b3735f8d1d31bd1bdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:gacc389ff29c23b76c5ccb035109bbda5d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> AURORA_SDK_API&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Utility__Functions.html#gacc389ff29c23b76c5ccb035109bbda5d">slamtec_aurora_sdk_convert_quaternion_to_euler</a> (const <a class="el" href="group__SDK__Basic__Data__Types.html#ga8a94a2a0d2d3dfb6b5a61a99eb45b7ce">slamtec_aurora_sdk_quaternion_t</a> *q, <a class="el" href="group__SDK__Basic__Data__Types.html#ga4d49a46263c64d48af450969b53828f4">slamtec_aurora_sdk_euler_angle_t</a> *euler_out)</td></tr>
 <tr class="memdesc:gacc389ff29c23b76c5ccb035109bbda5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert a quaternion to Euler angles in RPY order.  <a href="group__Utility__Functions.html#gacc389ff29c23b76c5ccb035109bbda5d">More...</a><br /></td></tr>
 <tr class="separator:gacc389ff29c23b76c5ccb035109bbda5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga46bab703b8895bef9068a649325d575d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> AURORA_SDK_API&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Utility__Functions.html#ga46bab703b8895bef9068a649325d575d">slamtec_aurora_sdk_convert_pose_covariance_to_readable</a> (const <a class="el" href="group__SDK__Basic__Data__Types.html#ga500134a3664f0e30e101236b714a7503">slamtec_aurora_sdk_pose_covariance_t</a> *covariance, <a class="el" href="group__SDK__Basic__Data__Types.html#ga514686bda28f190b700ec8347b456dc8">slamtec_aurora_sdk_pose_covariance_readable_t</a> *readable_out)</td></tr>
+<tr class="memdesc:ga46bab703b8895bef9068a649325d575d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert pose covariance to readable format.  <a href="group__Utility__Functions.html#ga46bab703b8895bef9068a649325d575d">More...</a><br /></td></tr>
+<tr class="separator:ga46bab703b8895bef9068a649325d575d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8822748919370899e5dd5d9c7a81c972"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> AURORA_SDK_API&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Utility__Functions.html#ga8822748919370899e5dd5d9c7a81c972">slamtec_aurora_sdk_datarecorder_start_recording</a> (<a class="el" href="group__SDK__Basic__Data__Types.html#ga28b02b17902e8c35063bba0df20bd715">slamtec_aurora_sdk_session_handle_t</a> handle, slamtec_aurora_sdk_datarecorder_type_t type, const char *target_folder)</td></tr>
 <tr class="memdesc:ga8822748919370899e5dd5d9c7a81c972"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start a data recorder session.  <a href="group__Utility__Functions.html#ga8822748919370899e5dd5d9c7a81c972">More...</a><br /></td></tr>
 <tr class="separator:ga8822748919370899e5dd5d9c7a81c972"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -138,10 +185,118 @@ Functions</h2></td></tr>
 <tr class="memitem:gab1fd9dbc15127a94627a13907f96a128"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> AURORA_SDK_API&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Utility__Functions.html#gab1fd9dbc15127a94627a13907f96a128">slamtec_aurora_sdk_datarecorder_query_status_float64</a> (<a class="el" href="group__SDK__Basic__Data__Types.html#ga28b02b17902e8c35063bba0df20bd715">slamtec_aurora_sdk_session_handle_t</a> handle, slamtec_aurora_sdk_datarecorder_type_t type, const char *key, double *value_out, int use_cached_value)</td></tr>
 <tr class="memdesc:gab1fd9dbc15127a94627a13907f96a128"><td class="mdescLeft">&#160;</td><td class="mdescRight">Query the status of a data recorder session.  <a href="group__Utility__Functions.html#gab1fd9dbc15127a94627a13907f96a128">More...</a><br /></td></tr>
 <tr class="separator:gab1fd9dbc15127a94627a13907f96a128"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf0c399925742068c65500984f78487cf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__Utility__Functions.html#gad3f88ed43b84d444ae85b83661f24c35">slamtec_aurora_sdk_timesync_handle_t</a> AURORA_SDK_API&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Utility__Functions.html#gaf0c399925742068c65500984f78487cf">slamtec_aurora_sdk_timesync_create_instance</a> (<a class="el" href="group__Utility__Functions.html#gaf83b58c07624e3b3735f8d1d31bd1bdc">slamtec_aurora_sdk_timesync_domain_t</a> time_domain, <a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> *error_code)</td></tr>
+<tr class="memdesc:gaf0c399925742068c65500984f78487cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a time synchronization client instance.  <a href="group__Utility__Functions.html#gaf0c399925742068c65500984f78487cf">More...</a><br /></td></tr>
+<tr class="separator:gaf0c399925742068c65500984f78487cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabae2c5ec1d7e47f9751a77d05de022fa"><td class="memItemLeft" align="right" valign="top">void AURORA_SDK_API&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Utility__Functions.html#gabae2c5ec1d7e47f9751a77d05de022fa">slamtec_aurora_sdk_timesync_destroy_instance</a> (<a class="el" href="group__Utility__Functions.html#gad3f88ed43b84d444ae85b83661f24c35">slamtec_aurora_sdk_timesync_handle_t</a> handle)</td></tr>
+<tr class="memdesc:gabae2c5ec1d7e47f9751a77d05de022fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy a time synchronization client instance.  <a href="group__Utility__Functions.html#gabae2c5ec1d7e47f9751a77d05de022fa">More...</a><br /></td></tr>
+<tr class="separator:gabae2c5ec1d7e47f9751a77d05de022fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga317e0c1a7e1eca325bf9c943a948f123"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> AURORA_SDK_API&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Utility__Functions.html#ga317e0c1a7e1eca325bf9c943a948f123">slamtec_aurora_sdk_timesync_connect</a> (<a class="el" href="group__Utility__Functions.html#gad3f88ed43b84d444ae85b83661f24c35">slamtec_aurora_sdk_timesync_handle_t</a> handle, const char *server_address, uint16_t server_port)</td></tr>
+<tr class="memdesc:ga317e0c1a7e1eca325bf9c943a948f123"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connect to a time synchronization server.  <a href="group__Utility__Functions.html#ga317e0c1a7e1eca325bf9c943a948f123">More...</a><br /></td></tr>
+<tr class="separator:ga317e0c1a7e1eca325bf9c943a948f123"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadc352b7fe8a4c58f64369ef88345c902"><td class="memItemLeft" align="right" valign="top">void AURORA_SDK_API&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Utility__Functions.html#gadc352b7fe8a4c58f64369ef88345c902">slamtec_aurora_sdk_timesync_get_default_options</a> (<a class="el" href="structslamtec__aurora__sdk__timesync__options__t.html">slamtec_aurora_sdk_timesync_options_t</a> *options_out)</td></tr>
+<tr class="memdesc:gadc352b7fe8a4c58f64369ef88345c902"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get default time synchronization options.  <a href="group__Utility__Functions.html#gadc352b7fe8a4c58f64369ef88345c902">More...</a><br /></td></tr>
+<tr class="separator:gadc352b7fe8a4c58f64369ef88345c902"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac0e1adb2b0bcc47050f83390d2f0cf12"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> AURORA_SDK_API&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Utility__Functions.html#gac0e1adb2b0bcc47050f83390d2f0cf12">slamtec_aurora_sdk_timesync_set_options</a> (<a class="el" href="group__Utility__Functions.html#gad3f88ed43b84d444ae85b83661f24c35">slamtec_aurora_sdk_timesync_handle_t</a> handle, const <a class="el" href="structslamtec__aurora__sdk__timesync__options__t.html">slamtec_aurora_sdk_timesync_options_t</a> *options)</td></tr>
+<tr class="memdesc:gac0e1adb2b0bcc47050f83390d2f0cf12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set time synchronization options.  <a href="group__Utility__Functions.html#gac0e1adb2b0bcc47050f83390d2f0cf12">More...</a><br /></td></tr>
+<tr class="separator:gac0e1adb2b0bcc47050f83390d2f0cf12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa28e9d440e732960758152ba596c0b94"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> AURORA_SDK_API&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Utility__Functions.html#gaa28e9d440e732960758152ba596c0b94">slamtec_aurora_sdk_timesync_initialize</a> (<a class="el" href="group__Utility__Functions.html#gad3f88ed43b84d444ae85b83661f24c35">slamtec_aurora_sdk_timesync_handle_t</a> handle)</td></tr>
+<tr class="memdesc:gaa28e9d440e732960758152ba596c0b94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize time synchronization with first sync request.  <a href="group__Utility__Functions.html#gaa28e9d440e732960758152ba596c0b94">More...</a><br /></td></tr>
+<tr class="separator:gaa28e9d440e732960758152ba596c0b94"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga47fb48eea7fc45756c4ef2f1b164d8ab"><td class="memItemLeft" align="right" valign="top">int AURORA_SDK_API&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Utility__Functions.html#ga47fb48eea7fc45756c4ef2f1b164d8ab">slamtec_aurora_sdk_timesync_is_synchronized</a> (<a class="el" href="group__Utility__Functions.html#gad3f88ed43b84d444ae85b83661f24c35">slamtec_aurora_sdk_timesync_handle_t</a> handle)</td></tr>
+<tr class="memdesc:ga47fb48eea7fc45756c4ef2f1b164d8ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if time synchronization is established.  <a href="group__Utility__Functions.html#ga47fb48eea7fc45756c4ef2f1b164d8ab">More...</a><br /></td></tr>
+<tr class="separator:ga47fb48eea7fc45756c4ef2f1b164d8ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae8be34d913f2c24c96e60a3b0673bc5c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> AURORA_SDK_API&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Utility__Functions.html#gae8be34d913f2c24c96e60a3b0673bc5c">slamtec_aurora_sdk_timesync_translate_timestamp</a> (<a class="el" href="group__Utility__Functions.html#gad3f88ed43b84d444ae85b83661f24c35">slamtec_aurora_sdk_timesync_handle_t</a> handle, uint64_t aurora_timestamp_ns, uint64_t *client_timestamp_ns_out)</td></tr>
+<tr class="memdesc:gae8be34d913f2c24c96e60a3b0673bc5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Translate Aurora timestamp to client time domain.  <a href="group__Utility__Functions.html#gae8be34d913f2c24c96e60a3b0673bc5c">More...</a><br /></td></tr>
+<tr class="separator:gae8be34d913f2c24c96e60a3b0673bc5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad1889e7a8d06e2c31f0275389ecb1ada"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> AURORA_SDK_API&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Utility__Functions.html#gad1889e7a8d06e2c31f0275389ecb1ada">slamtec_aurora_sdk_timesync_get_quality</a> (<a class="el" href="group__Utility__Functions.html#gad3f88ed43b84d444ae85b83661f24c35">slamtec_aurora_sdk_timesync_handle_t</a> handle, <a class="el" href="structslamtec__aurora__sdk__timesync__quality__t.html">slamtec_aurora_sdk_timesync_quality_t</a> *quality_out)</td></tr>
+<tr class="memdesc:gad1889e7a8d06e2c31f0275389ecb1ada"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get current synchronization quality metrics.  <a href="group__Utility__Functions.html#gad1889e7a8d06e2c31f0275389ecb1ada">More...</a><br /></td></tr>
+<tr class="separator:gad1889e7a8d06e2c31f0275389ecb1ada"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8146ea64ba9baa451a8ab6fe7c7b6747"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> AURORA_SDK_API&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Utility__Functions.html#ga8146ea64ba9baa451a8ab6fe7c7b6747">slamtec_aurora_sdk_timesync_get_current_server_timestamp</a> (<a class="el" href="group__Utility__Functions.html#gad3f88ed43b84d444ae85b83661f24c35">slamtec_aurora_sdk_timesync_handle_t</a> handle, uint32_t timeout_ms, uint64_t *server_timestamp_ns_out, uint64_t *client_timestamp_ns_out)</td></tr>
+<tr class="memdesc:ga8146ea64ba9baa451a8ab6fe7c7b6747"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get current server timestamp translated to client time domain.  <a href="group__Utility__Functions.html#ga8146ea64ba9baa451a8ab6fe7c7b6747">More...</a><br /></td></tr>
+<tr class="separator:ga8146ea64ba9baa451a8ab6fe7c7b6747"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7e97641eedffa4e504253e3064f491ed"><td class="memItemLeft" align="right" valign="top">void AURORA_SDK_API&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Utility__Functions.html#ga7e97641eedffa4e504253e3064f491ed">slamtec_aurora_sdk_timesync_stop</a> (<a class="el" href="group__Utility__Functions.html#gad3f88ed43b84d444ae85b83661f24c35">slamtec_aurora_sdk_timesync_handle_t</a> handle)</td></tr>
+<tr class="memdesc:ga7e97641eedffa4e504253e3064f491ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop time synchronization background thread.  <a href="group__Utility__Functions.html#ga7e97641eedffa4e504253e3064f491ed">More...</a><br /></td></tr>
+<tr class="separator:ga7e97641eedffa4e504253e3064f491ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga580371e3552dacfb97412c2053d8e5e6"><td class="memItemLeft" align="right" valign="top">int AURORA_SDK_API&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Utility__Functions.html#ga580371e3552dacfb97412c2053d8e5e6">slamtec_aurora_sdk_timesync_is_running</a> (<a class="el" href="group__Utility__Functions.html#gad3f88ed43b84d444ae85b83661f24c35">slamtec_aurora_sdk_timesync_handle_t</a> handle)</td></tr>
+<tr class="memdesc:ga580371e3552dacfb97412c2053d8e5e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if time synchronization is running.  <a href="group__Utility__Functions.html#ga580371e3552dacfb97412c2053d8e5e6">More...</a><br /></td></tr>
+<tr class="separator:ga580371e3552dacfb97412c2053d8e5e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4eccb66aaf51ceca706a8a8d9b274c81"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> AURORA_SDK_API&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Utility__Functions.html#ga4eccb66aaf51ceca706a8a8d9b274c81">slamtec_aurora_sdk_timesync_get_wallclock_offset</a> (<a class="el" href="group__Utility__Functions.html#gad3f88ed43b84d444ae85b83661f24c35">slamtec_aurora_sdk_timesync_handle_t</a> handle, uint32_t timeout_ms, <a class="el" href="structslamtec__aurora__sdk__wallclock__offset__result__t.html">slamtec_aurora_sdk_wallclock_offset_result_t</a> *result_out)</td></tr>
+<tr class="memdesc:ga4eccb66aaf51ceca706a8a8d9b274c81"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get wall clock offset between server and client.  <a href="group__Utility__Functions.html#ga4eccb66aaf51ceca706a8a8d9b274c81">More...</a><br /></td></tr>
+<tr class="separator:ga4eccb66aaf51ceca706a8a8d9b274c81"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac6dc8466715ec32d4d8dd6a2333673cc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> AURORA_SDK_API&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Utility__Functions.html#gac6dc8466715ec32d4d8dd6a2333673cc">slamtec_aurora_sdk_timesync_sync_server_wallclock</a> (<a class="el" href="group__Utility__Functions.html#gad3f88ed43b84d444ae85b83661f24c35">slamtec_aurora_sdk_timesync_handle_t</a> handle, uint32_t timeout_ms, <a class="el" href="structslamtec__aurora__sdk__wallclock__sync__result__t.html">slamtec_aurora_sdk_wallclock_sync_result_t</a> *result_out)</td></tr>
+<tr class="memdesc:gac6dc8466715ec32d4d8dd6a2333673cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sync server's wall clock with client's wall clock.  <a href="group__Utility__Functions.html#gac6dc8466715ec32d4d8dd6a2333673cc">More...</a><br /></td></tr>
+<tr class="separator:gac6dc8466715ec32d4d8dd6a2333673cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac9e0444376b1c5a8939773ba1bf4bc2b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> AURORA_SDK_API&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Utility__Functions.html#gac9e0444376b1c5a8939773ba1bf4bc2b">slamtec_aurora_sdk_timesync_evaluate_wallclock_accuracy</a> (<a class="el" href="group__Utility__Functions.html#gad3f88ed43b84d444ae85b83661f24c35">slamtec_aurora_sdk_timesync_handle_t</a> handle, uint32_t timeout_ms, <a class="el" href="structslamtec__aurora__sdk__wallclock__accuracy__result__t.html">slamtec_aurora_sdk_wallclock_accuracy_result_t</a> *result_out)</td></tr>
+<tr class="memdesc:gac9e0444376b1c5a8939773ba1bf4bc2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate wall clock synchronization accuracy.  <a href="group__Utility__Functions.html#gac9e0444376b1c5a8939773ba1bf4bc2b">More...</a><br /></td></tr>
+<tr class="separator:gac9e0444376b1c5a8939773ba1bf4bc2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Utility functions. </p>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="gaf83b58c07624e3b3735f8d1d31bd1bdc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf83b58c07624e3b3735f8d1d31bd1bdc">&#9670;&nbsp;</a></span>slamtec_aurora_sdk_timesync_domain_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group__Utility__Functions.html#gaf83b58c07624e3b3735f8d1d31bd1bdc">slamtec_aurora_sdk_timesync_domain_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Time domain types for synchronization. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaf83b58c07624e3b3735f8d1d31bd1bdcaddfd0cddbda5ec1aa10b7ae79da3e64a"></a>SLAMTEC_AURORA_SDK_TIMESYNC_DOMAIN_STEADY_CLOCK&#160;</td><td class="fielddoc"><p>Monotonic steady clock </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaf83b58c07624e3b3735f8d1d31bd1bdcacaa0a0c8c6f30d21e93f0fe4488694bf"></a>SLAMTEC_AURORA_SDK_TIMESYNC_DOMAIN_WALL_CLOCK&#160;</td><td class="fielddoc"><p>System wall clock </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="ga46bab703b8895bef9068a649325d575d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga46bab703b8895bef9068a649325d575d">&#9670;&nbsp;</a></span>slamtec_aurora_sdk_convert_pose_covariance_to_readable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> AURORA_SDK_API slamtec_aurora_sdk_convert_pose_covariance_to_readable </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="group__SDK__Basic__Data__Types.html#ga500134a3664f0e30e101236b714a7503">slamtec_aurora_sdk_pose_covariance_t</a> *&#160;</td>
+          <td class="paramname"><em>covariance</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__SDK__Basic__Data__Types.html#ga514686bda28f190b700ec8347b456dc8">slamtec_aurora_sdk_pose_covariance_readable_t</a> *&#160;</td>
+          <td class="paramname"><em>readable_out</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Convert pose covariance to readable format. </p>
+<p>This function converts the raw 6x6 covariance matrix to human-readable uncertainty metrics.</p>
+<p>The conversion includes computing 95% confidence ellipsoid, 2D radius, and rotation uncertainties.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">covariance</td><td>- the raw covariance data </td></tr>
+    <tr><td class="paramname">readable_out</td><td>- the readable values will be stored in this pointer </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the error code </dd></dl>
+
+</div>
+</div>
 <a id="gacc389ff29c23b76c5ccb035109bbda5d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gacc389ff29c23b76c5ccb035109bbda5d">&#9670;&nbsp;</a></span>slamtec_aurora_sdk_convert_quaternion_to_euler()</h2>
 
@@ -677,6 +832,562 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the error code </dd></dl>
+
+</div>
+</div>
+<a id="ga317e0c1a7e1eca325bf9c943a948f123"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga317e0c1a7e1eca325bf9c943a948f123">&#9670;&nbsp;</a></span>slamtec_aurora_sdk_timesync_connect()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> AURORA_SDK_API slamtec_aurora_sdk_timesync_connect </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__Utility__Functions.html#gad3f88ed43b84d444ae85b83661f24c35">slamtec_aurora_sdk_timesync_handle_t</a>&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>server_address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>server_port</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Connect to a time synchronization server. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>The time sync client handle </td></tr>
+    <tr><td class="paramname">server_address</td><td>Server IP address or hostname </td></tr>
+    <tr><td class="paramname">server_port</td><td>Server port number </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Error code </dd></dl>
+
+</div>
+</div>
+<a id="gaf0c399925742068c65500984f78487cf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf0c399925742068c65500984f78487cf">&#9670;&nbsp;</a></span>slamtec_aurora_sdk_timesync_create_instance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__Utility__Functions.html#gad3f88ed43b84d444ae85b83661f24c35">slamtec_aurora_sdk_timesync_handle_t</a> AURORA_SDK_API slamtec_aurora_sdk_timesync_create_instance </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__Utility__Functions.html#gaf83b58c07624e3b3735f8d1d31bd1bdc">slamtec_aurora_sdk_timesync_domain_t</a>&#160;</td>
+          <td class="paramname"><em>time_domain</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> *&#160;</td>
+          <td class="paramname"><em>error_code</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Create a time synchronization client instance. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">time_domain</td><td>The time domain type for this client </td></tr>
+    <tr><td class="paramname">error_code</td><td>If provided, the error code will be stored in this pointer </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Time sync client handle, or NULL on failure </dd></dl>
+
+</div>
+</div>
+<a id="gabae2c5ec1d7e47f9751a77d05de022fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gabae2c5ec1d7e47f9751a77d05de022fa">&#9670;&nbsp;</a></span>slamtec_aurora_sdk_timesync_destroy_instance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AURORA_SDK_API slamtec_aurora_sdk_timesync_destroy_instance </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__Utility__Functions.html#gad3f88ed43b84d444ae85b83661f24c35">slamtec_aurora_sdk_timesync_handle_t</a>&#160;</td>
+          <td class="paramname"><em>handle</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Destroy a time synchronization client instance. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>The time sync client handle to destroy </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gac9e0444376b1c5a8939773ba1bf4bc2b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac9e0444376b1c5a8939773ba1bf4bc2b">&#9670;&nbsp;</a></span>slamtec_aurora_sdk_timesync_evaluate_wallclock_accuracy()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> AURORA_SDK_API slamtec_aurora_sdk_timesync_evaluate_wallclock_accuracy </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__Utility__Functions.html#gad3f88ed43b84d444ae85b83661f24c35">slamtec_aurora_sdk_timesync_handle_t</a>&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>timeout_ms</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structslamtec__aurora__sdk__wallclock__accuracy__result__t.html">slamtec_aurora_sdk_wallclock_accuracy_result_t</a> *&#160;</td>
+          <td class="paramname"><em>result_out</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Evaluate wall clock synchronization accuracy. </p>
+<p>This function evaluates the accuracy of the wall clock synchronization by querying the current offset between server and client wall clocks.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>The time sync client handle </td></tr>
+    <tr><td class="paramname">timeout_ms</td><td>Timeout for the query (milliseconds) </td></tr>
+    <tr><td class="paramname">result_out</td><td>Pointer to result structure (output) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Error code </dd></dl>
+
+</div>
+</div>
+<a id="ga8146ea64ba9baa451a8ab6fe7c7b6747"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8146ea64ba9baa451a8ab6fe7c7b6747">&#9670;&nbsp;</a></span>slamtec_aurora_sdk_timesync_get_current_server_timestamp()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> AURORA_SDK_API slamtec_aurora_sdk_timesync_get_current_server_timestamp </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__Utility__Functions.html#gad3f88ed43b84d444ae85b83661f24c35">slamtec_aurora_sdk_timesync_handle_t</a>&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>timeout_ms</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t *&#160;</td>
+          <td class="paramname"><em>server_timestamp_ns_out</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t *&#160;</td>
+          <td class="paramname"><em>client_timestamp_ns_out</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get current server timestamp translated to client time domain. </p>
+<p>This function queries the server for its current timestamp and translates it to the client's time domain. Useful for validating synchronization.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>The time sync client handle </td></tr>
+    <tr><td class="paramname">timeout_ms</td><td>Timeout for the query (milliseconds) </td></tr>
+    <tr><td class="paramname">server_timestamp_ns_out</td><td>Translated server timestamp (output) </td></tr>
+    <tr><td class="paramname">client_timestamp_ns_out</td><td>Current client timestamp at query time (output, can be NULL) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Error code (returns NOT_READY if not synchronized) </dd></dl>
+
+</div>
+</div>
+<a id="gadc352b7fe8a4c58f64369ef88345c902"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gadc352b7fe8a4c58f64369ef88345c902">&#9670;&nbsp;</a></span>slamtec_aurora_sdk_timesync_get_default_options()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AURORA_SDK_API slamtec_aurora_sdk_timesync_get_default_options </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structslamtec__aurora__sdk__timesync__options__t.html">slamtec_aurora_sdk_timesync_options_t</a> *&#160;</td>
+          <td class="paramname"><em>options_out</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get default time synchronization options. </p>
+<p>This function fills the provided structure with default values that provide good performance for most use cases.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">options_out</td><td>Pointer to options structure to fill with defaults </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gad1889e7a8d06e2c31f0275389ecb1ada"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad1889e7a8d06e2c31f0275389ecb1ada">&#9670;&nbsp;</a></span>slamtec_aurora_sdk_timesync_get_quality()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> AURORA_SDK_API slamtec_aurora_sdk_timesync_get_quality </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__Utility__Functions.html#gad3f88ed43b84d444ae85b83661f24c35">slamtec_aurora_sdk_timesync_handle_t</a>&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structslamtec__aurora__sdk__timesync__quality__t.html">slamtec_aurora_sdk_timesync_quality_t</a> *&#160;</td>
+          <td class="paramname"><em>quality_out</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get current synchronization quality metrics. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>The time sync client handle </td></tr>
+    <tr><td class="paramname">quality_out</td><td>Quality metrics structure (output) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Error code </dd></dl>
+
+</div>
+</div>
+<a id="ga4eccb66aaf51ceca706a8a8d9b274c81"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4eccb66aaf51ceca706a8a8d9b274c81">&#9670;&nbsp;</a></span>slamtec_aurora_sdk_timesync_get_wallclock_offset()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> AURORA_SDK_API slamtec_aurora_sdk_timesync_get_wallclock_offset </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__Utility__Functions.html#gad3f88ed43b84d444ae85b83661f24c35">slamtec_aurora_sdk_timesync_handle_t</a>&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>timeout_ms</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structslamtec__aurora__sdk__wallclock__offset__result__t.html">slamtec_aurora_sdk_wallclock_offset_result_t</a> *&#160;</td>
+          <td class="paramname"><em>result_out</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get wall clock offset between server and client. </p>
+<p>This function queries the offset between the server's UTC wall clock and the client's UTC wall clock. This is used to evaluate whether the Aurora device's wall clock needs to be synchronized.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>The time sync client handle </td></tr>
+    <tr><td class="paramname">timeout_ms</td><td>Timeout for the query (milliseconds) </td></tr>
+    <tr><td class="paramname">result_out</td><td>Pointer to result structure (output) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Error code </dd></dl>
+
+</div>
+</div>
+<a id="gaa28e9d440e732960758152ba596c0b94"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa28e9d440e732960758152ba596c0b94">&#9670;&nbsp;</a></span>slamtec_aurora_sdk_timesync_initialize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> AURORA_SDK_API slamtec_aurora_sdk_timesync_initialize </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__Utility__Functions.html#gad3f88ed43b84d444ae85b83661f24c35">slamtec_aurora_sdk_timesync_handle_t</a>&#160;</td>
+          <td class="paramname"><em>handle</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initialize time synchronization with first sync request. </p>
+<p>The timeout for initialization is configured via setOptions(). If not set, the default timeout will be used.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>The time sync client handle </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Error code </dd></dl>
+
+</div>
+</div>
+<a id="ga580371e3552dacfb97412c2053d8e5e6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga580371e3552dacfb97412c2053d8e5e6">&#9670;&nbsp;</a></span>slamtec_aurora_sdk_timesync_is_running()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int AURORA_SDK_API slamtec_aurora_sdk_timesync_is_running </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__Utility__Functions.html#gad3f88ed43b84d444ae85b83661f24c35">slamtec_aurora_sdk_timesync_handle_t</a>&#160;</td>
+          <td class="paramname"><em>handle</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Check if time synchronization is running. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>The time sync client handle </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Non-zero if running, zero otherwise </dd></dl>
+
+</div>
+</div>
+<a id="ga47fb48eea7fc45756c4ef2f1b164d8ab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga47fb48eea7fc45756c4ef2f1b164d8ab">&#9670;&nbsp;</a></span>slamtec_aurora_sdk_timesync_is_synchronized()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int AURORA_SDK_API slamtec_aurora_sdk_timesync_is_synchronized </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__Utility__Functions.html#gad3f88ed43b84d444ae85b83661f24c35">slamtec_aurora_sdk_timesync_handle_t</a>&#160;</td>
+          <td class="paramname"><em>handle</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Check if time synchronization is established. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>The time sync client handle </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Non-zero if synchronized, zero otherwise </dd></dl>
+
+</div>
+</div>
+<a id="gac0e1adb2b0bcc47050f83390d2f0cf12"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac0e1adb2b0bcc47050f83390d2f0cf12">&#9670;&nbsp;</a></span>slamtec_aurora_sdk_timesync_set_options()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> AURORA_SDK_API slamtec_aurora_sdk_timesync_set_options </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__Utility__Functions.html#gad3f88ed43b84d444ae85b83661f24c35">slamtec_aurora_sdk_timesync_handle_t</a>&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structslamtec__aurora__sdk__timesync__options__t.html">slamtec_aurora_sdk_timesync_options_t</a> *&#160;</td>
+          <td class="paramname"><em>options</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set time synchronization options. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>The time sync client handle </td></tr>
+    <tr><td class="paramname">options</td><td>The options to configure </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Error code </dd></dl>
+
+</div>
+</div>
+<a id="ga7e97641eedffa4e504253e3064f491ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7e97641eedffa4e504253e3064f491ed">&#9670;&nbsp;</a></span>slamtec_aurora_sdk_timesync_stop()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AURORA_SDK_API slamtec_aurora_sdk_timesync_stop </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__Utility__Functions.html#gad3f88ed43b84d444ae85b83661f24c35">slamtec_aurora_sdk_timesync_handle_t</a>&#160;</td>
+          <td class="paramname"><em>handle</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Stop time synchronization background thread. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>The time sync client handle </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gac6dc8466715ec32d4d8dd6a2333673cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac6dc8466715ec32d4d8dd6a2333673cc">&#9670;&nbsp;</a></span>slamtec_aurora_sdk_timesync_sync_server_wallclock()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> AURORA_SDK_API slamtec_aurora_sdk_timesync_sync_server_wallclock </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__Utility__Functions.html#gad3f88ed43b84d444ae85b83661f24c35">slamtec_aurora_sdk_timesync_handle_t</a>&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>timeout_ms</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structslamtec__aurora__sdk__wallclock__sync__result__t.html">slamtec_aurora_sdk_wallclock_sync_result_t</a> *&#160;</td>
+          <td class="paramname"><em>result_out</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sync server's wall clock with client's wall clock. </p>
+<p>This function automatically queries the current wall clock offset between server and client, then requests the server to adjust its wall clock to match the client's UTC wall clock. The offset is calculated internally.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>The time sync client handle </td></tr>
+    <tr><td class="paramname">timeout_ms</td><td>Timeout for the operation (milliseconds) </td></tr>
+    <tr><td class="paramname">result_out</td><td>Pointer to result structure (output) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Error code </dd></dl>
+
+</div>
+</div>
+<a id="gae8be34d913f2c24c96e60a3b0673bc5c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae8be34d913f2c24c96e60a3b0673bc5c">&#9670;&nbsp;</a></span>slamtec_aurora_sdk_timesync_translate_timestamp()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> AURORA_SDK_API slamtec_aurora_sdk_timesync_translate_timestamp </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__Utility__Functions.html#gad3f88ed43b84d444ae85b83661f24c35">slamtec_aurora_sdk_timesync_handle_t</a>&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>aurora_timestamp_ns</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t *&#160;</td>
+          <td class="paramname"><em>client_timestamp_ns_out</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Translate Aurora timestamp to client time domain. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>The time sync client handle </td></tr>
+    <tr><td class="paramname">aurora_timestamp_ns</td><td>Aurora timestamp in nanoseconds </td></tr>
+    <tr><td class="paramname">client_timestamp_ns_out</td><td>Translated timestamp in client time domain (output) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Error code (returns NOT_READY if not synchronized) </dd></dl>
 
 </div>
 </div>

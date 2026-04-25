@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="slamtec.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SLAMTEC Aurora Public Remote SDK
-   &#160;<span id="projectnumber">2.1.0-rtm</span>
+   &#160;<span id="projectnumber">2.1.1-rc1</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -122,6 +122,9 @@ Typedefs</h2></td></tr>
 <tr class="memitem:gaf0e7a2127ce4669c8fbe1f0af2be939e"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SDK__Callback__Types.html#gaf0e7a2127ce4669c8fbe1f0af2be939e">slamtec_aurora_sdk_on_tracking_data_callback_t</a>) (void *user_data, const <a class="el" href="group__SDK__Basic__Data__Types.html#gae459a912b493897f96063b4fed4f44ec">slamtec_aurora_sdk_tracking_info_t</a> *tracking_data, const <a class="el" href="group__SDK__Basic__Data__Types.html#gaa263216dfecdcc7c1757cba6d945c435">slamtec_aurora_sdk_tracking_data_buffer_t</a> *provided_buffer_info)</td></tr>
 <tr class="memdesc:gaf0e7a2127ce4669c8fbe1f0af2be939e"><td class="mdescLeft">&#160;</td><td class="mdescRight">The tracking data callback.  <a href="group__SDK__Callback__Types.html#gaf0e7a2127ce4669c8fbe1f0af2be939e">More...</a><br /></td></tr>
 <tr class="separator:gaf0e7a2127ce4669c8fbe1f0af2be939e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4e3c20a20900fc754e995b4d512dd3cb"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SDK__Callback__Types.html#ga4e3c20a20900fc754e995b4d512dd3cb">slamtec_aurora_sdk_on_pose_augmentation_result_callback_t</a>) (void *user_data, uint64_t timestamp_ns, <a class="el" href="group__SDK__Basic__Data__Types.html#ga972808a748f55869f8e85bbb49cdd5ca">slamtec_aurora_sdk_pose_augmentation_mode_t</a> mode, const <a class="el" href="group__SDK__Basic__Data__Types.html#ga01840dc21269a490c9c337e9b723d0df">slamtec_aurora_sdk_pose_se3_t</a> *pose)</td></tr>
+<tr class="memdesc:ga4e3c20a20900fc754e995b4d512dd3cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">The pose augmentation result callback.  <a href="group__SDK__Callback__Types.html#ga4e3c20a20900fc754e995b4d512dd3cb">More...</a><br /></td></tr>
+<tr class="separator:ga4e3c20a20900fc754e995b4d512dd3cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaee9f7fb9def5fd87f99a916a03f6fdbd"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SDK__Callback__Types.html#gaee9f7fb9def5fd87f99a916a03f6fdbd">slamtec_aurora_sdk_on_imu_data_callback_t</a>) (void *user_data, const <a class="el" href="group__SDK__Basic__Data__Types.html#ga64848ce60da26c15e6595fb1aba0df49">slamtec_aurora_sdk_imu_data_t</a> *imu_data, size_t imu_data_count)</td></tr>
 <tr class="memdesc:gaee9f7fb9def5fd87f99a916a03f6fdbd"><td class="mdescLeft">&#160;</td><td class="mdescRight">The IMU data callback.  <a href="group__SDK__Callback__Types.html#gaee9f7fb9def5fd87f99a916a03f6fdbd">More...</a><br /></td></tr>
 <tr class="separator:gaee9f7fb9def5fd87f99a916a03f6fdbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -146,6 +149,9 @@ Typedefs</h2></td></tr>
 <tr class="memitem:ga7e0a15c14041d3f9242cb75a16c61ee9"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SDK__Callback__Types.html#ga7e0a15c14041d3f9242cb75a16c61ee9">slamtec_aurora_sdk_on_semantic_segmentation_image_arrived_callback_t</a>) (void *user_data, uint64_t timestamp_ns)</td></tr>
 <tr class="memdesc:ga7e0a15c14041d3f9242cb75a16c61ee9"><td class="mdescLeft">&#160;</td><td class="mdescRight">The semantic segmentation image arrived callback.  <a href="group__SDK__Callback__Types.html#ga7e0a15c14041d3f9242cb75a16c61ee9">More...</a><br /></td></tr>
 <tr class="separator:ga7e0a15c14041d3f9242cb75a16c61ee9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5e6499250840f1f9ababc52132583692"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SDK__Callback__Types.html#ga5e6499250840f1f9ababc52132583692">slamtec_aurora_sdk_on_pose_covariance_callback_t</a>) (void *user_data, uint64_t timestamp_ns, const float *covariance_matrix_buffer)</td></tr>
+<tr class="memdesc:ga5e6499250840f1f9ababc52132583692"><td class="mdescLeft">&#160;</td><td class="mdescRight">The pose covariance update callback.  <a href="group__SDK__Callback__Types.html#ga5e6499250840f1f9ababc52132583692">More...</a><br /></td></tr>
+<tr class="separator:ga5e6499250840f1f9ababc52132583692"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2e6f2b5e2798a593ee10cacfd2e04ea4"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SDK__Callback__Types.html#ga2e6f2b5e2798a593ee10cacfd2e04ea4">slamtec_aurora_sdk_on_map_keyframe_callback_t</a>) (void *user_data, const <a class="el" href="group__SDK__Basic__Data__Types.html#ga5e2be75c51a90e11f8364858171a63f1">slamtec_aurora_sdk_keyframe_desc_t</a> *keyframe_desc, const uint64_t *looped_frame_ids, const uint64_t *connected_frame_ids, const uint64_t *related_mp_ids)</td></tr>
 <tr class="memdesc:ga2e6f2b5e2798a593ee10cacfd2e04ea4"><td class="mdescLeft">&#160;</td><td class="mdescRight">The callback for accessing the keyframe data.  <a href="group__SDK__Callback__Types.html#ga2e6f2b5e2798a593ee10cacfd2e04ea4">More...</a><br /></td></tr>
 <tr class="separator:ga2e6f2b5e2798a593ee10cacfd2e04ea4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -188,6 +194,12 @@ Functions</h2></td></tr>
 <tr class="memitem:ga382a5c71600a7f1f2a147b0ddef40c4f"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SDK__Callback__Types.html#ga382a5c71600a7f1f2a147b0ddef40c4f">rp::standalone::aurora::RemoteSDKListener::onSemanticSegmentationDataArrived</a> (uint64_t timestamp_ns)</td></tr>
 <tr class="memdesc:ga382a5c71600a7f1f2a147b0ddef40c4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The callback for the semantic segmentation data.  <a href="group__SDK__Callback__Types.html#ga382a5c71600a7f1f2a147b0ddef40c4f">More...</a><br /></td></tr>
 <tr class="separator:ga382a5c71600a7f1f2a147b0ddef40c4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9ffd439515e852169a2caec419690a86"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SDK__Callback__Types.html#ga9ffd439515e852169a2caec419690a86">rp::standalone::aurora::RemoteSDKListener::onPoseCovariance</a> (uint64_t timestamp_ns, const <a class="el" href="classrp_1_1standalone_1_1aurora_1_1PoseCovariance.html">PoseCovariance</a> &amp;covariance)</td></tr>
+<tr class="memdesc:ga9ffd439515e852169a2caec419690a86"><td class="mdescLeft">&#160;</td><td class="mdescRight">The callback for the pose covariance update.  <a href="group__SDK__Callback__Types.html#ga9ffd439515e852169a2caec419690a86">More...</a><br /></td></tr>
+<tr class="separator:ga9ffd439515e852169a2caec419690a86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3997397c691aa6e205f2150d048d07ef"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SDK__Callback__Types.html#ga3997397c691aa6e205f2150d048d07ef">rp::standalone::aurora::RemoteSDKListener::onPoseAugmentationResult</a> (uint64_t timestamp_ns, <a class="el" href="group__SDK__Basic__Data__Types.html#ga972808a748f55869f8e85bbb49cdd5ca">slamtec_aurora_sdk_pose_augmentation_mode_t</a> mode, const <a class="el" href="group__SDK__Basic__Data__Types.html#ga01840dc21269a490c9c337e9b723d0df">slamtec_aurora_sdk_pose_se3_t</a> &amp;pose)</td></tr>
+<tr class="memdesc:ga3997397c691aa6e205f2150d048d07ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback for pose augmentation result.  <a href="group__SDK__Callback__Types.html#ga3997397c691aa6e205f2150d048d07ef">More...</a><br /></td></tr>
+<tr class="separator:ga3997397c691aa6e205f2150d048d07ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>The callback types for the SDK. </p>
@@ -443,6 +455,56 @@ Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">user_data</td><td>The user data to be passed to the callback </td></tr>
     <tr><td class="paramname">mapping_flags</td><td>The mapping flags </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga4e3c20a20900fc754e995b4d512dd3cb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4e3c20a20900fc754e995b4d512dd3cb">&#9670;&nbsp;</a></span>slamtec_aurora_sdk_on_pose_augmentation_result_callback_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(* slamtec_aurora_sdk_on_pose_augmentation_result_callback_t) (void *user_data, uint64_t timestamp_ns, <a class="el" href="group__SDK__Basic__Data__Types.html#ga972808a748f55869f8e85bbb49cdd5ca">slamtec_aurora_sdk_pose_augmentation_mode_t</a> mode, const <a class="el" href="group__SDK__Basic__Data__Types.html#ga01840dc21269a490c9c337e9b723d0df">slamtec_aurora_sdk_pose_se3_t</a> *pose)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The pose augmentation result callback. </p>
+<p>The pose augmentation result callback to receive augmented pose data at higher frequency.</p>
+<p>This callback is invoked when pose augmentation is enabled and new augmented pose is available. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">user_data</td><td>The user data to be passed to the callback </td></tr>
+    <tr><td class="paramname">timestamp_ns</td><td>The timestamp of the augmented pose in nanoseconds </td></tr>
+    <tr><td class="paramname">mode</td><td>The current pose augmentation mode </td></tr>
+    <tr><td class="paramname">pose</td><td>The augmented pose in SE3 format </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga5e6499250840f1f9ababc52132583692"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5e6499250840f1f9ababc52132583692">&#9670;&nbsp;</a></span>slamtec_aurora_sdk_on_pose_covariance_callback_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(* slamtec_aurora_sdk_on_pose_covariance_callback_t) (void *user_data, uint64_t timestamp_ns, const float *covariance_matrix_buffer)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The pose covariance update callback. </p>
+<p>The pose covariance update callback to receive the pose covariance data from the device. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">user_data</td><td>The user data to be passed to the callback </td></tr>
+    <tr><td class="paramname">timestamp_ns</td><td>The timestamp of the pose covariance data </td></tr>
+    <tr><td class="paramname">covariance_matrix_buffer</td><td>The 6x6 pose covariance matrix buffer in column-major order (36 floats), or NULL if not available </td></tr>
   </table>
   </dd>
 </dl>
@@ -737,6 +799,112 @@ Functions</h2></td></tr>
 
 <p>The callback for the mapping flags. </p>
 <p>The callback to receive the mapping flags from the remote device </p>
+
+</div>
+</div>
+<a id="ga3997397c691aa6e205f2150d048d07ef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3997397c691aa6e205f2150d048d07ef">&#9670;&nbsp;</a></span>onPoseAugmentationResult()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void rp::standalone::aurora::RemoteSDKListener::onPoseAugmentationResult </td>
+          <td>(</td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>timestamp_ns</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__SDK__Basic__Data__Types.html#ga972808a748f55869f8e85bbb49cdd5ca">slamtec_aurora_sdk_pose_augmentation_mode_t</a>&#160;</td>
+          <td class="paramname"><em>mode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="group__SDK__Basic__Data__Types.html#ga01840dc21269a490c9c337e9b723d0df">slamtec_aurora_sdk_pose_se3_t</a> &amp;&#160;</td>
+          <td class="paramname"><em>pose</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Callback for pose augmentation result. </p>
+<p>The callback to receive high-frequency augmented pose data</p>
+<p>This callback is invoked when pose augmentation is enabled and new augmented pose is available </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">timestamp_ns</td><td>The timestamp of the augmented pose in nanoseconds </td></tr>
+    <tr><td class="paramname">mode</td><td>The current pose augmentation mode </td></tr>
+    <tr><td class="paramname">pose</td><td>The augmented pose in SE3 format </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga9ffd439515e852169a2caec419690a86"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9ffd439515e852169a2caec419690a86">&#9670;&nbsp;</a></span>onPoseCovariance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void rp::standalone::aurora::RemoteSDKListener::onPoseCovariance </td>
+          <td>(</td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>timestamp_ns</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classrp_1_1standalone_1_1aurora_1_1PoseCovariance.html">PoseCovariance</a> &amp;&#160;</td>
+          <td class="paramname"><em>covariance</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The callback for the pose covariance update. </p>
+<p>The callback to receive the pose covariance data from the remote device </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">timestamp_ns</td><td>The timestamp of the pose covariance data </td></tr>
+    <tr><td class="paramname">covariance</td><td>The pose covariance data</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Callback for pose covariance update </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">timestamp_ns</td><td>The timestamp of the pose covariance </td></tr>
+    <tr><td class="paramname">covariance</td><td>The pose covariance object (zero-copy, references callback buffer) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>The covariance object references the callback buffer. If you need to store it beyond the callback, copy it. </dd></dl>
 
 </div>
 </div>

@@ -3,15 +3,27 @@ var annotated_dup =
     [ "rp", null, [
       [ "standalone", null, [
         [ "aurora", null, [
+          [ "CameraMaskManager", "classrp_1_1standalone_1_1aurora_1_1CameraMaskManager.html", "classrp_1_1standalone_1_1aurora_1_1CameraMaskManager" ],
+          [ "ConfigData", "classrp_1_1standalone_1_1aurora_1_1ConfigData.html", "classrp_1_1standalone_1_1aurora_1_1ConfigData" ],
+          [ "DashcamRecorderManager", "classrp_1_1standalone_1_1aurora_1_1DashcamRecorderManager.html", "classrp_1_1standalone_1_1aurora_1_1DashcamRecorderManager" ],
           [ "DataRecorder", "classrp_1_1standalone_1_1aurora_1_1DataRecorder.html", "classrp_1_1standalone_1_1aurora_1_1DataRecorder" ],
           [ "EnhancedImaging", "classrp_1_1standalone_1_1aurora_1_1EnhancedImaging.html", "classrp_1_1standalone_1_1aurora_1_1EnhancedImaging" ],
           [ "FloorDetectionHistogram", "classrp_1_1standalone_1_1aurora_1_1FloorDetectionHistogram.html", "classrp_1_1standalone_1_1aurora_1_1FloorDetectionHistogram" ],
           [ "FloorDetector", "classrp_1_1standalone_1_1aurora_1_1FloorDetector.html", "classrp_1_1standalone_1_1aurora_1_1FloorDetector" ],
+          [ "is_eigen_matrix", "structrp_1_1standalone_1_1aurora_1_1is__eigen__matrix.html", null ],
           [ "LIDAR2DGridMapGenerationOptions", "classrp_1_1standalone_1_1aurora_1_1LIDAR2DGridMapGenerationOptions.html", "classrp_1_1standalone_1_1aurora_1_1LIDAR2DGridMapGenerationOptions" ],
           [ "LIDAR2DMapBuilder", "classrp_1_1standalone_1_1aurora_1_1LIDAR2DMapBuilder.html", "classrp_1_1standalone_1_1aurora_1_1LIDAR2DMapBuilder" ],
           [ "Noncopyable", "classrp_1_1standalone_1_1aurora_1_1Noncopyable.html", "classrp_1_1standalone_1_1aurora_1_1Noncopyable" ],
           [ "OccupancyGridMap2DRef", "classrp_1_1standalone_1_1aurora_1_1OccupancyGridMap2DRef.html", "classrp_1_1standalone_1_1aurora_1_1OccupancyGridMap2DRef" ],
+          [ "PersistentConfigManager", "classrp_1_1standalone_1_1aurora_1_1PersistentConfigManager.html", "classrp_1_1standalone_1_1aurora_1_1PersistentConfigManager" ],
+          [ "PoseCovariance", "classrp_1_1standalone_1_1aurora_1_1PoseCovariance.html", "classrp_1_1standalone_1_1aurora_1_1PoseCovariance" ],
+          [ "PoseCovarianceReadable", "classrp_1_1standalone_1_1aurora_1_1PoseCovarianceReadable.html", "classrp_1_1standalone_1_1aurora_1_1PoseCovarianceReadable" ],
+          [ "RemoteCameraMaskImage", "structrp_1_1standalone_1_1aurora_1_1RemoteCameraMaskImage.html", "structrp_1_1standalone_1_1aurora_1_1RemoteCameraMaskImage" ],
           [ "RemoteController", "classrp_1_1standalone_1_1aurora_1_1RemoteController.html", "classrp_1_1standalone_1_1aurora_1_1RemoteController" ],
+          [ "RemoteDashcamSessionInfo", "structrp_1_1standalone_1_1aurora_1_1RemoteDashcamSessionInfo.html", "structrp_1_1standalone_1_1aurora_1_1RemoteDashcamSessionInfo" ],
+          [ "RemoteDashcamStatus", "structrp_1_1standalone_1_1aurora_1_1RemoteDashcamStatus.html", "structrp_1_1standalone_1_1aurora_1_1RemoteDashcamStatus" ],
+          [ "RemoteDashcamStorageInfo", "classrp_1_1standalone_1_1aurora_1_1RemoteDashcamStorageInfo.html", "classrp_1_1standalone_1_1aurora_1_1RemoteDashcamStorageInfo" ],
+          [ "RemoteDashcamStorageStatus", "structrp_1_1standalone_1_1aurora_1_1RemoteDashcamStorageStatus.html", "structrp_1_1standalone_1_1aurora_1_1RemoteDashcamStorageStatus" ],
           [ "RemoteDataProvider", "classrp_1_1standalone_1_1aurora_1_1RemoteDataProvider.html", "classrp_1_1standalone_1_1aurora_1_1RemoteDataProvider" ],
           [ "RemoteDeviceBasicInfo", "classrp_1_1standalone_1_1aurora_1_1RemoteDeviceBasicInfo.html", "classrp_1_1standalone_1_1aurora_1_1RemoteDeviceBasicInfo" ],
           [ "RemoteEnhancedImagingFrame", "structrp_1_1standalone_1_1aurora_1_1RemoteEnhancedImagingFrame.html", "structrp_1_1standalone_1_1aurora_1_1RemoteEnhancedImagingFrame" ],
@@ -26,7 +38,8 @@ var annotated_dup =
           [ "SDKConfig", "classrp_1_1standalone_1_1aurora_1_1SDKConfig.html", "classrp_1_1standalone_1_1aurora_1_1SDKConfig" ],
           [ "SDKConnectionInfo", "classrp_1_1standalone_1_1aurora_1_1SDKConnectionInfo.html", "classrp_1_1standalone_1_1aurora_1_1SDKConnectionInfo" ],
           [ "SDKServerConnectionDesc", "classrp_1_1standalone_1_1aurora_1_1SDKServerConnectionDesc.html", "classrp_1_1standalone_1_1aurora_1_1SDKServerConnectionDesc" ],
-          [ "SingleLayerLIDARScan", "classrp_1_1standalone_1_1aurora_1_1SingleLayerLIDARScan.html", "classrp_1_1standalone_1_1aurora_1_1SingleLayerLIDARScan" ]
+          [ "SingleLayerLIDARScan", "classrp_1_1standalone_1_1aurora_1_1SingleLayerLIDARScan.html", "classrp_1_1standalone_1_1aurora_1_1SingleLayerLIDARScan" ],
+          [ "TransformManager", "classrp_1_1standalone_1_1aurora_1_1TransformManager.html", "classrp_1_1standalone_1_1aurora_1_1TransformManager" ]
         ] ]
       ] ]
     ] ],
@@ -34,7 +47,11 @@ var annotated_dup =
     [ "_slamtec_aurora_sdk_2d_gridmap_fetch_info_t", "struct__slamtec__aurora__sdk__2d__gridmap__fetch__info__t.html", "struct__slamtec__aurora__sdk__2d__gridmap__fetch__info__t" ],
     [ "_slamtec_aurora_sdk_2d_gridmap_generation_options_t", "struct__slamtec__aurora__sdk__2d__gridmap__generation__options__t.html", "struct__slamtec__aurora__sdk__2d__gridmap__generation__options__t" ],
     [ "_slamtec_aurora_sdk_camera_calibration_t", "struct__slamtec__aurora__sdk__camera__calibration__t.html", "struct__slamtec__aurora__sdk__camera__calibration__t" ],
+    [ "_slamtec_aurora_sdk_camera_mask_image_buffer_t", "struct__slamtec__aurora__sdk__camera__mask__image__buffer__t.html", "struct__slamtec__aurora__sdk__camera__mask__image__buffer__t" ],
     [ "_slamtec_aurora_sdk_connection_info_t", "struct__slamtec__aurora__sdk__connection__info__t.html", "struct__slamtec__aurora__sdk__connection__info__t" ],
+    [ "_slamtec_aurora_sdk_dashcam_session_info_t", "struct__slamtec__aurora__sdk__dashcam__session__info__t.html", "struct__slamtec__aurora__sdk__dashcam__session__info__t" ],
+    [ "_slamtec_aurora_sdk_dashcam_status_t", "struct__slamtec__aurora__sdk__dashcam__status__t.html", "struct__slamtec__aurora__sdk__dashcam__status__t" ],
+    [ "_slamtec_aurora_sdk_dashcam_storage_status_t", "struct__slamtec__aurora__sdk__dashcam__storage__status__t.html", "struct__slamtec__aurora__sdk__dashcam__storage__status__t" ],
     [ "_slamtec_aurora_sdk_depthcam_config_info", "struct__slamtec__aurora__sdk__depthcam__config__info.html", "struct__slamtec__aurora__sdk__depthcam__config__info" ],
     [ "_slamtec_aurora_sdk_device_basic_info", "struct__slamtec__aurora__sdk__device__basic__info.html", "struct__slamtec__aurora__sdk__device__basic__info" ],
     [ "_slamtec_aurora_sdk_device_status_desc", "struct__slamtec__aurora__sdk__device__status__desc.html", "struct__slamtec__aurora__sdk__device__status__desc" ],
@@ -57,6 +74,9 @@ var annotated_dup =
     [ "_slamtec_aurora_sdk_map_desc_t", "struct__slamtec__aurora__sdk__map__desc__t.html", "struct__slamtec__aurora__sdk__map__desc__t" ],
     [ "_slamtec_aurora_sdk_map_point_desc_t", "struct__slamtec__aurora__sdk__map__point__desc__t.html", "struct__slamtec__aurora__sdk__map__point__desc__t" ],
     [ "_slamtec_aurora_sdk_mapstorage_session_status_t", "struct__slamtec__aurora__sdk__mapstorage__session__status__t.html", "struct__slamtec__aurora__sdk__mapstorage__session__status__t" ],
+    [ "_slamtec_aurora_sdk_pose_augmentation_config_t", "struct__slamtec__aurora__sdk__pose__augmentation__config__t.html", "struct__slamtec__aurora__sdk__pose__augmentation__config__t" ],
+    [ "_slamtec_aurora_sdk_pose_covariance_readable_t", "struct__slamtec__aurora__sdk__pose__covariance__readable__t.html", "struct__slamtec__aurora__sdk__pose__covariance__readable__t" ],
+    [ "_slamtec_aurora_sdk_pose_covariance_t", "struct__slamtec__aurora__sdk__pose__covariance__t.html", "struct__slamtec__aurora__sdk__pose__covariance__t" ],
     [ "_slamtec_aurora_sdk_pose_se3_t", "struct__slamtec__aurora__sdk__pose__se3__t.html", "struct__slamtec__aurora__sdk__pose__se3__t" ],
     [ "_slamtec_aurora_sdk_pose_t", "struct__slamtec__aurora__sdk__pose__t.html", "struct__slamtec__aurora__sdk__pose__t" ],
     [ "_slamtec_aurora_sdk_position3d_t", "struct__slamtec__aurora__sdk__position3d__t.html", "struct__slamtec__aurora__sdk__position3d__t" ],
@@ -74,5 +94,13 @@ var annotated_dup =
     [ "_slamtec_aurora_sdk_tracking_data_buffer_t", "struct__slamtec__aurora__sdk__tracking__data__buffer__t.html", "struct__slamtec__aurora__sdk__tracking__data__buffer__t" ],
     [ "_slamtec_aurora_sdk_tracking_info", "struct__slamtec__aurora__sdk__tracking__info.html", "struct__slamtec__aurora__sdk__tracking__info" ],
     [ "_slamtec_aurora_sdk_transform_calibration_t", "struct__slamtec__aurora__sdk__transform__calibration__t.html", "struct__slamtec__aurora__sdk__transform__calibration__t" ],
-    [ "_slamtec_aurora_sdk_version_info_t", "struct__slamtec__aurora__sdk__version__info__t.html", "struct__slamtec__aurora__sdk__version__info__t" ]
+    [ "_slamtec_aurora_sdk_version_info_t", "struct__slamtec__aurora__sdk__version__info__t.html", "struct__slamtec__aurora__sdk__version__info__t" ],
+    [ "RemoteTimeSyncClient", "classRemoteTimeSyncClient.html", "classRemoteTimeSyncClient" ],
+    [ "slamtec_aurora_sdk_timesync_options_t", "structslamtec__aurora__sdk__timesync__options__t.html", "structslamtec__aurora__sdk__timesync__options__t" ],
+    [ "slamtec_aurora_sdk_timesync_quality_t", "structslamtec__aurora__sdk__timesync__quality__t.html", "structslamtec__aurora__sdk__timesync__quality__t" ],
+    [ "slamtec_aurora_sdk_wallclock_accuracy_result_t", "structslamtec__aurora__sdk__wallclock__accuracy__result__t.html", "structslamtec__aurora__sdk__wallclock__accuracy__result__t" ],
+    [ "slamtec_aurora_sdk_wallclock_offset_result_t", "structslamtec__aurora__sdk__wallclock__offset__result__t.html", "structslamtec__aurora__sdk__wallclock__offset__result__t" ],
+    [ "slamtec_aurora_sdk_wallclock_sync_result_t", "structslamtec__aurora__sdk__wallclock__sync__result__t.html", "structslamtec__aurora__sdk__wallclock__sync__result__t" ],
+    [ "TimeSyncOptions", "structTimeSyncOptions.html", "structTimeSyncOptions" ],
+    [ "TimeSyncQuality", "structTimeSyncQuality.html", "structTimeSyncQuality" ]
 ];

@@ -6,8 +6,18 @@ var hierarchy =
       [ "rp::standalone::aurora::LIDAR2DGridMapGenerationOptions", "classrp_1_1standalone_1_1aurora_1_1LIDAR2DGridMapGenerationOptions.html", null ]
     ] ],
     [ "_slamtec_aurora_sdk_camera_calibration_t", "struct__slamtec__aurora__sdk__camera__calibration__t.html", null ],
+    [ "_slamtec_aurora_sdk_camera_mask_image_buffer_t", "struct__slamtec__aurora__sdk__camera__mask__image__buffer__t.html", null ],
     [ "_slamtec_aurora_sdk_connection_info_t", "struct__slamtec__aurora__sdk__connection__info__t.html", [
       [ "rp::standalone::aurora::SDKConnectionInfo", "classrp_1_1standalone_1_1aurora_1_1SDKConnectionInfo.html", null ]
+    ] ],
+    [ "_slamtec_aurora_sdk_dashcam_session_info_t", "struct__slamtec__aurora__sdk__dashcam__session__info__t.html", [
+      [ "rp::standalone::aurora::RemoteDashcamSessionInfo", "structrp_1_1standalone_1_1aurora_1_1RemoteDashcamSessionInfo.html", null ]
+    ] ],
+    [ "_slamtec_aurora_sdk_dashcam_status_t", "struct__slamtec__aurora__sdk__dashcam__status__t.html", [
+      [ "rp::standalone::aurora::RemoteDashcamStatus", "structrp_1_1standalone_1_1aurora_1_1RemoteDashcamStatus.html", null ]
+    ] ],
+    [ "_slamtec_aurora_sdk_dashcam_storage_status_t", "struct__slamtec__aurora__sdk__dashcam__storage__status__t.html", [
+      [ "rp::standalone::aurora::RemoteDashcamStorageStatus", "structrp_1_1standalone_1_1aurora_1_1RemoteDashcamStorageStatus.html", null ]
     ] ],
     [ "_slamtec_aurora_sdk_depthcam_config_info", "struct__slamtec__aurora__sdk__depthcam__config__info.html", null ],
     [ "_slamtec_aurora_sdk_device_basic_info", "struct__slamtec__aurora__sdk__device__basic__info.html", [
@@ -33,6 +43,11 @@ var hierarchy =
     [ "_slamtec_aurora_sdk_map_desc_t", "struct__slamtec__aurora__sdk__map__desc__t.html", null ],
     [ "_slamtec_aurora_sdk_map_point_desc_t", "struct__slamtec__aurora__sdk__map__point__desc__t.html", null ],
     [ "_slamtec_aurora_sdk_mapstorage_session_status_t", "struct__slamtec__aurora__sdk__mapstorage__session__status__t.html", null ],
+    [ "_slamtec_aurora_sdk_pose_augmentation_config_t", "struct__slamtec__aurora__sdk__pose__augmentation__config__t.html", null ],
+    [ "_slamtec_aurora_sdk_pose_covariance_readable_t", "struct__slamtec__aurora__sdk__pose__covariance__readable__t.html", [
+      [ "rp::standalone::aurora::PoseCovarianceReadable", "classrp_1_1standalone_1_1aurora_1_1PoseCovarianceReadable.html", null ]
+    ] ],
+    [ "_slamtec_aurora_sdk_pose_covariance_t", "struct__slamtec__aurora__sdk__pose__covariance__t.html", null ],
     [ "_slamtec_aurora_sdk_pose_se3_t", "struct__slamtec__aurora__sdk__pose__se3__t.html", null ],
     [ "_slamtec_aurora_sdk_pose_t", "struct__slamtec__aurora__sdk__pose__t.html", null ],
     [ "_slamtec_aurora_sdk_position3d_t", "struct__slamtec__aurora__sdk__position3d__t.html", null ],
@@ -55,26 +70,45 @@ var hierarchy =
     [ "_slamtec_aurora_sdk_tracking_info", "struct__slamtec__aurora__sdk__tracking__info.html", null ],
     [ "_slamtec_aurora_sdk_transform_calibration_t", "struct__slamtec__aurora__sdk__transform__calibration__t.html", null ],
     [ "_slamtec_aurora_sdk_version_info_t", "struct__slamtec__aurora__sdk__version__info__t.html", null ],
+    [ "false_type", null, [
+      [ "rp::standalone::aurora::is_eigen_matrix< T >", "structrp_1_1standalone_1_1aurora_1_1is__eigen__matrix.html", null ]
+    ] ],
     [ "rp::standalone::aurora::FloorDetectionHistogram", "classrp_1_1standalone_1_1aurora_1_1FloorDetectionHistogram.html", null ],
     [ "rp::standalone::aurora::Noncopyable", "classrp_1_1standalone_1_1aurora_1_1Noncopyable.html", [
       [ "rp::standalone::aurora::DataRecorder< SLAMTEC_AURORA_DATARECORDER_TYPE_COLMAP_DATASET >", "classrp_1_1standalone_1_1aurora_1_1DataRecorder.html", null ],
       [ "rp::standalone::aurora::DataRecorder< SLAMTEC_AURORA_DATARECORDER_TYPE_RAW_DATASET >", "classrp_1_1standalone_1_1aurora_1_1DataRecorder.html", null ],
+      [ "rp::standalone::aurora::CameraMaskManager", "classrp_1_1standalone_1_1aurora_1_1CameraMaskManager.html", null ],
+      [ "rp::standalone::aurora::ConfigData", "classrp_1_1standalone_1_1aurora_1_1ConfigData.html", null ],
+      [ "rp::standalone::aurora::DashcamRecorderManager", "classrp_1_1standalone_1_1aurora_1_1DashcamRecorderManager.html", null ],
       [ "rp::standalone::aurora::DataRecorder< T >", "classrp_1_1standalone_1_1aurora_1_1DataRecorder.html", null ],
       [ "rp::standalone::aurora::EnhancedImaging", "classrp_1_1standalone_1_1aurora_1_1EnhancedImaging.html", null ],
       [ "rp::standalone::aurora::FloorDetector", "classrp_1_1standalone_1_1aurora_1_1FloorDetector.html", null ],
       [ "rp::standalone::aurora::LIDAR2DMapBuilder", "classrp_1_1standalone_1_1aurora_1_1LIDAR2DMapBuilder.html", null ],
       [ "rp::standalone::aurora::OccupancyGridMap2DRef", "classrp_1_1standalone_1_1aurora_1_1OccupancyGridMap2DRef.html", null ],
+      [ "rp::standalone::aurora::PersistentConfigManager", "classrp_1_1standalone_1_1aurora_1_1PersistentConfigManager.html", null ],
       [ "rp::standalone::aurora::RemoteController", "classrp_1_1standalone_1_1aurora_1_1RemoteController.html", null ],
+      [ "rp::standalone::aurora::RemoteDashcamStorageInfo", "classrp_1_1standalone_1_1aurora_1_1RemoteDashcamStorageInfo.html", null ],
       [ "rp::standalone::aurora::RemoteDataProvider", "classrp_1_1standalone_1_1aurora_1_1RemoteDataProvider.html", null ],
       [ "rp::standalone::aurora::RemoteMapManager", "classrp_1_1standalone_1_1aurora_1_1RemoteMapManager.html", null ],
-      [ "rp::standalone::aurora::RemoteSDK", "classrp_1_1standalone_1_1aurora_1_1RemoteSDK.html", null ]
+      [ "rp::standalone::aurora::RemoteSDK", "classrp_1_1standalone_1_1aurora_1_1RemoteSDK.html", null ],
+      [ "rp::standalone::aurora::TransformManager", "classrp_1_1standalone_1_1aurora_1_1TransformManager.html", null ]
     ] ],
+    [ "rp::standalone::aurora::PoseCovariance", "classrp_1_1standalone_1_1aurora_1_1PoseCovariance.html", null ],
+    [ "rp::standalone::aurora::RemoteCameraMaskImage", "structrp_1_1standalone_1_1aurora_1_1RemoteCameraMaskImage.html", null ],
     [ "rp::standalone::aurora::RemoteEnhancedImagingFrame", "structrp_1_1standalone_1_1aurora_1_1RemoteEnhancedImagingFrame.html", null ],
     [ "rp::standalone::aurora::RemoteImageRef", "classrp_1_1standalone_1_1aurora_1_1RemoteImageRef.html", null ],
     [ "rp::standalone::aurora::RemoteKeyFrameData", "classrp_1_1standalone_1_1aurora_1_1RemoteKeyFrameData.html", null ],
     [ "rp::standalone::aurora::RemoteMapDataVisitor", "classrp_1_1standalone_1_1aurora_1_1RemoteMapDataVisitor.html", null ],
     [ "rp::standalone::aurora::RemoteSDKListener", "classrp_1_1standalone_1_1aurora_1_1RemoteSDKListener.html", null ],
     [ "rp::standalone::aurora::RemoteStereoImagePair", "structrp_1_1standalone_1_1aurora_1_1RemoteStereoImagePair.html", null ],
+    [ "RemoteTimeSyncClient", "classRemoteTimeSyncClient.html", null ],
     [ "rp::standalone::aurora::RemoteTrackingFrameInfo", "classrp_1_1standalone_1_1aurora_1_1RemoteTrackingFrameInfo.html", null ],
-    [ "rp::standalone::aurora::SingleLayerLIDARScan", "classrp_1_1standalone_1_1aurora_1_1SingleLayerLIDARScan.html", null ]
+    [ "rp::standalone::aurora::SingleLayerLIDARScan", "classrp_1_1standalone_1_1aurora_1_1SingleLayerLIDARScan.html", null ],
+    [ "slamtec_aurora_sdk_timesync_options_t", "structslamtec__aurora__sdk__timesync__options__t.html", null ],
+    [ "slamtec_aurora_sdk_timesync_quality_t", "structslamtec__aurora__sdk__timesync__quality__t.html", null ],
+    [ "slamtec_aurora_sdk_wallclock_accuracy_result_t", "structslamtec__aurora__sdk__wallclock__accuracy__result__t.html", null ],
+    [ "slamtec_aurora_sdk_wallclock_offset_result_t", "structslamtec__aurora__sdk__wallclock__offset__result__t.html", null ],
+    [ "slamtec_aurora_sdk_wallclock_sync_result_t", "structslamtec__aurora__sdk__wallclock__sync__result__t.html", null ],
+    [ "TimeSyncOptions", "structTimeSyncOptions.html", null ],
+    [ "TimeSyncQuality", "structTimeSyncQuality.html", null ]
 ];

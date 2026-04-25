@@ -4,6 +4,7 @@ var classrp_1_1standalone_1_1aurora_1_1RemoteDataProvider =
     [ "accessMapData", "classrp_1_1standalone_1_1aurora_1_1RemoteDataProvider.html#abbc7b6d2f1f88031908b9265e6673785", null ],
     [ "accessMapData", "classrp_1_1standalone_1_1aurora_1_1RemoteDataProvider.html#a75498b787692bf73c4439d685a7ae25a", null ],
     [ "getAllMapInfo", "classrp_1_1standalone_1_1aurora_1_1RemoteDataProvider.html#a2ae940ef71c82a516a32d46827477159", null ],
+    [ "getAugmentedPose", "classrp_1_1standalone_1_1aurora_1_1RemoteDataProvider.html#ad25f53a44bb8ededce3c8e42ce9880d4", null ],
     [ "getCameraCalibration", "classrp_1_1standalone_1_1aurora_1_1RemoteDataProvider.html#a207acf130a1c75eb7e294cd887f80f6f", null ],
     [ "getCurrentPose", "classrp_1_1standalone_1_1aurora_1_1RemoteDataProvider.html#aa3cdc0bfad27d6c882efb5b89d642bbd", null ],
     [ "getCurrentPoseSE3", "classrp_1_1standalone_1_1aurora_1_1RemoteDataProvider.html#a020587b8ec7e1f4c2464c19be494e255", null ],
@@ -14,6 +15,9 @@ var classrp_1_1standalone_1_1aurora_1_1RemoteDataProvider =
     [ "getLastDeviceBasicInfo", "classrp_1_1standalone_1_1aurora_1_1RemoteDataProvider.html#ac8749e376acb75ba4a041e43d77e213e", null ],
     [ "getLastDeviceStatus", "classrp_1_1standalone_1_1aurora_1_1RemoteDataProvider.html#ae78f2be2cf47dff0a75cce90f4736796", null ],
     [ "getMappingFlags", "classrp_1_1standalone_1_1aurora_1_1RemoteDataProvider.html#a20d765bc9d1cb926d98aad59a034078e", null ],
+    [ "getPoseAugmentationConfig", "classrp_1_1standalone_1_1aurora_1_1RemoteDataProvider.html#ae28e305a5e9c0aa8bbf5314a8d15ea81", null ],
+    [ "getPoseAugmentationMode", "classrp_1_1standalone_1_1aurora_1_1RemoteDataProvider.html#affbcb99c8a3a79e4b71fc6e58dd1a8ae", null ],
+    [ "getRecentPoseCovariance", "classrp_1_1standalone_1_1aurora_1_1RemoteDataProvider.html#a8bea2ed9441f4113f2d943e4f4ac72d1", null ],
     [ "getTransformCalibration", "classrp_1_1standalone_1_1aurora_1_1RemoteDataProvider.html#a9afa19cb67eb813a1fdb3bfed7e493b6", null ],
     [ "isCameraPreviewStreamSupported", "classrp_1_1standalone_1_1aurora_1_1RemoteDataProvider.html#aa5e1c8a1f3f7b33ea82f969c6e59bd81", null ],
     [ "peekCameraPreviewImage", "classrp_1_1standalone_1_1aurora_1_1RemoteDataProvider.html#a6eefba14f1c9dc5a81e619821ce759f6", null ],
@@ -23,6 +27,8 @@ var classrp_1_1standalone_1_1aurora_1_1RemoteDataProvider =
     [ "peekRelocalizationStatus", "classrp_1_1standalone_1_1aurora_1_1RemoteDataProvider.html#af92b02eacad65a10e0c6a10cf8518fd6", null ],
     [ "peekTrackingData", "classrp_1_1standalone_1_1aurora_1_1RemoteDataProvider.html#a448d3da5892ddce8c9751f95a65e9c19", null ],
     [ "peekVSLAMSystemStatus", "classrp_1_1standalone_1_1aurora_1_1RemoteDataProvider.html#a5aeffeeed7f264b35a44ff675e760a23", null ],
+    [ "startPoseAugmentation", "classrp_1_1standalone_1_1aurora_1_1RemoteDataProvider.html#a73872c957f5a7ad538a5e99c373fc5c7", null ],
+    [ "stopPoseAugmentation", "classrp_1_1standalone_1_1aurora_1_1RemoteDataProvider.html#a506b99286325d0dd0416ef1a5109a0d4", null ],
     [ "RemoteSDK", "classrp_1_1standalone_1_1aurora_1_1RemoteDataProvider.html#a3d7224f06f82e9b871760e360315effe", null ],
     [ "_sdk", "classrp_1_1standalone_1_1aurora_1_1RemoteDataProvider.html#a718269dbca274e95182d626524262bd3", null ]
 ];

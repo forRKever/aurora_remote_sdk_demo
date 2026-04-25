@@ -8,6 +8,7 @@ var group__Controller__Operations =
     [ "slamtec_aurora_sdk_controller_get_keyframe_fetch_flags", "group__Controller__Operations.html#gaf684f528298e42add8ed90a0d9433678", null ],
     [ "slamtec_aurora_sdk_controller_get_last_relocalization_status", "group__Controller__Operations.html#ga46dfe79e7f5c9bedd616d91d8b51532e", null ],
     [ "slamtec_aurora_sdk_controller_get_map_point_fetch_flags", "group__Controller__Operations.html#ga610b9de405aa515611b98750bcdbc10c", null ],
+    [ "slamtec_aurora_sdk_controller_get_system_config", "group__Controller__Operations.html#ga8a7ac5be777ec1225576e78d4d119512", null ],
     [ "slamtec_aurora_sdk_controller_is_connected", "group__Controller__Operations.html#ga4e0bca5f102374737483880cd573da08", null ],
     [ "slamtec_aurora_sdk_controller_is_device_connection_alive", "group__Controller__Operations.html#ga41d77061c7f95bea5149fe266543c3c2", null ],
     [ "slamtec_aurora_sdk_controller_is_enhanced_imaging_subscribed", "group__Controller__Operations.html#gacf6930fee2037ac56bc49383ee10ef11", null ],
@@ -27,5 +28,6 @@ var group__Controller__Operations =
     [ "slamtec_aurora_sdk_controller_set_low_rate_mode", "group__Controller__Operations.html#gaba9925238fd9ad0a7d509291e30e9dc9", null ],
     [ "slamtec_aurora_sdk_controller_set_map_data_syncing", "group__Controller__Operations.html#gacd4a4423da8095ad2c7d14f79a06e66d", null ],
     [ "slamtec_aurora_sdk_controller_set_map_point_fetch_flags", "group__Controller__Operations.html#ga4d7252fbc8300965ee1eff816b2b00f8", null ],
-    [ "slamtec_aurora_sdk_controller_set_raw_data_subscription", "group__Controller__Operations.html#ga1b16545b03d20a8b08804f4bd7950364", null ]
+    [ "slamtec_aurora_sdk_controller_set_raw_data_subscription", "group__Controller__Operations.html#ga1b16545b03d20a8b08804f4bd7950364", null ],
+    [ "slamtec_aurora_sdk_controller_set_system_config", "group__Controller__Operations.html#ga04a41d9c3ec019ba2a679d5c1cbb6672", null ]
 ];

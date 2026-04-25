@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="slamtec.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SLAMTEC Aurora Public Remote SDK
-   &#160;<span id="projectnumber">2.1.0-rtm</span>
+   &#160;<span id="projectnumber">2.1.1-rc1</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -189,6 +189,12 @@ Functions</h2></td></tr>
 <tr class="memitem:ga41d77061c7f95bea5149fe266543c3c2"><td class="memItemLeft" align="right" valign="top">int AURORA_SDK_API&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Controller__Operations.html#ga41d77061c7f95bea5149fe266543c3c2">slamtec_aurora_sdk_controller_is_device_connection_alive</a> (<a class="el" href="group__SDK__Basic__Data__Types.html#ga28b02b17902e8c35063bba0df20bd715">slamtec_aurora_sdk_session_handle_t</a> handle)</td></tr>
 <tr class="memdesc:ga41d77061c7f95bea5149fe266543c3c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the device connection is alive.  <a href="group__Controller__Operations.html#ga41d77061c7f95bea5149fe266543c3c2">More...</a><br /></td></tr>
 <tr class="separator:ga41d77061c7f95bea5149fe266543c3c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8a7ac5be777ec1225576e78d4d119512"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> AURORA_SDK_API&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Controller__Operations.html#ga8a7ac5be777ec1225576e78d4d119512">slamtec_aurora_sdk_controller_get_system_config</a> (<a class="el" href="group__SDK__Basic__Data__Types.html#ga28b02b17902e8c35063bba0df20bd715">slamtec_aurora_sdk_session_handle_t</a> handle, const char *filter_type, <a class="el" href="group__SDK__Basic__Data__Types.html#gaf7f275611fdf3957132421f2bcd0e99d">slamtec_aurora_sdk_config_data_t</a> config_data, uint64_t timeout_ms)</td></tr>
+<tr class="memdesc:ga8a7ac5be777ec1225576e78d4d119512"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get system configuration from the remote device.  <a href="group__Controller__Operations.html#ga8a7ac5be777ec1225576e78d4d119512">More...</a><br /></td></tr>
+<tr class="separator:ga8a7ac5be777ec1225576e78d4d119512"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga04a41d9c3ec019ba2a679d5c1cbb6672"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> AURORA_SDK_API&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Controller__Operations.html#ga04a41d9c3ec019ba2a679d5c1cbb6672">slamtec_aurora_sdk_controller_set_system_config</a> (<a class="el" href="group__SDK__Basic__Data__Types.html#ga28b02b17902e8c35063bba0df20bd715">slamtec_aurora_sdk_session_handle_t</a> handle, const char *filter_type, const char *key, <a class="el" href="group__SDK__Basic__Data__Types.html#gaf7f275611fdf3957132421f2bcd0e99d">slamtec_aurora_sdk_config_data_t</a> config_data, uint64_t timeout_ms)</td></tr>
+<tr class="memdesc:ga04a41d9c3ec019ba2a679d5c1cbb6672"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set system configuration on the remote device.  <a href="group__Controller__Operations.html#ga04a41d9c3ec019ba2a679d5c1cbb6672">More...</a><br /></td></tr>
+<tr class="separator:ga04a41d9c3ec019ba2a679d5c1cbb6672"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Functions for controlling and interacting with Aurora servers. </p>
@@ -476,6 +482,58 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the flags of the map point fetch, check enum slamtec_aurora_sdk_map_point_fetch_flags_t for more details </dd></dl>
+
+</div>
+</div>
+<a id="ga8a7ac5be777ec1225576e78d4d119512"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8a7ac5be777ec1225576e78d4d119512">&#9670;&nbsp;</a></span>slamtec_aurora_sdk_controller_get_system_config()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> AURORA_SDK_API slamtec_aurora_sdk_controller_get_system_config </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__SDK__Basic__Data__Types.html#ga28b02b17902e8c35063bba0df20bd715">slamtec_aurora_sdk_session_handle_t</a>&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>filter_type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__SDK__Basic__Data__Types.html#gaf7f275611fdf3957132421f2bcd0e99d">slamtec_aurora_sdk_config_data_t</a>&#160;</td>
+          <td class="paramname"><em>config_data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>timeout_ms</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get system configuration from the remote device. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>- the session handle </td></tr>
+    <tr><td class="paramname">filter_type</td><td>- the filter type to get configuration for (e.g., "recorder.dashcam") </td></tr>
+    <tr><td class="paramname">config_data</td><td>- the config data handle to populate (must be created by caller using slamtec_aurora_sdk_config_data_create) </td></tr>
+    <tr><td class="paramname">timeout_ms</td><td>- the timeout in milliseconds </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the error code </dd></dl>
 
 </div>
 </div>
@@ -1299,6 +1357,65 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="ga04a41d9c3ec019ba2a679d5c1cbb6672"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga04a41d9c3ec019ba2a679d5c1cbb6672">&#9670;&nbsp;</a></span>slamtec_aurora_sdk_controller_set_system_config()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__SDK__Basic__Data__Types.html#ga594824a6dfa667c6bdd6c8f95b3a37a3">slamtec_aurora_sdk_errorcode_t</a> AURORA_SDK_API slamtec_aurora_sdk_controller_set_system_config </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__SDK__Basic__Data__Types.html#ga28b02b17902e8c35063bba0df20bd715">slamtec_aurora_sdk_session_handle_t</a>&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>filter_type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__SDK__Basic__Data__Types.html#gaf7f275611fdf3957132421f2bcd0e99d">slamtec_aurora_sdk_config_data_t</a>&#160;</td>
+          <td class="paramname"><em>config_data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>timeout_ms</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set system configuration on the remote device. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>- the session handle </td></tr>
+    <tr><td class="paramname">filter_type</td><td>- the filter type to set configuration for (e.g., "recorder.dashcam") </td></tr>
+    <tr><td class="paramname">key</td><td>- the key for merging config, use "@overwrite" to overwrite the entire config </td></tr>
+    <tr><td class="paramname">config_data</td><td>- the config data handle containing the configuration to set </td></tr>
+    <tr><td class="paramname">timeout_ms</td><td>- the timeout in milliseconds </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the error code </dd></dl>
 
 </div>
 </div>

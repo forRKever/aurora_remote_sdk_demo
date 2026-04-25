@@ -1,14 +1,18 @@
 var searchData=
 [
-  ['rawdatarecorder_993',['rawDataRecorder',['../group__Cxx__Data__Recorder__Operations.html#gaf2e2215161948e09c5ee12aad654c335',1,'rp::standalone::aurora::RemoteSDK']]],
-  ['real_5fx_994',['real_x',['../struct__slamtec__aurora__sdk__2d__gridmap__fetch__info__t.html#a82a535b8dbdd9bd9a80eb7a62da66427',1,'_slamtec_aurora_sdk_2d_gridmap_fetch_info_t']]],
-  ['real_5fy_995',['real_y',['../struct__slamtec__aurora__sdk__2d__gridmap__fetch__info__t.html#ac313d63e2655f0981c6c0143620430f9',1,'_slamtec_aurora_sdk_2d_gridmap_fetch_info_t']]],
-  ['related_5fmp_5fcount_996',['related_mp_count',['../struct__slamtec__aurora__sdk__keyframe__desc__t.html#a7b59ada37485982bc96f6f483bcb60d3',1,'_slamtec_aurora_sdk_keyframe_desc_t']]],
-  ['relatedmappointids_997',['relatedMapPointIDs',['../classrp_1_1standalone_1_1aurora_1_1RemoteKeyFrameData.html#a652c12a36be38b6db2bf7a96b2c0b5d3',1,'rp::standalone::aurora::RemoteKeyFrameData']]],
-  ['reserved_998',['reserved',['../struct__slamtec__aurora__sdk__session__config__t.html#a6ad74b6ff5ca864a9feeba628f02e656',1,'_slamtec_aurora_sdk_session_config_t']]],
-  ['resolution_999',['resolution',['../struct__slamtec__aurora__sdk__2d__gridmap__generation__options__t.html#a69c3bd98554d092a5ea8371283995999',1,'_slamtec_aurora_sdk_2d_gridmap_generation_options_t']]],
-  ['right_5fimage_5fdesc_1000',['right_image_desc',['../struct__slamtec__aurora__sdk__tracking__info.html#a965c559cabe83a191721eee0facf6789',1,'_slamtec_aurora_sdk_tracking_info::right_image_desc()'],['../struct__slamtec__aurora__sdk__stereo__image__pair__desc__t.html#a78883ae4ac524e5b290dc4ff96a0d300',1,'_slamtec_aurora_sdk_stereo_image_pair_desc_t::right_image_desc()']]],
-  ['rightimage_1001',['rightImage',['../classrp_1_1standalone_1_1aurora_1_1RemoteTrackingFrameInfo.html#ae74a8adfc41edea0e8f6fd514662d8c9',1,'rp::standalone::aurora::RemoteTrackingFrameInfo']]],
-  ['roll_1002',['roll',['../struct__slamtec__aurora__sdk__euler__angle__t.html#a69591a2fa8546bf5c017997b99621fcf',1,'_slamtec_aurora_sdk_euler_angle_t']]],
-  ['rpy_1003',['rpy',['../struct__slamtec__aurora__sdk__pose__t.html#af13da7e73e79a69d43202dc4cf6ba7f2',1,'_slamtec_aurora_sdk_pose_t']]]
+  ['rawdatarecorder_1488',['rawDataRecorder',['../group__Cxx__Data__Recorder__Operations.html#gaf2e2215161948e09c5ee12aad654c335',1,'rp::standalone::aurora::RemoteSDK']]],
+  ['real_5fx_1489',['real_x',['../struct__slamtec__aurora__sdk__2d__gridmap__fetch__info__t.html#a82a535b8dbdd9bd9a80eb7a62da66427',1,'_slamtec_aurora_sdk_2d_gridmap_fetch_info_t']]],
+  ['real_5fy_1490',['real_y',['../struct__slamtec__aurora__sdk__2d__gridmap__fetch__info__t.html#ac313d63e2655f0981c6c0143620430f9',1,'_slamtec_aurora_sdk_2d_gridmap_fetch_info_t']]],
+  ['recording_1491',['recording',['../struct__slamtec__aurora__sdk__dashcam__status__t.html#a8519ce3a73f9d7131231e7b5879b3064',1,'_slamtec_aurora_sdk_dashcam_status_t']]],
+  ['related_5fmp_5fcount_1492',['related_mp_count',['../struct__slamtec__aurora__sdk__keyframe__desc__t.html#a7b59ada37485982bc96f6f483bcb60d3',1,'_slamtec_aurora_sdk_keyframe_desc_t']]],
+  ['relatedmappointids_1493',['relatedMapPointIDs',['../classrp_1_1standalone_1_1aurora_1_1RemoteKeyFrameData.html#a652c12a36be38b6db2bf7a96b2c0b5d3',1,'rp::standalone::aurora::RemoteKeyFrameData']]],
+  ['reserved_1494',['reserved',['../struct__slamtec__aurora__sdk__session__config__t.html#a6ad74b6ff5ca864a9feeba628f02e656',1,'_slamtec_aurora_sdk_session_config_t']]],
+  ['resolution_1495',['resolution',['../struct__slamtec__aurora__sdk__2d__gridmap__generation__options__t.html#a69c3bd98554d092a5ea8371283995999',1,'_slamtec_aurora_sdk_2d_gridmap_generation_options_t']]],
+  ['right_5fimage_5fdesc_1496',['right_image_desc',['../struct__slamtec__aurora__sdk__tracking__info.html#a965c559cabe83a191721eee0facf6789',1,'_slamtec_aurora_sdk_tracking_info::right_image_desc()'],['../struct__slamtec__aurora__sdk__stereo__image__pair__desc__t.html#a78883ae4ac524e5b290dc4ff96a0d300',1,'_slamtec_aurora_sdk_stereo_image_pair_desc_t::right_image_desc()']]],
+  ['rightimage_1497',['rightImage',['../classrp_1_1standalone_1_1aurora_1_1RemoteTrackingFrameInfo.html#ae74a8adfc41edea0e8f6fd514662d8c9',1,'rp::standalone::aurora::RemoteTrackingFrameInfo']]],
+  ['rmse_5fms_1498',['rmse_ms',['../structslamtec__aurora__sdk__timesync__quality__t.html#a606e3c3ac9fa649220d4935b26ba33f4',1,'slamtec_aurora_sdk_timesync_quality_t::rmse_ms()'],['../structTimeSyncQuality.html#ad6b809f2fc8582206cb6754582975417',1,'TimeSyncQuality::rmse_ms()']]],
+  ['roll_1499',['roll',['../struct__slamtec__aurora__sdk__euler__angle__t.html#a69591a2fa8546bf5c017997b99621fcf',1,'_slamtec_aurora_sdk_euler_angle_t']]],
+  ['rotation_5f1sigma_5frpy_5fdeg_1500',['rotation_1sigma_rpy_deg',['../struct__slamtec__aurora__sdk__pose__covariance__readable__t.html#a52f66875009f9cd15c122906bfba089d',1,'_slamtec_aurora_sdk_pose_covariance_readable_t']]],
+  ['rpy_1501',['rpy',['../struct__slamtec__aurora__sdk__pose__t.html#af13da7e73e79a69d43202dc4cf6ba7f2',1,'_slamtec_aurora_sdk_pose_t']]],
+  ['rtt_5fns_1502',['rtt_ns',['../structslamtec__aurora__sdk__wallclock__offset__result__t.html#aa85862e89f5451747ed037eda7fcde3a',1,'slamtec_aurora_sdk_wallclock_offset_result_t::rtt_ns()'],['../structslamtec__aurora__sdk__wallclock__accuracy__result__t.html#a544da9e92f5936732466809e22c8fe61',1,'slamtec_aurora_sdk_wallclock_accuracy_result_t::rtt_ns()']]]
 ];

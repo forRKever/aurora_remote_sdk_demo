@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['occupancygridmap2dref_635',['OccupancyGridMap2DRef',['../classrp_1_1standalone_1_1aurora_1_1OccupancyGridMap2DRef.html',1,'rp::standalone::aurora']]]
+  ['lidar2dgridmapgenerationoptions_926',['LIDAR2DGridMapGenerationOptions',['../classrp_1_1standalone_1_1aurora_1_1LIDAR2DGridMapGenerationOptions.html',1,'rp::standalone::aurora']]],
+  ['lidar2dmapbuilder_927',['LIDAR2DMapBuilder',['../classrp_1_1standalone_1_1aurora_1_1LIDAR2DMapBuilder.html',1,'rp::standalone::aurora']]]
 ];

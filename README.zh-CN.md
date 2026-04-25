@@ -152,3 +152,56 @@
 - 可配置记录选项，包括图像质量、文件格式和处理参数。
 - 支持立体录制、图像去畸变和各种输出格式。
 - [📖 详细说明](demo/colmap_recorder/README.zh-CN.md)
+
+### 高级功能（SDK 2.1）
+
+#### time_sync
+- Aurora 设备与客户端系统之间的软件时间同步。
+- 亚毫秒级精度，用于准确的时间戳转换。
+- 对于将 Aurora 数据与外部传感器或事件关联至关重要。
+- [📖 详细说明](demo/time_sync/README.zh-CN.md) | [📚 教程](tutorials/TimeSync_Tutorial_CN.md)
+
+#### pose_augmentation
+- 使用 IMU 数据集成实现高频位姿输出（高达 200+ Hz）。
+- 将位姿更新速率从典型的 10-15 Hz 提高到 200+ Hz。
+- 适用于需要低延迟位姿估计的机器人导航和 AR/VR 应用。
+- [📖 详细说明](demo/pose_augmentation/README.zh-CN.md) | [📚 教程](tutorials/PoseAugmentation_Tutorial_CN.md)
+
+#### pose_covariance
+- 检索位姿不确定性估计（位置和方向协方差）。
+- 实时评估定位置信度和质量。
+- 适用于自适应导航、质量监控和多传感器融合。
+- [📖 详细说明](demo/pose_covariance/README.zh-CN.md) | [📚 教程](tutorials/PoseCovariance_Tutorial_CN.md)
+
+### 设备配置和管理（SDK 2.1.1）
+
+#### persistent_config
+- 通过基于 JSON 的 API 管理设备配置条目。
+- 枚举、获取、设置和重置设备配置。
+- 支持将配置保存到文件或从文件加载。
+- [📖 详细说明](demo/persistent_config/README.zh-CN.md)
+
+#### transform_manager
+- 管理设备上的坐标系变换（SE3 位姿）。
+- 列出、获取、设置和重置坐标系之间的变换。
+- 适用于校准调整和自定义坐标系定义。
+- [📖 详细说明](demo/transform_manager/README.zh-CN.md)
+
+#### camera_mask
+- 管理静态相机遮罩，用于从 SLAM 处理中排除区域。
+- 启用/禁用遮罩，上传/下载遮罩图像。
+- 适用于过滤静态障碍物、反射表面或移动物体。
+- 图像 I/O 操作需要 OpenCV。
+- [📖 详细说明](demo/camera_mask/README.zh-CN.md)
+
+#### dashcam_recorder（数据记录仪）
+- 用于监控和控制设备数据记录仪的交互式控制台。
+- 实时仪表板，显示录制状态、存储信息和会话管理。
+- 启用/禁用录制、设置大小限制和管理录制会话。
+- [📖 详细说明](demo/dashcam_recorder/README.zh-CN.md)
+
+#### system_power（系统电源管理）
+- 控制 Aurora 设备电源操作（重启和关机）。
+- 执行电源操作前显示设备状态。
+- 执行电源命令前需要安全确认。
+- [📖 详细说明](demo/system_power/README.zh-CN.md)
