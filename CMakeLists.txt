@@ -80,6 +80,54 @@ message(STATUS "Aurora SDK library path: ${AURORA_LIB_PATH}")
 
 find_package(Threads REQUIRED)
 
+# ── Qt5 Aurora Dashboard ───────────────────────────────────────────────────
+set(CMAKE_PREFIX_PATH "C:/Qt/Qt5.12.12/5.12.12/msvc2017_64" ${CMAKE_PREFIX_PATH})
+find_package(Qt5 QUIET COMPONENTS Widgets)
+
+if(Qt5_FOUND)
+    set(CMAKE_AUTOMOC ON)
+    set(CMAKE_AUTOUIC ON)
+    set(CMAKE_AUTORCC ON)
+
+    add_executable(aurora_dashboard
+        demo/aurora_dashboard/src/main.cpp
+        demo/aurora_dashboard/src/MainWindow.cpp
+        demo/aurora_dashboard/src/MainWindow.h
+        demo/aurora_dashboard/src/MapWidget.cpp
+        demo/aurora_dashboard/src/MapWidget.h
+        demo/aurora_dashboard/src/SdkWorker.cpp
+        demo/aurora_dashboard/src/SdkWorker.h
+        demo/aurora_dashboard/src/CameraPreviewWidget.cpp
+        demo/aurora_dashboard/src/CameraPreviewWidget.h
+    )
+    target_link_libraries(aurora_dashboard
+        ${AURORA_LIB_NAME}
+        Qt5::Widgets
+        Qt5::Core
+        Qt5::Gui
+    )
+
+    # Static Qt 依賴庫
+    target_link_libraries(aurora_dashboard
+        ws2_32 ole32 oleaut32 imm32 winmm
+    )
+    set_target_properties(aurora_dashboard PROPERTIES
+        WIN32_EXECUTABLE TRUE
+        CXX_STANDARD 14
+        CXX_STANDARD_REQUIRED ON
+    )
+    add_custom_command(TARGET aurora_dashboard POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${AURORA_LIB_PATH}
+        $<TARGET_FILE_DIR:aurora_dashboard>)
+    add_custom_command(TARGET aurora_dashboard POST_BUILD
+        COMMAND "C:/Qt/Qt5.12.12/5.12.12/msvc2017_64/bin/windeployqt.exe"
+        $<TARGET_FILE:aurora_dashboard>)
+    message(STATUS "Qt5 found: aurora_dashboard target added")
+else()
+    message(WARNING "Qt5 not found, aurora_dashboard will not be built")
+endif()
+
 # Build Demos
 
 ## simple_pose
