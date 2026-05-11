@@ -11,6 +11,9 @@
 #include <chrono>
 #include <cstring>
 #include <vector>
+#include <cmath>
+#include <cfloat>
+#include <limits>
 
 // 全局日誌函數
 static void logToFile(const QString& msg) {
@@ -61,6 +64,99 @@ static QImage remoteImageRefToQImage(const RemoteImageRef& ref) {
     return QImage();
 }
 
+// JET colormap: t in [0,1], maps blue -> cyan -> green -> yellow -> red
+static void jetColor(float t, uint8_t& r, uint8_t& g, uint8_t& b) {
+    // Clamp t to [0,1]
+    t = qBound(0.0f, t, 1.0f);
+
+    // Segmented JET colormap with 4 transitions
+    if (t < 0.25f) {
+        // blue to cyan: (0,0,1) -> (0,1,1)
+        float x = t / 0.25f;  // [0,1] in this segment
+        r = 0;
+        g = (uint8_t)(255 * x);
+        b = 255;
+    } else if (t < 0.5f) {
+        // cyan to green: (0,1,1) -> (0,1,0)
+        float x = (t - 0.25f) / 0.25f;
+        r = 0;
+        g = 255;
+        b = (uint8_t)(255 * (1.0f - x));
+    } else if (t < 0.75f) {
+        // green to yellow: (0,1,0) -> (1,1,0)
+        float x = (t - 0.5f) / 0.25f;
+        r = (uint8_t)(255 * x);
+        g = 255;
+        b = 0;
+    } else {
+        // yellow to red: (1,1,0) -> (1,0,0)
+        float x = (t - 0.75f) / 0.25f;
+        r = 255;
+        g = (uint8_t)(255 * (1.0f - x));
+        b = 0;
+    }
+}
+
+// Convert float32 depth frame to JET colormap QImage (no OpenCV dependency)
+// Auto-detects depth range, handles NaN/inf values gracefully
+static QImage depthFrameToColorQImage(const RemoteEnhancedImagingFrame& frame) {
+    const auto& img = frame.image;
+    if (img.isEmpty()) return QImage();
+
+    const auto& d = img._desc;
+    const float* data = reinterpret_cast<const float*>(img._data);
+    uint32_t stride_floats = (d.stride > 0) ? (d.stride / sizeof(float)) : d.width;
+
+    // First pass: find min/max valid depth for auto-scaling
+    float minDepth = FLT_MAX, maxDepth = -FLT_MAX;
+    for (uint32_t row = 0; row < d.height; ++row) {
+        const float* src = data + row * stride_floats;
+        for (uint32_t col = 0; col < d.width; ++col) {
+            float depth = src[col];
+            // Skip invalid: NaN, inf, negative, or zero
+            if (std::isfinite(depth) && depth > 0.0f) {
+                if (depth < minDepth) minDepth = depth;
+                if (depth > maxDepth) maxDepth = depth;
+            }
+        }
+    }
+
+    // Fallback range if no valid data found
+    if (!std::isfinite(minDepth) || !std::isfinite(maxDepth) || minDepth >= maxDepth) {
+        minDepth = 0.0f;
+        maxDepth = 5.0f;
+    }
+
+    float depthRange = maxDepth - minDepth;
+    if (depthRange < 0.01f) depthRange = 0.01f;  // Avoid division by near-zero
+
+    // Second pass: render with auto-scaled colors
+    QImage result(d.width, d.height, QImage::Format_RGB888);
+    for (uint32_t row = 0; row < d.height; ++row) {
+        uint8_t* dst = result.scanLine(row);
+        const float* src = data + row * stride_floats;
+        for (uint32_t col = 0; col < d.width; ++col) {
+            float depth = src[col];
+
+            uint8_t r, g, b;
+            if (!std::isfinite(depth) || depth <= 0.0f) {
+                // Invalid: black
+                r = g = b = 0;
+            } else {
+                // Normalize to [0, 1] using actual min/max
+                float norm = (depth - minDepth) / depthRange;
+                norm = qBound(0.0f, norm, 1.0f);
+                // Invert: near (low value) = red, far (high value) = blue
+                norm = 1.0f - norm;
+                jetColor(norm, r, g, b);
+            }
+
+            *dst++ = r; *dst++ = g; *dst++ = b;
+        }
+    }
+    return result;
+}
+
 SdkWorker::SdkWorker() {
     sdk_ = RemoteSDK::CreateSession();
 
@@ -70,9 +166,17 @@ SdkWorker::SdkWorker() {
     mapTimer_ = new QTimer(this);
     connect(mapTimer_, &QTimer::timeout, this, &SdkWorker::onMapRefreshTimeout);
 
-    // Initialize map generation options
-    mapGenOptions_.loadDefaults();
-    mapGenOptions_.active_map_only = 1;  // Use only active map
+    lidarMapTimer_ = new QTimer(this);
+    connect(lidarMapTimer_, &QTimer::timeout, this, &SdkWorker::onLidarMapTimeout);
+
+    depthTimer_ = new QTimer(this);
+    connect(depthTimer_, &QTimer::timeout, this, &SdkWorker::onDepthTimeout);
+
+    // Initialize map generation options with explicit values
+    mapGenOptions_.map_canvas_height = 150;
+    mapGenOptions_.map_canvas_width = 150;
+    mapGenOptions_.resolution = 0.05f;
+    mapGenOptions_.active_map_only = 0;  // Include all maps (active_map_only=1 may filter out data during mapping)
 }
 
 SdkWorker::~SdkWorker() {
@@ -112,8 +216,18 @@ void SdkWorker::connectToDevice(const QString& ip, int port) {
     connected_ = true;
     logToFile("✓ Connected to device: " + ip);
 
-    // Start occupancy grid map background update FIRST
+    // Enable map data syncing FIRST (before starting map builder)
+    logToFile(">>> Enabling map data syncing...");
+    sdk_->controller.setMapDataSyncing(true);
+    logToFile("✓ Map data syncing enabled");
+
+    // Start occupancy grid map background update
     logToFile(">>> Starting preview map background update...");
+    logToFile(QString("    Map options: W=%1 H=%2 Res=%3")
+              .arg(mapGenOptions_.map_canvas_width)
+              .arg(mapGenOptions_.map_canvas_height)
+              .arg(mapGenOptions_.resolution));
+
     if (!sdk_->lidar2DMapBuilder.startPreviewMapBackgroundUpdate(mapGenOptions_)) {
         logToFile("✗ Failed to start map builder");
         emit connectionChanged(false, "Failed to start map builder");
@@ -123,13 +237,9 @@ void SdkWorker::connectToDevice(const QString& ip, int port) {
     }
 
     logToFile("✓ Map builder started successfully");
+
     // Enable auto floor detection
     sdk_->lidar2DMapBuilder.setPreviewMapAutoFloorDetection(true);
-
-    // Enable map data syncing
-    logToFile(">>> Enabling map data syncing...");
-    sdk_->controller.setMapDataSyncing(true);
-    logToFile("✓ Map data syncing enabled");
 
     // Use Qt-style delay instead of std::this_thread
     logToFile(">>> Waiting 1 second for device initialization...");
@@ -139,10 +249,25 @@ void SdkWorker::connectToDevice(const QString& ip, int port) {
     }
     logToFile("✓ Device initialization complete, starting polling...");
 
-    pollTimer_->start(100);      // 100ms polling
-    mapTimer_->start(10000);     // 10s map refresh
+    pollTimer_->start(100);      // 100ms polling for pose/device info
+    mapTimer_->start(10000);     // 10s for VSLAM map data
+    lidarMapTimer_->start(500);  // 500ms for occupancy grid updates
 
-    logToFile("✓ Timers started: poll=100ms, map=10s");
+    logToFile("✓ Timers started: poll=100ms, map=10s, lidar=500ms");
+
+    // Subscribe to depth camera (graceful if unsupported)
+    if (sdk_->enhancedImaging.isDepthCameraSupported()) {
+        if (sdk_->controller.setEnhancedImagingSubscription(
+                SLAMTEC_AURORA_SDK_ENHANCED_IMAGE_TYPE_DEPTH, true)) {
+            depthTimer_->start(200);  // ~5fps for depth camera
+            logToFile("✓ Depth camera subscription enabled, polling at 200ms");
+        } else {
+            logToFile("✗ Failed to subscribe to depth camera");
+        }
+    } else {
+        logToFile("ℹ Depth camera not supported by this device");
+    }
+
     emit connectionChanged(true, "Connected to " + ip);
 }
 
@@ -153,6 +278,8 @@ void SdkWorker::disconnectDevice() {
 
     pollTimer_->stop();
     mapTimer_->stop();
+    lidarMapTimer_->stop();
+    depthTimer_->stop();
 
     sdk_->lidar2DMapBuilder.stopPreviewMapBackgroundUpdate();
     sdk_->disconnect();
@@ -225,68 +352,81 @@ void SdkWorker::onMapRefreshTimeout() {
         return;
     }
 
-    // Update VSLAM map data
+    // Update VSLAM map data (keyframes and map points)
     slamtec_aurora_sdk_global_map_desc_t globalDesc;
     if (!sdk_->dataProvider.getGlobalMappingInfo(globalDesc)) {
+        logToFile("WARNING: getGlobalMappingInfo failed");
         return;
     }
 
-    QVector<QPointF> keyframes;
-    QVector<QPointF> mapPoints;
+    QVector<QVector3D> keyframes;
+    QVector<QVector3D> mapPoints;
 
     RemoteMapDataVisitor visitor;
 
     visitor.subscribeKeyFrameData([&](const RemoteKeyFrameData& kf) {
-        keyframes.append(QPointF(kf.desc.pose.translation.x, kf.desc.pose.translation.z));
+        keyframes.append(QVector3D(kf.desc.pose.translation.x, kf.desc.pose.translation.y, kf.desc.pose.translation.z));
     });
 
     visitor.subscribeMapPointData([&](const slamtec_aurora_sdk_map_point_desc_t& mp) {
-        mapPoints.append(QPointF(mp.position.x, mp.position.z));
+        mapPoints.append(QVector3D(mp.position.x, mp.position.y, mp.position.z));
     });
 
     sdk_->dataProvider.accessMapData(visitor, {(uint32_t)globalDesc.activeMapID});
 
-    emit mapDataUpdated(keyframes, mapPoints);
+    logToFile(QString("VSLAM: KF=%1 MP=%2").arg(keyframes.size()).arg(mapPoints.size()));
 
-    // Update occupancy grid map
-    if (!sdk_->lidar2DMapBuilder.isPreviewMapBackgroundUpdateActive()) {
-        logToFile("WARNING: Map background update NOT active");
+    // Log signal emission
+    if (keyframes.isEmpty() && mapPoints.isEmpty()) {
+        logToFile("  WARNING: Both KF and MP are empty, still emitting signal");
+    }
+
+    emit mapDataUpdated(keyframes, mapPoints);
+}
+
+void SdkWorker::onLidarMapTimeout() {
+    if (!sdk_ || !connected_) {
         return;
     }
 
+    // Update occupancy grid map
+    if (!sdk_->lidar2DMapBuilder.isPreviewMapBackgroundUpdateActive()) {
+        return;
+    }
+
+    // Always request redraw to ensure SDK flushes latest LiDAR data
+    sdk_->lidar2DMapBuilder.requireRedrawPreviewMap();
+
+    // Check if there is any update
     slamtec_aurora_sdk_rect_t dirtyRect;
     bool mapBigChange = false;
     sdk_->lidar2DMapBuilder.getAndResetPreviewMapDirtyRect(dirtyRect, mapBigChange);
-
-    logToFile(QString("Dirty rect: W=%1 H=%2 at X=%3 Y=%4 | BigChange=%5")
-              .arg(dirtyRect.width).arg(dirtyRect.height)
-              .arg(dirtyRect.x).arg(dirtyRect.y)
-              .arg(mapBigChange ? "Yes" : "No"));
-
-    // Only update if there's a dirty rectangle with non-zero dimensions
     if (dirtyRect.width <= 0 || dirtyRect.height <= 0) {
-        logToFile("  -> No map updates");
         return;
     }
 
     const OccupancyGridMap2DRef& gridMap = sdk_->lidar2DMapBuilder.getPreviewMap();
-
-    slamtec_aurora_sdk_2dmap_dimension_t mapDim;
-    gridMap.getMapDimension(mapDim);
     float resolution = gridMap.getResolution();
 
+    // Query the actual populated bounding box instead of fixed canvas
+    slamtec_aurora_sdk_2dmap_dimension_t mapDim;
+    gridMap.getMapDimension(mapDim);
+
+    // Skip if no meaningful data yet (dimensions too small)
+    if ((mapDim.max_x - mapDim.min_x) < resolution || (mapDim.max_y - mapDim.min_y) < resolution) {
+        return;
+    }
+
     slamtec_aurora_sdk_rect_t fetchRect;
-    fetchRect.x = mapDim.min_x;
-    fetchRect.y = mapDim.min_y;
-    fetchRect.width = mapDim.max_x - mapDim.min_x;
+    fetchRect.x      = mapDim.min_x;
+    fetchRect.y      = mapDim.min_y;
+    fetchRect.width  = mapDim.max_x - mapDim.min_x;
     fetchRect.height = mapDim.max_y - mapDim.min_y;
 
     std::vector<uint8_t> mapData;
     slamtec_aurora_sdk_2d_gridmap_fetch_info_t fetchInfo;
-
     gridMap.readCellData(fetchRect, fetchInfo, mapData);
 
-    // Get grid dimensions from fetch info
     uint32_t cell_width = fetchInfo.cell_width;
     uint32_t cell_height = fetchInfo.cell_height;
 
@@ -294,11 +434,22 @@ void SdkWorker::onMapRefreshTimeout() {
         return;
     }
 
-    // Convert to QImage (grayscale 8-bit)
     if (mapData.size() != cell_width * cell_height) {
-        qWarning() << "Map data size mismatch:" << mapData.size() << "!=" << (cell_width * cell_height);
         return;
     }
+
+    // Analyze map data content
+    int countBlack = 0, countWhite = 0, countGray = 0;
+    for (uint8_t pixel : mapData) {
+        if (pixel < 64) countBlack++;      // 0-63: obstacle
+        else if (pixel > 192) countWhite++; // 193-255: free
+        else countGray++;                  // 64-192: unknown
+    }
+
+    logToFile(QString("LIDAR map emit: %1x%2 px | Black:%3 White:%4 Gray:%5 | BigChange=%6")
+              .arg(cell_width).arg(cell_height)
+              .arg(countBlack).arg(countWhite).arg(countGray)
+              .arg(mapBigChange ? "Y" : "N"));
 
     QImage gridImage(cell_width, cell_height, QImage::Format_Grayscale8);
     std::memcpy(gridImage.bits(), mapData.data(), mapData.size());
@@ -334,9 +485,12 @@ void SdkWorker::stopMapping() {
         return;
     }
 
+    logToFile(">>> Attempting to enter LOCALIZATION mode...");
     if (sdk_->controller.requirePureLocalizationMode(5000)) {
+        logToFile("✓ Successfully entered LOCALIZATION mode");
         emit mappingStatusChanged("Localization mode activated");
     } else {
+        logToFile("✗ FAILED to enter localization mode!");
         emit mappingStatusChanged("Failed to activate localization mode");
     }
 }
@@ -436,4 +590,22 @@ void SdkWorker::uploadMap(const QString& filePath) {
         bool ok = future.get();
         emit mapTransferFinished(ok, ok ? "Upload complete" : "Upload failed");
     }).detach();
+}
+
+void SdkWorker::onDepthTimeout() {
+    if (!sdk_ || !connected_) {
+        return;
+    }
+
+    RemoteEnhancedImagingFrame depthFrame;
+    slamtec_aurora_sdk_errorcode_t errorCode;
+    if (!sdk_->enhancedImaging.peekDepthCameraFrame(
+            depthFrame, SLAMTEC_AURORA_SDK_DEPTHCAM_FRAME_TYPE_DEPTH_MAP, &errorCode)) {
+        return;  // NOT_READY is normal — skip silently
+    }
+
+    QImage img = depthFrameToColorQImage(depthFrame);
+    if (!img.isNull()) {
+        emit depthFrameUpdated(img);
+    }
 }

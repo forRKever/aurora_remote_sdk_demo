@@ -11,6 +11,7 @@
 #include "SdkWorker.h"
 #include "MapWidget.h"
 #include "CameraPreviewWidget.h"
+#include "DepthCamWidget.h"
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -25,6 +26,7 @@ private slots:
     void onRefreshMapClicked();
     void onDownloadMapClicked();
     void onUploadMapClicked();
+    void onExportMapPngClicked();
     void onStartMappingClicked();
     void onStopMappingClicked();
     void onResetMapClicked();
@@ -73,10 +75,12 @@ private:
     // Right panel widgets
     MapWidget* mapWidget_;
     CameraPreviewWidget* cameraWidget_;
+    DepthCamWidget* depthWidget_;
     QSplitter* rightSplitter_;
     QPushButton* refreshMapBtn_;
     QPushButton* downloadMapBtn_;
     QPushButton* uploadMapBtn_;
+    QPushButton* exportMapPngBtn_;
     QLineEdit* uploadFileEdit_;
     QProgressBar* progressBar_;
     QLabel* opStatusLabel_;

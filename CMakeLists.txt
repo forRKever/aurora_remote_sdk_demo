@@ -82,7 +82,7 @@ find_package(Threads REQUIRED)
 
 # ── Qt5 Aurora Dashboard ───────────────────────────────────────────────────
 set(CMAKE_PREFIX_PATH "C:/Qt/Qt5.12.12/5.12.12/msvc2017_64" ${CMAKE_PREFIX_PATH})
-find_package(Qt5 QUIET COMPONENTS Widgets)
+find_package(Qt5 QUIET COMPONENTS Widgets OpenGL)
 
 if(Qt5_FOUND)
     set(CMAKE_AUTOMOC ON)
@@ -95,16 +95,21 @@ if(Qt5_FOUND)
         demo/aurora_dashboard/src/MainWindow.h
         demo/aurora_dashboard/src/MapWidget.cpp
         demo/aurora_dashboard/src/MapWidget.h
+        demo/aurora_dashboard/src/LidarMapWidget.cpp
+        demo/aurora_dashboard/src/LidarMapWidget.h
         demo/aurora_dashboard/src/SdkWorker.cpp
         demo/aurora_dashboard/src/SdkWorker.h
         demo/aurora_dashboard/src/CameraPreviewWidget.cpp
         demo/aurora_dashboard/src/CameraPreviewWidget.h
+        demo/aurora_dashboard/src/DepthCamWidget.cpp
+        demo/aurora_dashboard/src/DepthCamWidget.h
     )
     target_link_libraries(aurora_dashboard
         ${AURORA_LIB_NAME}
         Qt5::Widgets
         Qt5::Core
         Qt5::Gui
+        Qt5::OpenGL
     )
 
     # Static Qt 依賴庫

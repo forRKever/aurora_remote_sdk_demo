@@ -14,7 +14,7 @@ MainWindow::MainWindow()
       disconnectBtn_(nullptr), statusLabel_(nullptr),
       startMappingBtn_(nullptr), stopMappingBtn_(nullptr), resetMapBtn_(nullptr),
       mappingStatusLabel_(nullptr),
-      mapWidget_(nullptr), cameraWidget_(nullptr), rightSplitter_(nullptr),
+      mapWidget_(nullptr), cameraWidget_(nullptr), depthWidget_(nullptr), rightSplitter_(nullptr),
       worker_(nullptr), workerThread_(nullptr) {
     setWindowTitle("Aurora Dashboard");
     setGeometry(100, 100, 1200, 800);
@@ -157,7 +157,7 @@ void MainWindow::setupUI() {
     rightSplitter_ = new QSplitter(Qt::Vertical);
     rightSplitter_->setChildrenCollapsible(true);
 
-    // Map widget (takes most vertical space)
+    // 3D map widget (takes most vertical space)
     mapWidget_ = new MapWidget;
     mapWidget_->setMinimumHeight(200);
     rightSplitter_->addWidget(mapWidget_);
@@ -166,6 +166,11 @@ void MainWindow::setupUI() {
     cameraWidget_ = new CameraPreviewWidget;
     cameraWidget_->setMinimumHeight(0);   // allow full collapse
     rightSplitter_->addWidget(cameraWidget_);
+
+    // Depth camera panel (collapsible via splitter handle)
+    depthWidget_ = new DepthCamWidget;
+    depthWidget_->setMinimumHeight(0);    // allow full collapse
+    rightSplitter_->addWidget(depthWidget_);
 
     // Map operations group (fixed at bottom)
     QGroupBox* mapOpsGroup = new QGroupBox("Map Operations");
@@ -194,6 +199,12 @@ void MainWindow::setupUI() {
     uploadLayout->addWidget(uploadMapBtn_);
     mapOpsLayout->addLayout(uploadLayout);
 
+    QHBoxLayout* exportLayout = new QHBoxLayout;
+    exportMapPngBtn_ = new QPushButton("Export Map as PNG");
+    exportLayout->addWidget(exportMapPngBtn_);
+    exportLayout->addStretch();
+    mapOpsLayout->addLayout(exportLayout);
+
     progressBar_ = new QProgressBar;
     progressBar_->setVisible(false);
     progressBar_->setMaximum(100);
@@ -205,9 +216,9 @@ void MainWindow::setupUI() {
 
     rightSplitter_->addWidget(mapOpsGroup);
 
-    // Initial size distribution: 60% map, 25% camera, 15% map-ops
+    // Initial size distribution: 60% map, 19% camera, 19% depth, 12% map-ops
     // Expressed in pixels assuming 800px total right panel height - (borders)
-    rightSplitter_->setSizes({480, 200, 120});
+    rightSplitter_->setSizes({480, 150, 150, 120});
 
     rightLayout->addWidget(rightSplitter_);
     mainLayout->addWidget(rightPanel, 1);
@@ -218,6 +229,7 @@ void MainWindow::setupUI() {
     connect(refreshMapBtn_, &QPushButton::clicked, this, &MainWindow::onRefreshMapClicked);
     connect(downloadMapBtn_, &QPushButton::clicked, this, &MainWindow::onDownloadMapClicked);
     connect(uploadMapBtn_, &QPushButton::clicked, this, &MainWindow::onUploadMapClicked);
+    connect(exportMapPngBtn_, &QPushButton::clicked, this, &MainWindow::onExportMapPngClicked);
     connect(startMappingBtn_, &QPushButton::clicked, this, &MainWindow::onStartMappingClicked);
     connect(stopMappingBtn_, &QPushButton::clicked, this, &MainWindow::onStopMappingClicked);
     connect(resetMapBtn_, &QPushButton::clicked, this, &MainWindow::onResetMapClicked);
@@ -228,11 +240,12 @@ void MainWindow::setupWorker() {
     worker_ = new SdkWorker;
     worker_->moveToThread(workerThread_);
 
-    connect(worker_, &SdkWorker::poseUpdated, this, &MainWindow::updatePoseUI);
-    connect(worker_, &SdkWorker::deviceInfoUpdated, this, &MainWindow::updateDeviceUI);
-    connect(worker_, &SdkWorker::mapDataUpdated, mapWidget_, &MapWidget::updateMapData);
-    connect(worker_, &SdkWorker::occupancyMapUpdated, mapWidget_, &MapWidget::setOccupancyMap);
+    connect(worker_, &SdkWorker::poseUpdated, this, &MainWindow::updatePoseUI, Qt::QueuedConnection);
+    connect(worker_, &SdkWorker::deviceInfoUpdated, this, &MainWindow::updateDeviceUI, Qt::QueuedConnection);
+    connect(worker_, &SdkWorker::mapDataUpdated, mapWidget_, &MapWidget::updateMapData, Qt::QueuedConnection);
     connect(worker_, &SdkWorker::cameraFrameUpdated, cameraWidget_, &CameraPreviewWidget::updateFrame,
+            Qt::QueuedConnection);
+    connect(worker_, &SdkWorker::depthFrameUpdated, depthWidget_, &DepthCamWidget::updateDepthFrame,
             Qt::QueuedConnection);
     connect(worker_, &SdkWorker::connectionChanged, this, &MainWindow::updateConnectionUI);
     connect(worker_, &SdkWorker::mappingStatusChanged, this, &MainWindow::onMappingStatusChanged);
@@ -314,7 +327,7 @@ void MainWindow::updatePoseUI(double x, double y, double z, double roll, double 
     posePitchLabel_->setText(QString::asprintf("Pitch: %.2f°", pitch * 180.0 / 3.14159));
     poseYawLabel_->setText(QString::asprintf("Yaw: %.2f°", yaw * 180.0 / 3.14159));
 
-    mapWidget_->updateCurrentPose(x, z, yaw);
+    mapWidget_->updateCurrentPose(x, y, z, yaw);
 }
 
 void MainWindow::updateDeviceUI(QString firmware, QString serial, quint64 uptime_us, bool trackingLost,
@@ -348,6 +361,7 @@ void MainWindow::updateConnectionUI(bool connected, QString message) {
         ipEdit_->setReadOnly(false);
         portSpin_->setReadOnly(false);
         cameraWidget_->clearFrame();
+        depthWidget_->clearFrame();
     }
 }
 
@@ -393,4 +407,24 @@ void MainWindow::onResetMapClicked() {
 
 void MainWindow::onMappingStatusChanged(QString status) {
     mappingStatusLabel_->setText("Status: " + status);
+}
+
+void MainWindow::onExportMapPngClicked() {
+    QString downloadDir = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    QString defaultPath = downloadDir + "/aurora_map.png";
+
+    QString filePath = QFileDialog::getSaveFileName(
+        this, "Save Map as PNG", defaultPath, "PNG Images (*.png);;All Files (*)"
+    );
+
+    if (!filePath.isEmpty()) {
+        bool success = mapWidget_->exportToPng(filePath);
+        if (success) {
+            opStatusLabel_->setText("Map exported to: " + filePath);
+            opStatusLabel_->setStyleSheet("color: green;");
+        } else {
+            opStatusLabel_->setText("Failed to export map");
+            opStatusLabel_->setStyleSheet("color: red;");
+        }
+    }
 }
