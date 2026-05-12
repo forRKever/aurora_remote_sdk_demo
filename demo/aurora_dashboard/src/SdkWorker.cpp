@@ -255,9 +255,6 @@ void SdkWorker::connectToDevice(const QString& ip, int port) {
     // Enable auto floor detection
     sdk_->lidar2DMapBuilder.setPreviewMapAutoFloorDetection(true);
 
-    // 強制要求初始重繪，確保 dirty rect 在第一次 poll 時有資料
-    sdk_->lidar2DMapBuilder.requireRedrawPreviewMap();
-
     // Use Qt-style delay instead of std::this_thread
     logToFile(">>> Waiting 1 second for device initialization...");
     QTime delayTime = QTime::currentTime().addMSecs(1000);
@@ -266,10 +263,10 @@ void SdkWorker::connectToDevice(const QString& ip, int port) {
     }
     logToFile("✓ Device initialization complete, starting polling...");
 
-    pollTimer_->start(100);      // 100ms polling for pose/device info
-    mapTimer_->start(10000);     // 10s for VSLAM map data
-    lidarMapTimer_->start(500);  // 500ms for occupancy grid updates
-    lidarScanTimer_->start(100); // 100ms for LIDAR scan points overlay
+    pollTimer_->start(100);        // 100ms polling for pose/device info
+    mapTimer_->start(10000);       // 10s for VSLAM map data
+    lidarMapTimer_->start(30000);  // 30s for occupancy grid (generateFullMap is blocking)
+    lidarScanTimer_->start(100);   // 100ms for LIDAR scan points overlay
 
     logToFile("✓ Timers started: poll=100ms, map=10s, lidar=500ms, scan=100ms");
 
@@ -467,73 +464,71 @@ void SdkWorker::onMapRefreshTimeout() {
 }
 
 void SdkWorker::onLidarMapTimeout() {
-    if (!sdk_ || !connected_) {
+    if (!sdk_ || !connected_) return;
+    if (generating_) return;
+
+    generating_ = true;
+
+    LIDAR2DGridMapGenerationOptions options = mapGenOptions_;
+    logToFile(">>> generateFullMap start...");
+    auto fullMap = sdk_->lidar2DMapBuilder.generateFullMap(options, true, 5000);
+
+    if (!fullMap) {
+        logToFile("✗ generateFullMap failed or timeout");
+        generating_ = false;
         return;
     }
 
-    // Update occupancy grid map
-    if (!sdk_->lidar2DMapBuilder.isPreviewMapBackgroundUpdateActive()) {
-        return;
-    }
-
-    // 檢查是否有新資料（dirty rect 由 SDK 背景執行緒自動設定，不需要每次強制 requireRedraw）
-    slamtec_aurora_sdk_rect_t dirtyRect;
-    bool mapBigChange = false;
-    sdk_->lidar2DMapBuilder.getAndResetPreviewMapDirtyRect(dirtyRect, mapBigChange);
-    if (dirtyRect.width <= 0 || dirtyRect.height <= 0) {
-        return;
-    }
-
-    const OccupancyGridMap2DRef& gridMap = sdk_->lidar2DMapBuilder.getPreviewMap();
-    float resolution = gridMap.getResolution();
-
-    // Query the actual populated bounding box instead of fixed canvas
     slamtec_aurora_sdk_2dmap_dimension_t mapDim;
-    gridMap.getMapDimension(mapDim);
+    fullMap->getMapDimension(mapDim);
+    logToFile(QString("generateFullMap dim: x=[%1,%2] y=[%3,%4]")
+              .arg(mapDim.min_x, 0, 'f', 2).arg(mapDim.max_x, 0, 'f', 2)
+              .arg(mapDim.min_y, 0, 'f', 2).arg(mapDim.max_y, 0, 'f', 2));
 
-    // Skip if no meaningful data yet (dimensions too small)
-    if ((mapDim.max_x - mapDim.min_x) < resolution || (mapDim.max_y - mapDim.min_y) < resolution) {
+    float w = mapDim.max_x - mapDim.min_x;
+    float h = mapDim.max_y - mapDim.min_y;
+    if (w < options.resolution || h < options.resolution) {
+        logToFile("✗ Map too small");
+        generating_ = false;
         return;
     }
 
     slamtec_aurora_sdk_rect_t fetchRect;
-    fetchRect.x      = mapDim.min_x;
-    fetchRect.y      = mapDim.min_y;
-    fetchRect.width  = mapDim.max_x - mapDim.min_x;
-    fetchRect.height = mapDim.max_y - mapDim.min_y;
+    fetchRect.x = mapDim.min_x;
+    fetchRect.y = mapDim.min_y;
+    fetchRect.width  = w;
+    fetchRect.height = h;
 
     std::vector<uint8_t> mapData;
     slamtec_aurora_sdk_2d_gridmap_fetch_info_t fetchInfo;
-    gridMap.readCellData(fetchRect, fetchInfo, mapData);
-
-    uint32_t cell_width = fetchInfo.cell_width;
-    uint32_t cell_height = fetchInfo.cell_height;
-
-    if (cell_width == 0 || cell_height == 0 || mapData.empty()) {
+    if (!fullMap->readCellData(fetchRect, fetchInfo, mapData)) {
+        logToFile("✗ readCellData failed");
+        generating_ = false;
         return;
     }
 
-    if (mapData.size() != cell_width * cell_height) {
+    uint32_t cw = fetchInfo.cell_width;
+    uint32_t ch = fetchInfo.cell_height;
+    if (cw == 0 || ch == 0 || mapData.empty() || mapData.size() != (size_t)cw * ch) {
+        logToFile(QString("✗ Invalid cell data: %1x%2").arg(cw).arg(ch));
+        generating_ = false;
         return;
     }
 
-    // Analyze map data content
     int countBlack = 0, countWhite = 0, countGray = 0;
-    for (uint8_t pixel : mapData) {
-        if (pixel < 64) countBlack++;      // 0-63: obstacle
-        else if (pixel > 192) countWhite++; // 193-255: free
-        else countGray++;                  // 64-192: unknown
+    for (uint8_t p : mapData) {
+        if (p < 64) countBlack++;
+        else if (p > 192) countWhite++;
+        else countGray++;
     }
+    logToFile(QString("✓ Full map: %1x%2 px | Black:%3 White:%4 Gray:%5")
+              .arg(cw).arg(ch).arg(countBlack).arg(countWhite).arg(countGray));
 
-    logToFile(QString("LIDAR map emit: %1x%2 px | Black:%3 White:%4 Gray:%5 | BigChange=%6")
-              .arg(cell_width).arg(cell_height)
-              .arg(countBlack).arg(countWhite).arg(countGray)
-              .arg(mapBigChange ? "Y" : "N"));
-
-    QImage gridImage(cell_width, cell_height, QImage::Format_Grayscale8);
+    QImage gridImage(cw, ch, QImage::Format_Grayscale8);
     std::memcpy(gridImage.bits(), mapData.data(), mapData.size());
 
-    emit occupancyMapUpdated(gridImage, fetchRect.x, fetchRect.y, resolution);
+    emit occupancyMapUpdated(gridImage, fetchRect.x, fetchRect.y, options.resolution);
+    generating_ = false;
 }
 
 void SdkWorker::onLidarScanTimeout() {
@@ -598,6 +593,11 @@ void SdkWorker::onLidarScanTimeout() {
 
 void SdkWorker::requestMapRefresh() {
     mapRefreshRequested_ = true;
+    // 同時立刻觸發一次 2D 地圖更新
+    if (connected_ && !generating_) {
+        lidarMapTimer_->stop();
+        lidarMapTimer_->start(1000);  // 1 秒後立即觸發一次
+    }
     onMapRefreshTimeout();
 }
 

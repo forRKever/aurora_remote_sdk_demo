@@ -64,13 +64,14 @@ private:
     RemoteSDK* sdk_ = nullptr;
     QTimer* pollTimer_ = nullptr;
     QTimer* mapTimer_ = nullptr;
-    QTimer* lidarMapTimer_ = nullptr;   // 500ms polling for occupancy grid
+    QTimer* lidarMapTimer_ = nullptr;   // 30000ms polling for occupancy grid (generateFullMap)
     QTimer* lidarScanTimer_ = nullptr;  // 100ms polling for LIDAR scan points
     QTimer* depthTimer_ = nullptr;      // 200ms polling for depth camera
     QTimer* segmentationTimer_ = nullptr;  // 200ms polling for semantic segmentation
     QTimer* colmapStatusTimer_ = nullptr;  // 2s polling for COLMAP recording status
     bool connected_ = false;
     bool mapRefreshRequested_ = false;
+    bool generating_ = false;  // 防止 generateFullMap 重入
     LIDAR2DGridMapGenerationOptions mapGenOptions_;
     slamtec_aurora_sdk_semantic_segmentation_label_info_t segLabelInfo_;
     int lastFloorID_ = -999;
