@@ -92,6 +92,8 @@ void MainWindow::setupUI() {
     poseRollLabel_ = new QLabel("Roll: --");
     posePitchLabel_ = new QLabel("Pitch: --");
     poseYawLabel_ = new QLabel("Yaw: --");
+    poseQualityLabel_ = new QLabel("Quality: --");
+    poseQualityLabel_->setFont(QFont("monospace", 9, QFont::Bold));
 
     poseLayout->addWidget(poseXLabel_);
     poseLayout->addWidget(poseYLabel_);
@@ -99,6 +101,7 @@ void MainWindow::setupUI() {
     poseLayout->addWidget(poseRollLabel_);
     poseLayout->addWidget(posePitchLabel_);
     poseLayout->addWidget(poseYawLabel_);
+    poseLayout->addWidget(poseQualityLabel_);
 
     leftLayout->addWidget(poseGroup);
 
@@ -283,6 +286,19 @@ void MainWindow::setupWorker() {
             floorLabel_->setText(
                 QString("Floor %1/%2 | H:%3m | %4%")
                 .arg(fid).arg(total).arg(h, 0, 'f', 2).arg((int)(conf * 100)));
+        }, Qt::QueuedConnection);
+    connect(worker_, &SdkWorker::poseQualityUpdated, this,
+        [this](QString q, float r95) {
+            static const QMap<QString, QString> colorMap = {
+                {"EXCELLENT", "green"},
+                {"GOOD", "#aacc00"},
+                {"FAIR", "orange"},
+                {"POOR", "red"}
+            };
+            poseQualityLabel_->setText(
+                QString("Quality: %1 (±%2m)").arg(q).arg(r95, 0, 'f', 3));
+            poseQualityLabel_->setStyleSheet(
+                QString("color:%1; font-weight:bold;").arg(colorMap.value(q, "gray")));
         }, Qt::QueuedConnection);
     connect(worker_, &SdkWorker::connectionChanged, this, &MainWindow::updateConnectionUI);
     connect(worker_, &SdkWorker::mappingStatusChanged, this, &MainWindow::onMappingStatusChanged);

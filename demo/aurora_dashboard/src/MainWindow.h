@@ -60,6 +60,7 @@ private:
     QLabel* poseRollLabel_;
     QLabel* posePitchLabel_;
     QLabel* poseYawLabel_;
+    QLabel* poseQualityLabel_;
 
     QLabel* slamStateLabel_;
     QLabel* firmwareLabel_;

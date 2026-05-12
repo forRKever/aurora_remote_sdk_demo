@@ -389,6 +389,23 @@ void SdkWorker::onPollTimeout() {
         }
     }
 
+    // ── Pose quality indicator ───────────────────────────────────────────
+    PoseCovariance cov;
+    uint64_t covTs = 0;
+    if (sdk_->dataProvider.getRecentPoseCovariance(cov, &covTs)) {
+        PoseCovarianceReadable readable;
+        if (cov.toHumanReadable(readable)) {
+            float r95 = readable.getPositionRadius95XY();
+            QString q = r95 < 0.05f ? "EXCELLENT"
+                      : r95 < 0.10f ? "GOOD"
+                      : r95 < 0.30f ? "FAIR" : "POOR";
+            if (q != lastQuality_) {
+                lastQuality_ = q;
+                emit poseQualityUpdated(q, r95);
+            }
+        }
+    }
+
     // ── Camera frame preview ─────────────────────────────────────────────
     // peekTrackingData returns the most recent tracking frame buffered by
     // the SDK. Returns false when no new frame is available.
