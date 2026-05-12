@@ -103,6 +103,8 @@ if(Qt5_FOUND)
         demo/aurora_dashboard/src/CameraPreviewWidget.h
         demo/aurora_dashboard/src/DepthCamWidget.cpp
         demo/aurora_dashboard/src/DepthCamWidget.h
+        demo/aurora_dashboard/src/SemanticSegmentationWidget.cpp
+        demo/aurora_dashboard/src/SemanticSegmentationWidget.h
     )
     target_link_libraries(aurora_dashboard
         ${AURORA_LIB_NAME}
@@ -121,6 +123,9 @@ if(Qt5_FOUND)
         CXX_STANDARD 14
         CXX_STANDARD_REQUIRED ON
     )
+    if(MSVC)
+        target_compile_options(aurora_dashboard PRIVATE /utf-8)
+    endif()
     add_custom_command(TARGET aurora_dashboard POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
         ${AURORA_LIB_PATH}

@@ -39,6 +39,7 @@ signals:
     void occupancyMapUpdated(QImage gridImage, float minX, float minY, float resolution);
     void cameraFrameUpdated(QImage left, QImage right);
     void depthFrameUpdated(QImage img);
+    void semanticSegmentationFrameUpdated(QImage img, QString dominantLabel);
     void mappingStatusChanged(QString status);
     void connectionChanged(bool connected, QString message);
     void mapTransferProgress(float progress);
@@ -49,6 +50,7 @@ private slots:
     void onMapRefreshTimeout();
     void onLidarMapTimeout();
     void onDepthTimeout();
+    void onSegmentationTimeout();
 
 private:
     RemoteSDK* sdk_ = nullptr;
@@ -56,7 +58,9 @@ private:
     QTimer* mapTimer_ = nullptr;
     QTimer* lidarMapTimer_ = nullptr;  // 500ms polling for occupancy grid
     QTimer* depthTimer_ = nullptr;     // 200ms polling for depth camera
+    QTimer* segmentationTimer_ = nullptr;  // 200ms polling for semantic segmentation
     bool connected_ = false;
     bool mapRefreshRequested_ = false;
     LIDAR2DGridMapGenerationOptions mapGenOptions_;
+    slamtec_aurora_sdk_semantic_segmentation_label_info_t segLabelInfo_;
 };

@@ -12,6 +12,7 @@
 #include <cstring>
 #include <vector>
 #include <cmath>
+#include <algorithm>
 #include <cfloat>
 #include <limits>
 
@@ -172,11 +173,17 @@ SdkWorker::SdkWorker() {
     depthTimer_ = new QTimer(this);
     connect(depthTimer_, &QTimer::timeout, this, &SdkWorker::onDepthTimeout);
 
+    segmentationTimer_ = new QTimer(this);
+    connect(segmentationTimer_, &QTimer::timeout, this, &SdkWorker::onSegmentationTimeout);
+
     // Initialize map generation options with explicit values
     mapGenOptions_.map_canvas_height = 150;
     mapGenOptions_.map_canvas_width = 150;
     mapGenOptions_.resolution = 0.05f;
     mapGenOptions_.active_map_only = 0;  // Include all maps (active_map_only=1 may filter out data during mapping)
+
+    // Initialize segmentation label info
+    segLabelInfo_.label_count = 0;
 }
 
 SdkWorker::~SdkWorker() {
@@ -268,6 +275,27 @@ void SdkWorker::connectToDevice(const QString& ip, int port) {
         logToFile("ℹ Depth camera not supported by this device");
     }
 
+    // Subscribe to semantic segmentation (graceful if unsupported)
+    if (sdk_->enhancedImaging.isSemanticSegmentationSupported()) {
+        if (sdk_->controller.setEnhancedImagingSubscription(
+                SLAMTEC_AURORA_SDK_ENHANCED_IMAGE_TYPE_SEMANTIC, true)) {
+            segmentationTimer_->start(200);  // ~5fps for semantic segmentation
+            logToFile("✓ Semantic segmentation subscription enabled, polling at 200ms");
+
+            // Load segmentation labels
+            if (sdk_->enhancedImaging.getSemanticSegmentationLabels(segLabelInfo_)) {
+                logToFile(QString("✓ Segmentation labels loaded: %1 classes").arg((int)segLabelInfo_.label_count));
+            } else {
+                segLabelInfo_.label_count = 0;
+                logToFile("✗ Failed to load segmentation labels");
+            }
+        } else {
+            logToFile("✗ Failed to subscribe to semantic segmentation");
+        }
+    } else {
+        logToFile("ℹ Semantic segmentation not supported by this device");
+    }
+
     emit connectionChanged(true, "Connected to " + ip);
 }
 
@@ -280,6 +308,7 @@ void SdkWorker::disconnectDevice() {
     mapTimer_->stop();
     lidarMapTimer_->stop();
     depthTimer_->stop();
+    segmentationTimer_->stop();
 
     sdk_->lidar2DMapBuilder.stopPreviewMapBackgroundUpdate();
     sdk_->disconnect();
@@ -607,5 +636,82 @@ void SdkWorker::onDepthTimeout() {
     QImage img = depthFrameToColorQImage(depthFrame);
     if (!img.isNull()) {
         emit depthFrameUpdated(img);
+    }
+}
+
+// Colorize segmentation map: each class gets a distinct color
+static QImage segmentationFrameToColorQImage(const RemoteEnhancedImagingFrame& frame) {
+    const auto& img = frame.image;
+    if (img.isEmpty()) return QImage();
+
+    const auto& d = img._desc;
+    const uint8_t* data = reinterpret_cast<const uint8_t*>(img._data);
+
+    // Generate deterministic colors for each class (based on demo's approach)
+    std::vector<uint32_t> classColors(256);
+    classColors[0] = 0x000000;  // Background: black (transparent)
+
+    // Generate colors for classes 1-255
+    for (int i = 1; i < 256; i++) {
+        // Use deterministic pseudo-random colors
+        uint32_t r = ((i * 73) % 256);
+        if (r < 50) r += 80;  // Avoid too dark colors
+        uint32_t g = ((i * 131) % 256);
+        if (g < 50) g += 80;
+        uint32_t b = ((i * 173) % 256);
+        if (b < 50) b += 80;
+        classColors[i] = (r << 16) | (g << 8) | b;
+    }
+
+    // Convert to RGB image
+    QImage result(d.width, d.height, QImage::Format_RGB888);
+    for (uint32_t row = 0; row < d.height; ++row) {
+        uint8_t* dst = result.scanLine(row);
+        const uint8_t* src = data + row * d.stride;
+        for (uint32_t col = 0; col < d.width; ++col) {
+            uint8_t classId = src[col];
+            uint32_t color = classColors[classId];
+            dst[0] = (color >> 16) & 0xFF;  // R
+            dst[1] = (color >> 8) & 0xFF;   // G
+            dst[2] = color & 0xFF;           // B
+            dst += 3;
+        }
+    }
+
+    return result;
+}
+
+void SdkWorker::onSegmentationTimeout() {
+    if (!sdk_ || !connected_) {
+        return;
+    }
+
+    RemoteEnhancedImagingFrame segFrame;
+    slamtec_aurora_sdk_errorcode_t errorCode;
+    if (!sdk_->enhancedImaging.peekSemanticSegmentationFrame(segFrame, &errorCode)) {
+        return;  // NOT_READY is normal — skip silently
+    }
+
+    // Compute dominant label (pure C++, no OpenCV)
+    QString dominantLabel;
+    if (segLabelInfo_.label_count > 0 && !segFrame.image.isEmpty()) {
+        const auto& desc = segFrame.image._desc;
+        const uint8_t* rawData = reinterpret_cast<const uint8_t*>(segFrame.image._data);
+        int counts[256] = {};
+        for (uint32_t r = 0; r < desc.height; ++r) {
+            const uint8_t* row = rawData + r * desc.stride;
+            for (uint32_t c = 0; c < desc.width; ++c) counts[row[c]]++;
+        }
+        counts[0] = 0;  // exclude background
+        int domClass = (int)(std::max_element(counts, counts + 256) - counts);
+        if (domClass > 0 && domClass < (int)segLabelInfo_.label_count) {
+            std::string n = segLabelInfo_.label_names[domClass].name;
+            if (n != "(null)") dominantLabel = QString::fromStdString(n);
+        }
+    }
+
+    QImage img = segmentationFrameToColorQImage(segFrame);
+    if (!img.isNull()) {
+        emit semanticSegmentationFrameUpdated(img, dominantLabel);
     }
 }

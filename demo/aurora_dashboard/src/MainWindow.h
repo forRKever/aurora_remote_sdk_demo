@@ -12,6 +12,7 @@
 #include "MapWidget.h"
 #include "CameraPreviewWidget.h"
 #include "DepthCamWidget.h"
+#include "SemanticSegmentationWidget.h"
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -76,7 +77,10 @@ private:
     MapWidget* mapWidget_;
     CameraPreviewWidget* cameraWidget_;
     DepthCamWidget* depthWidget_;
-    QSplitter* rightSplitter_;
+    SemanticSegmentationWidget* segmentationWidget_;
+    QSplitter* centerSplitter_;   // horizontal splitter
+    QSplitter* leftSubSplitter_;  // vertical splitter for depth + seg
+    QSplitter* rightSubSplitter_; // vertical splitter for VSLAM + camera + mapOps
     QPushButton* refreshMapBtn_;
     QPushButton* downloadMapBtn_;
     QPushButton* uploadMapBtn_;

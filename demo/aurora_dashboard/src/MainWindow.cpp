@@ -14,7 +14,8 @@ MainWindow::MainWindow()
       disconnectBtn_(nullptr), statusLabel_(nullptr),
       startMappingBtn_(nullptr), stopMappingBtn_(nullptr), resetMapBtn_(nullptr),
       mappingStatusLabel_(nullptr),
-      mapWidget_(nullptr), cameraWidget_(nullptr), depthWidget_(nullptr), rightSplitter_(nullptr),
+      mapWidget_(nullptr), cameraWidget_(nullptr), depthWidget_(nullptr), segmentationWidget_(nullptr),
+      centerSplitter_(nullptr), leftSubSplitter_(nullptr), rightSubSplitter_(nullptr),
       worker_(nullptr), workerThread_(nullptr) {
     setWindowTitle("Aurora Dashboard");
     setGeometry(100, 100, 1200, 800);
@@ -153,26 +154,37 @@ void MainWindow::setupUI() {
     rightLayout->setContentsMargins(0, 0, 0, 0);
     rightLayout->setSpacing(0);
 
-    // Vertical splitter: top=MapWidget, middle=CameraPreview, bottom=MapOps
-    rightSplitter_ = new QSplitter(Qt::Vertical);
-    rightSplitter_->setChildrenCollapsible(true);
+    // Outer horizontal splitter: [leftSubSplitter_ | rightSubSplitter_]
+    centerSplitter_ = new QSplitter(Qt::Horizontal);
+    centerSplitter_->setChildrenCollapsible(false);
 
-    // 3D map widget (takes most vertical space)
+    // Left sub-pane: vertical splitter with [depthWidget_, segmentationWidget_]
+    leftSubSplitter_ = new QSplitter(Qt::Vertical);
+    leftSubSplitter_->setChildrenCollapsible(true);
+
+    depthWidget_ = new DepthCamWidget;
+    depthWidget_->setMinimumHeight(0);
+    leftSubSplitter_->addWidget(depthWidget_);
+
+    segmentationWidget_ = new SemanticSegmentationWidget;
+    segmentationWidget_->setMinimumHeight(0);
+    leftSubSplitter_->addWidget(segmentationWidget_);
+
+    leftSubSplitter_->setSizes({400, 400});
+
+    // Right sub-pane: vertical splitter with [mapWidget_, cameraWidget_, mapOpsGroup]
+    rightSubSplitter_ = new QSplitter(Qt::Vertical);
+    rightSubSplitter_->setChildrenCollapsible(true);
+
     mapWidget_ = new MapWidget;
     mapWidget_->setMinimumHeight(200);
-    rightSplitter_->addWidget(mapWidget_);
+    rightSubSplitter_->addWidget(mapWidget_);
 
-    // Camera preview panel (collapsible via splitter handle)
     cameraWidget_ = new CameraPreviewWidget;
-    cameraWidget_->setMinimumHeight(0);   // allow full collapse
-    rightSplitter_->addWidget(cameraWidget_);
+    cameraWidget_->setMinimumHeight(0);
+    rightSubSplitter_->addWidget(cameraWidget_);
 
-    // Depth camera panel (collapsible via splitter handle)
-    depthWidget_ = new DepthCamWidget;
-    depthWidget_->setMinimumHeight(0);    // allow full collapse
-    rightSplitter_->addWidget(depthWidget_);
-
-    // Map operations group (fixed at bottom)
+    // Map operations group
     QGroupBox* mapOpsGroup = new QGroupBox("Map Operations");
     QVBoxLayout* mapOpsLayout = new QVBoxLayout(mapOpsGroup);
 
@@ -214,13 +226,15 @@ void MainWindow::setupUI() {
     opStatusLabel_->setWordWrap(true);
     mapOpsLayout->addWidget(opStatusLabel_);
 
-    rightSplitter_->addWidget(mapOpsGroup);
+    rightSubSplitter_->addWidget(mapOpsGroup);
+    rightSubSplitter_->setSizes({450, 220, 130});
 
-    // Initial size distribution: 60% map, 19% camera, 19% depth, 12% map-ops
-    // Expressed in pixels assuming 800px total right panel height - (borders)
-    rightSplitter_->setSizes({480, 150, 150, 120});
+    // Compose the horizontal splitter
+    centerSplitter_->addWidget(leftSubSplitter_);
+    centerSplitter_->addWidget(rightSubSplitter_);
+    centerSplitter_->setSizes({380, 620});
 
-    rightLayout->addWidget(rightSplitter_);
+    rightLayout->addWidget(centerSplitter_);
     mainLayout->addWidget(rightPanel, 1);
 
     // Connect signals
@@ -246,6 +260,8 @@ void MainWindow::setupWorker() {
     connect(worker_, &SdkWorker::cameraFrameUpdated, cameraWidget_, &CameraPreviewWidget::updateFrame,
             Qt::QueuedConnection);
     connect(worker_, &SdkWorker::depthFrameUpdated, depthWidget_, &DepthCamWidget::updateDepthFrame,
+            Qt::QueuedConnection);
+    connect(worker_, &SdkWorker::semanticSegmentationFrameUpdated, segmentationWidget_, &SemanticSegmentationWidget::updateSegmentationFrame,
             Qt::QueuedConnection);
     connect(worker_, &SdkWorker::connectionChanged, this, &MainWindow::updateConnectionUI);
     connect(worker_, &SdkWorker::mappingStatusChanged, this, &MainWindow::onMappingStatusChanged);
