@@ -37,6 +37,7 @@ signals:
     void mapDataUpdated(QVector<QVector3D> keyframes,
                         QVector<QVector3D> mapPoints);
     void occupancyMapUpdated(QImage gridImage, float minX, float minY, float resolution);
+    void lidarScanUpdated(QVector<QPointF> worldPoints);
     void cameraFrameUpdated(QImage left, QImage right);
     void depthFrameUpdated(QImage img);
     void semanticSegmentationFrameUpdated(QImage img, QString dominantLabel);
@@ -49,6 +50,7 @@ private slots:
     void onPollTimeout();
     void onMapRefreshTimeout();
     void onLidarMapTimeout();
+    void onLidarScanTimeout();
     void onDepthTimeout();
     void onSegmentationTimeout();
 
@@ -56,8 +58,9 @@ private:
     RemoteSDK* sdk_ = nullptr;
     QTimer* pollTimer_ = nullptr;
     QTimer* mapTimer_ = nullptr;
-    QTimer* lidarMapTimer_ = nullptr;  // 500ms polling for occupancy grid
-    QTimer* depthTimer_ = nullptr;     // 200ms polling for depth camera
+    QTimer* lidarMapTimer_ = nullptr;   // 500ms polling for occupancy grid
+    QTimer* lidarScanTimer_ = nullptr;  // 100ms polling for LIDAR scan points
+    QTimer* depthTimer_ = nullptr;      // 200ms polling for depth camera
     QTimer* segmentationTimer_ = nullptr;  // 200ms polling for semantic segmentation
     bool connected_ = false;
     bool mapRefreshRequested_ = false;

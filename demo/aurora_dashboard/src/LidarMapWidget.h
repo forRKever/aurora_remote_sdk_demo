@@ -2,6 +2,8 @@
 
 #include <QWidget>
 #include <QImage>
+#include <QVector>
+#include <QPointF>
 
 class LidarMapWidget : public QWidget {
     Q_OBJECT
@@ -12,6 +14,7 @@ public:
 public slots:
     void setOccupancyMap(QImage img, float minX, float minY, float resolution);
     void updateCurrentPose(double x, double y, double z, double yaw);
+    void updateLidarScan(QVector<QPointF> worldPoints);
 
 protected:
     void paintEvent(QPaintEvent* event) override;
@@ -26,4 +29,6 @@ private:
     double poseY_ = 0.0;
     double poseYaw_ = 0.0;
     bool hasPose_ = false;
+
+    QVector<QPointF> scanPoints_;
 };

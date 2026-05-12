@@ -26,6 +26,11 @@ void LidarMapWidget::updateCurrentPose(double x, double y, double z, double yaw)
     update();
 }
 
+void LidarMapWidget::updateLidarScan(QVector<QPointF> worldPoints) {
+    scanPoints_ = worldPoints;
+    update();
+}
+
 void LidarMapWidget::paintEvent(QPaintEvent* event) {
     QPainter painter(this);
     painter.setRenderHint(QPainter::SmoothPixmapTransform);
@@ -69,6 +74,29 @@ void LidarMapWidget::paintEvent(QPaintEvent* event) {
 
     // Draw occupancy grid map
     painter.drawImage(destRect, gridImage_);
+
+    // Draw LIDAR scan points overlay
+    if (!scanPoints_.empty()) {
+        painter.setBrush(QColor(255, 80, 80, 200));  // Red semi-transparent
+        painter.setPen(Qt::NoPen);
+
+        float scaleX = (float)displayW / imgW;
+        float scaleY = (float)displayH / imgH;
+
+        for (const QPointF& wp : scanPoints_) {
+            float imgX = (float)(wp.x() - minX_) / resolution_;
+            float imgY = (float)(wp.y() - minY_) / resolution_;
+
+            int screenX = offsetX + (int)(imgX * scaleX);
+            int screenY = offsetY + (int)(imgY * scaleY);
+
+            // Check bounds before drawing
+            if (screenX >= offsetX && screenX < offsetX + displayW &&
+                screenY >= offsetY && screenY < offsetY + displayH) {
+                painter.drawEllipse(QPoint(screenX, screenY), 2, 2);
+            }
+        }
+    }
 
     // Draw current pose if available
     if (hasPose_) {

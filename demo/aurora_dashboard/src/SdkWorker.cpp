@@ -170,6 +170,9 @@ SdkWorker::SdkWorker() {
     lidarMapTimer_ = new QTimer(this);
     connect(lidarMapTimer_, &QTimer::timeout, this, &SdkWorker::onLidarMapTimeout);
 
+    lidarScanTimer_ = new QTimer(this);
+    connect(lidarScanTimer_, &QTimer::timeout, this, &SdkWorker::onLidarScanTimeout);
+
     depthTimer_ = new QTimer(this);
     connect(depthTimer_, &QTimer::timeout, this, &SdkWorker::onDepthTimeout);
 
@@ -259,8 +262,9 @@ void SdkWorker::connectToDevice(const QString& ip, int port) {
     pollTimer_->start(100);      // 100ms polling for pose/device info
     mapTimer_->start(10000);     // 10s for VSLAM map data
     lidarMapTimer_->start(500);  // 500ms for occupancy grid updates
+    lidarScanTimer_->start(100); // 100ms for LIDAR scan points overlay
 
-    logToFile("✓ Timers started: poll=100ms, map=10s, lidar=500ms");
+    logToFile("✓ Timers started: poll=100ms, map=10s, lidar=500ms, scan=100ms");
 
     // Subscribe to depth camera (graceful if unsupported)
     if (sdk_->enhancedImaging.isDepthCameraSupported()) {
@@ -307,6 +311,7 @@ void SdkWorker::disconnectDevice() {
     pollTimer_->stop();
     mapTimer_->stop();
     lidarMapTimer_->stop();
+    lidarScanTimer_->stop();
     depthTimer_->stop();
     segmentationTimer_->stop();
 
@@ -484,6 +489,66 @@ void SdkWorker::onLidarMapTimeout() {
     std::memcpy(gridImage.bits(), mapData.data(), mapData.size());
 
     emit occupancyMapUpdated(gridImage, fetchRect.x, fetchRect.y, resolution);
+}
+
+void SdkWorker::onLidarScanTimeout() {
+    if (!sdk_ || !connected_) {
+        return;
+    }
+
+    // Fetch recent LIDAR scan single layer with pose
+    SingleLayerLIDARScan scan;
+    slamtec_aurora_sdk_pose_se3_t poseSE3;
+
+    if (!sdk_->dataProvider.peekRecentLIDARScanSingleLayer(scan, poseSE3)) {
+        return;
+    }
+
+    if (scan.info.scan_count == 0) {
+        return;
+    }
+
+    // Extract quaternion components from pose
+    double qx = poseSE3.quaternion.x;
+    double qy = poseSE3.quaternion.y;
+    double qz = poseSE3.quaternion.z;
+    double qw = poseSE3.quaternion.w;
+
+    // Convert scan points to world coordinates
+    QVector<QPointF> worldPoints;
+    worldPoints.reserve(scan.info.scan_count);
+
+    for (size_t i = 0; i < scan.info.scan_count; ++i) {
+        const auto& point = scan.scanData[i];
+        double dist = point.dist;
+        double angle = point.angle;
+
+        // Skip invalid points (quality should be > 0 for valid points)
+        if (dist <= 0 || point.quality <= 0 || !std::isfinite(dist) || !std::isfinite(angle)) {
+            continue;
+        }
+
+        // Transform from polar to Cartesian in local frame
+        double localX = dist * std::cos(angle);
+        double localY = dist * std::sin(angle);
+        double localZ = 0.0;  // Single-layer LIDAR
+
+        // Apply quaternion rotation: p' = q * p * q^-1
+        // For efficiency, only compute the rotated X,Y components
+        double tx = 2.0 * (-qz * localY);
+        double ty = 2.0 * (qz * localX);
+        double tz = 2.0 * (qx * localY - qy * localX);
+
+        // Transform to world frame
+        double worldX = poseSE3.translation.x + localX + qw * tx + (qy * tz - qz * ty);
+        double worldY = poseSE3.translation.y + localY + qw * ty + (qz * tx - qx * tz);
+
+        worldPoints.append(QPointF(worldX, worldY));
+    }
+
+    if (!worldPoints.empty()) {
+        emit lidarScanUpdated(worldPoints);
+    }
 }
 
 void SdkWorker::requestMapRefresh() {
