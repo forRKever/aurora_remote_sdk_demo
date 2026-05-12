@@ -29,8 +29,17 @@ MainWindow::MainWindow()
 MainWindow::~MainWindow() {
     if (workerThread_) {
         workerThread_->quit();
-        workerThread_->wait();
+        workerThread_->wait(5000);
     }
+}
+
+void MainWindow::closeEvent(QCloseEvent* event) {
+    // 先斷線：停止所有計時器、關閉 SDK 連線
+    if (worker_ && workerThread_ && workerThread_->isRunning()) {
+        QMetaObject::invokeMethod(worker_, "disconnectDevice",
+                                  Qt::BlockingQueuedConnection);
+    }
+    event->accept();
 }
 
 void MainWindow::setupUI() {

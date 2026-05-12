@@ -186,7 +186,8 @@ SdkWorker::SdkWorker() {
     mapGenOptions_.map_canvas_height = 150;
     mapGenOptions_.map_canvas_width = 150;
     mapGenOptions_.resolution = 0.05f;
-    mapGenOptions_.active_map_only = 0;  // Include all maps (active_map_only=1 may filter out data during mapping)
+    // NOTE: active_map_only default is 1 (show only active map)
+    // Setting to 0 caused "all maps merged view" to fail with 4x4 gray placeholder
 
     // Initialize segmentation label info
     segLabelInfo_.label_count = 0;

@@ -9,6 +9,7 @@
 #include <QFileDialog>
 #include <QSplitter>
 #include <QTabWidget>
+#include <QCloseEvent>
 #include "SdkWorker.h"
 #include "MapWidget.h"
 #include "LidarMapWidget.h"
@@ -41,6 +42,9 @@ private slots:
     void updateMapProgress(float progress);
     void onMapTransferDone(bool success, QString message);
     void onMappingStatusChanged(QString status);
+
+protected:
+    void closeEvent(QCloseEvent* event) override;
 
 private:
     void setupUI();
