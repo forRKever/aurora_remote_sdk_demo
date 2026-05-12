@@ -443,12 +443,15 @@ void SdkWorker::onMapRefreshTimeout() {
 
     RemoteMapDataVisitor visitor;
 
+    // Aurora 座標系：Z 向上，X-Y 水平面
+    // OpenGL 座標系：Y 向上，X-Z 水平面
+    // 映射：Aurora(x, y, z) → OpenGL(x, z, y)
     visitor.subscribeKeyFrameData([&](const RemoteKeyFrameData& kf) {
-        keyframes.append(QVector3D(kf.desc.pose.translation.x, kf.desc.pose.translation.y, kf.desc.pose.translation.z));
+        keyframes.append(QVector3D(kf.desc.pose.translation.x, kf.desc.pose.translation.z, kf.desc.pose.translation.y));
     });
 
     visitor.subscribeMapPointData([&](const slamtec_aurora_sdk_map_point_desc_t& mp) {
-        mapPoints.append(QVector3D(mp.position.x, mp.position.y, mp.position.z));
+        mapPoints.append(QVector3D(mp.position.x, mp.position.z, mp.position.y));
     });
 
     sdk_->dataProvider.accessMapData(visitor, {(uint32_t)globalDesc.activeMapID});

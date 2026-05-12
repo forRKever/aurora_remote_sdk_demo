@@ -81,9 +81,10 @@ void MapWidget::updateMapData(QVector<QVector3D> keyframes, QVector<QVector3D> m
 
 void MapWidget::updateCurrentPose(double x, double y, double z, double yaw) {
     makeCurrent();
-    currentPos_ = QVector3D(x, y, z);
+    // Aurora(x,y,z) → OpenGL(x,z,y)：Aurora Z 向上映射到 OpenGL Y 向上
+    currentPos_ = QVector3D(x, z, y);
     currentYaw_ = yaw;
-    target_ = QVector3D(x, y, z);  // Follow target
+    target_ = QVector3D(x, z, y);
     update();
     doneCurrent();
 }
@@ -272,11 +273,13 @@ void MapWidget::renderCurrentPose() {
     glDeleteVertexArrays(1, &poseVao);
 
     // Draw yaw arrow (simple line)
+    // Aurora yaw 圍繞 Z 軸（向上），前進方向在 Aurora X-Y 平面：(cos(yaw), sin(yaw), 0)
+    // 轉換為 OpenGL：Aurora Y → OpenGL Z，所以方向變為 (cos(yaw), 0, sin(yaw))
     float arrowLen = 0.5f;
     QVector3D arrowEnd = currentPos_ + QVector3D(
-        arrowLen * sin(currentYaw_),
+        arrowLen * cos(currentYaw_),
         0,
-        arrowLen * cos(currentYaw_)
+        arrowLen * sin(currentYaw_)
     );
 
     std::vector<QVector3D> arrowVerts = {currentPos_, arrowEnd};
