@@ -167,12 +167,6 @@ SdkWorker::SdkWorker() {
     mapTimer_ = new QTimer(this);
     connect(mapTimer_, &QTimer::timeout, this, &SdkWorker::onMapRefreshTimeout);
 
-    lidarMapTimer_ = new QTimer(this);
-    connect(lidarMapTimer_, &QTimer::timeout, this, &SdkWorker::onLidarMapTimeout);
-
-    lidarScanTimer_ = new QTimer(this);
-    connect(lidarScanTimer_, &QTimer::timeout, this, &SdkWorker::onLidarScanTimeout);
-
     depthTimer_ = new QTimer(this);
     connect(depthTimer_, &QTimer::timeout, this, &SdkWorker::onDepthTimeout);
 
@@ -181,13 +175,6 @@ SdkWorker::SdkWorker() {
 
     colmapStatusTimer_ = new QTimer(this);
     connect(colmapStatusTimer_, &QTimer::timeout, this, &SdkWorker::onColmapStatusTimeout);
-
-    // Initialize map generation options with explicit values
-    mapGenOptions_.map_canvas_height = 150;
-    mapGenOptions_.map_canvas_width = 150;
-    mapGenOptions_.resolution = 0.05f;
-    // NOTE: active_map_only default is 1 (show only active map)
-    // Setting to 0 caused "all maps merged view" to fail with 4x4 gray placeholder
 
     // Initialize segmentation label info
     segLabelInfo_.label_count = 0;
@@ -230,30 +217,10 @@ void SdkWorker::connectToDevice(const QString& ip, int port) {
     connected_ = true;
     logToFile("✓ Connected to device: " + ip);
 
-    // Enable map data syncing FIRST (before starting map builder)
+    // Enable map data syncing
     logToFile(">>> Enabling map data syncing...");
     sdk_->controller.setMapDataSyncing(true);
     logToFile("✓ Map data syncing enabled");
-
-    // Start occupancy grid map background update
-    logToFile(">>> Starting preview map background update...");
-    logToFile(QString("    Map options: W=%1 H=%2 Res=%3")
-              .arg(mapGenOptions_.map_canvas_width)
-              .arg(mapGenOptions_.map_canvas_height)
-              .arg(mapGenOptions_.resolution));
-
-    if (!sdk_->lidar2DMapBuilder.startPreviewMapBackgroundUpdate(mapGenOptions_)) {
-        logToFile("✗ Failed to start map builder");
-        emit connectionChanged(false, "Failed to start map builder");
-        sdk_->disconnect();
-        connected_ = false;
-        return;
-    }
-
-    logToFile("✓ Map builder started successfully");
-
-    // Enable auto floor detection
-    sdk_->lidar2DMapBuilder.setPreviewMapAutoFloorDetection(true);
 
     // Use Qt-style delay instead of std::this_thread
     logToFile(">>> Waiting 1 second for device initialization...");
@@ -265,10 +232,8 @@ void SdkWorker::connectToDevice(const QString& ip, int port) {
 
     pollTimer_->start(100);        // 100ms polling for pose/device info
     mapTimer_->start(10000);       // 10s for VSLAM map data
-    lidarMapTimer_->start(30000);  // 30s for occupancy grid (generateFullMap is blocking)
-    lidarScanTimer_->start(100);   // 100ms for LIDAR scan points overlay
 
-    logToFile("✓ Timers started: poll=100ms, map=10s, lidar=500ms, scan=100ms");
+    logToFile("✓ Timers started: poll=100ms, map=10s");
 
     // Subscribe to depth camera (graceful if unsupported)
     if (sdk_->enhancedImaging.isDepthCameraSupported()) {
@@ -314,8 +279,6 @@ void SdkWorker::disconnectDevice() {
 
     pollTimer_->stop();
     mapTimer_->stop();
-    lidarMapTimer_->stop();
-    lidarScanTimer_->stop();
     depthTimer_->stop();
     segmentationTimer_->stop();
     colmapStatusTimer_->stop();
@@ -323,7 +286,6 @@ void SdkWorker::disconnectDevice() {
     // Stop COLMAP recording if active
     sdk_->colmapDataRecorder.stopRecording();
 
-    sdk_->lidar2DMapBuilder.stopPreviewMapBackgroundUpdate();
     sdk_->disconnect();
     connected_ = false;
 
@@ -466,141 +428,8 @@ void SdkWorker::onMapRefreshTimeout() {
     emit mapDataUpdated(keyframes, mapPoints);
 }
 
-void SdkWorker::onLidarMapTimeout() {
-    if (!sdk_ || !connected_) return;
-    if (generating_) return;
-
-    generating_ = true;
-
-    LIDAR2DGridMapGenerationOptions options = mapGenOptions_;
-    logToFile(">>> generateFullMap start...");
-    auto fullMap = sdk_->lidar2DMapBuilder.generateFullMap(options, true, 5000);
-
-    if (!fullMap) {
-        logToFile("✗ generateFullMap failed or timeout");
-        generating_ = false;
-        return;
-    }
-
-    slamtec_aurora_sdk_2dmap_dimension_t mapDim;
-    fullMap->getMapDimension(mapDim);
-    logToFile(QString("generateFullMap dim: x=[%1,%2] y=[%3,%4]")
-              .arg(mapDim.min_x, 0, 'f', 2).arg(mapDim.max_x, 0, 'f', 2)
-              .arg(mapDim.min_y, 0, 'f', 2).arg(mapDim.max_y, 0, 'f', 2));
-
-    float w = mapDim.max_x - mapDim.min_x;
-    float h = mapDim.max_y - mapDim.min_y;
-    if (w < options.resolution || h < options.resolution) {
-        logToFile("✗ Map too small");
-        generating_ = false;
-        return;
-    }
-
-    slamtec_aurora_sdk_rect_t fetchRect;
-    fetchRect.x = mapDim.min_x;
-    fetchRect.y = mapDim.min_y;
-    fetchRect.width  = w;
-    fetchRect.height = h;
-
-    std::vector<uint8_t> mapData;
-    slamtec_aurora_sdk_2d_gridmap_fetch_info_t fetchInfo;
-    if (!fullMap->readCellData(fetchRect, fetchInfo, mapData)) {
-        logToFile("✗ readCellData failed");
-        generating_ = false;
-        return;
-    }
-
-    uint32_t cw = fetchInfo.cell_width;
-    uint32_t ch = fetchInfo.cell_height;
-    if (cw == 0 || ch == 0 || mapData.empty() || mapData.size() != (size_t)cw * ch) {
-        logToFile(QString("✗ Invalid cell data: %1x%2").arg(cw).arg(ch));
-        generating_ = false;
-        return;
-    }
-
-    int countBlack = 0, countWhite = 0, countGray = 0;
-    for (uint8_t p : mapData) {
-        if (p < 64) countBlack++;
-        else if (p > 192) countWhite++;
-        else countGray++;
-    }
-    logToFile(QString("✓ Full map: %1x%2 px | Black:%3 White:%4 Gray:%5")
-              .arg(cw).arg(ch).arg(countBlack).arg(countWhite).arg(countGray));
-
-    QImage gridImage(cw, ch, QImage::Format_Grayscale8);
-    std::memcpy(gridImage.bits(), mapData.data(), mapData.size());
-
-    emit occupancyMapUpdated(gridImage, fetchRect.x, fetchRect.y, options.resolution);
-    generating_ = false;
-}
-
-void SdkWorker::onLidarScanTimeout() {
-    if (!sdk_ || !connected_) {
-        return;
-    }
-
-    // Fetch recent LIDAR scan single layer with pose
-    SingleLayerLIDARScan scan;
-    slamtec_aurora_sdk_pose_se3_t poseSE3;
-
-    if (!sdk_->dataProvider.peekRecentLIDARScanSingleLayer(scan, poseSE3)) {
-        return;
-    }
-
-    if (scan.info.scan_count == 0) {
-        return;
-    }
-
-    // Extract quaternion components from pose
-    double qx = poseSE3.quaternion.x;
-    double qy = poseSE3.quaternion.y;
-    double qz = poseSE3.quaternion.z;
-    double qw = poseSE3.quaternion.w;
-
-    // Convert scan points to world coordinates
-    QVector<QPointF> worldPoints;
-    worldPoints.reserve(scan.info.scan_count);
-
-    for (size_t i = 0; i < scan.info.scan_count; ++i) {
-        const auto& point = scan.scanData[i];
-        double dist = point.dist;
-        double angle = point.angle;
-
-        // Skip invalid points (quality should be > 0 for valid points)
-        if (dist <= 0 || point.quality <= 0 || !std::isfinite(dist) || !std::isfinite(angle)) {
-            continue;
-        }
-
-        // Transform from polar to Cartesian in local frame
-        double localX = dist * std::cos(angle);
-        double localY = dist * std::sin(angle);
-        double localZ = 0.0;  // Single-layer LIDAR
-
-        // Apply quaternion rotation: p' = q * p * q^-1
-        // For efficiency, only compute the rotated X,Y components
-        double tx = 2.0 * (-qz * localY);
-        double ty = 2.0 * (qz * localX);
-        double tz = 2.0 * (qx * localY - qy * localX);
-
-        // Transform to world frame
-        double worldX = poseSE3.translation.x + localX + qw * tx + (qy * tz - qz * ty);
-        double worldY = poseSE3.translation.y + localY + qw * ty + (qz * tx - qx * tz);
-
-        worldPoints.append(QPointF(worldX, worldY));
-    }
-
-    if (!worldPoints.empty()) {
-        emit lidarScanUpdated(worldPoints);
-    }
-}
-
 void SdkWorker::requestMapRefresh() {
     mapRefreshRequested_ = true;
-    // 同時立刻觸發一次 2D 地圖更新
-    if (connected_ && !generating_) {
-        lidarMapTimer_->stop();
-        lidarMapTimer_->start(1000);  // 1 秒後立即觸發一次
-    }
     onMapRefreshTimeout();
 }
 

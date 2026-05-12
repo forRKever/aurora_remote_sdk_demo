@@ -15,8 +15,7 @@ MainWindow::MainWindow()
       startMappingBtn_(nullptr), stopMappingBtn_(nullptr), resetMapBtn_(nullptr),
       mappingStatusLabel_(nullptr),
       startColmapBtn_(nullptr), stopColmapBtn_(nullptr), colmapStatusLabel_(nullptr),
-      mapWidget_(nullptr), lidarMapWidget_(nullptr), mapTabWidget_(nullptr),
-      cameraWidget_(nullptr), depthWidget_(nullptr), segmentationWidget_(nullptr),
+      mapWidget_(nullptr), cameraWidget_(nullptr), depthWidget_(nullptr), segmentationWidget_(nullptr),
       centerSplitter_(nullptr), leftSubSplitter_(nullptr), rightSubSplitter_(nullptr),
       worker_(nullptr), workerThread_(nullptr) {
     setWindowTitle("Aurora Dashboard");
@@ -206,19 +205,14 @@ void MainWindow::setupUI() {
 
     leftSubSplitter_->setSizes({400, 400});
 
-    // Right sub-pane: vertical splitter with [mapTabWidget_, cameraWidget_, mapOpsGroup]
+    // Right sub-pane: vertical splitter with [mapWidget_, cameraWidget_, mapOpsGroup]
     rightSubSplitter_ = new QSplitter(Qt::Vertical);
     rightSubSplitter_->setChildrenCollapsible(true);
 
-    // Create tab widget for 3D (VSLAM) and 2D (LIDAR) maps
-    mapTabWidget_ = new QTabWidget;
+    // Create 3D map widget
     mapWidget_ = new MapWidget;
-    lidarMapWidget_ = new LidarMapWidget;
     mapWidget_->setMinimumHeight(200);
-    mapTabWidget_->addTab(mapWidget_, "3D Map (VSLAM)");
-    mapTabWidget_->addTab(lidarMapWidget_, "2D Map (LiDAR)");
-    mapTabWidget_->setMinimumHeight(200);
-    rightSubSplitter_->addWidget(mapTabWidget_);
+    rightSubSplitter_->addWidget(mapWidget_);
 
     cameraWidget_ = new CameraPreviewWidget;
     cameraWidget_->setMinimumHeight(0);
@@ -331,12 +325,6 @@ void MainWindow::setupWorker() {
             Qt::QueuedConnection);
     connect(worker_, &SdkWorker::semanticSegmentationFrameUpdated, segmentationWidget_, &SemanticSegmentationWidget::updateSegmentationFrame,
             Qt::QueuedConnection);
-    connect(worker_, &SdkWorker::occupancyMapUpdated, lidarMapWidget_, &LidarMapWidget::setOccupancyMap, Qt::QueuedConnection);
-    connect(worker_, &SdkWorker::lidarScanUpdated, lidarMapWidget_, &LidarMapWidget::updateLidarScan, Qt::QueuedConnection);
-    connect(worker_, &SdkWorker::poseUpdated, lidarMapWidget_,
-        [this](double x, double y, double z, double, double, double yaw) {
-            lidarMapWidget_->updateCurrentPose(x, y, z, yaw);
-        }, Qt::QueuedConnection);
     connect(worker_, &SdkWorker::floorInfoUpdated, this,
         [this](int fid, int total, float h, float conf) {
             floorLabel_->setText(

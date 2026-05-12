@@ -12,7 +12,6 @@
 #include <QCloseEvent>
 #include "SdkWorker.h"
 #include "MapWidget.h"
-#include "LidarMapWidget.h"
 #include "CameraPreviewWidget.h"
 #include "DepthCamWidget.h"
 #include "SemanticSegmentationWidget.h"
@@ -88,8 +87,6 @@ private:
 
     // Right panel widgets
     MapWidget* mapWidget_;
-    LidarMapWidget* lidarMapWidget_;
-    QTabWidget* mapTabWidget_;     // Tab widget containing 3D (VSLAM) and 2D (LIDAR) maps
     CameraPreviewWidget* cameraWidget_;
     DepthCamWidget* depthWidget_;
     SemanticSegmentationWidget* segmentationWidget_;
