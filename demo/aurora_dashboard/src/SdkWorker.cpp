@@ -254,6 +254,9 @@ void SdkWorker::connectToDevice(const QString& ip, int port) {
     // Enable auto floor detection
     sdk_->lidar2DMapBuilder.setPreviewMapAutoFloorDetection(true);
 
+    // 強制要求初始重繪，確保 dirty rect 在第一次 poll 時有資料
+    sdk_->lidar2DMapBuilder.requireRedrawPreviewMap();
+
     // Use Qt-style delay instead of std::this_thread
     logToFile(">>> Waiting 1 second for device initialization...");
     QTime delayTime = QTime::currentTime().addMSecs(1000);
@@ -472,10 +475,7 @@ void SdkWorker::onLidarMapTimeout() {
         return;
     }
 
-    // Always request redraw to ensure SDK flushes latest LiDAR data
-    sdk_->lidar2DMapBuilder.requireRedrawPreviewMap();
-
-    // Check if there is any update
+    // 檢查是否有新資料（dirty rect 由 SDK 背景執行緒自動設定，不需要每次強制 requireRedraw）
     slamtec_aurora_sdk_rect_t dirtyRect;
     bool mapBigChange = false;
     sdk_->lidar2DMapBuilder.getAndResetPreviewMapDirtyRect(dirtyRect, mapBigChange);
