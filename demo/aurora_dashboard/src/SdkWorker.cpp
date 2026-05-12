@@ -7,6 +7,8 @@
 #include <QTime>
 #include <QCoreApplication>
 #include <QStandardPaths>
+#include <QMatrix4x4>
+#include <QVector3D>
 #include <thread>
 #include <chrono>
 #include <cstring>
@@ -15,6 +17,10 @@
 #include <algorithm>
 #include <cfloat>
 #include <limits>
+#define _USE_MATH_DEFINES
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
 
 // 全局日誌函數
 static void logToFile(const QString& msg) {
@@ -300,6 +306,14 @@ void SdkWorker::onPollTimeout() {
     // Get pose - C++ wrapper returns bool (true=success, false=fail)
     slamtec_aurora_sdk_pose_t pose;
     if (sdk_->dataProvider.getCurrentPose(pose)) {
+        // Update lastPose* for depth cloud transformation
+        lastPoseX_ = pose.translation.x;
+        lastPoseY_ = pose.translation.y;
+        lastPoseZ_ = pose.translation.z;
+        lastPoseRoll_ = pose.rpy.roll;
+        lastPosePitch_ = pose.rpy.pitch;
+        lastPoseYaw_ = pose.rpy.yaw;
+
         emit poseUpdated(pose.translation.x, pose.translation.y, pose.translation.z,
                          pose.rpy.roll, pose.rpy.pitch, pose.rpy.yaw);
     }
@@ -617,6 +631,7 @@ void SdkWorker::onDepthTimeout() {
         return;
     }
 
+    // Fetch depth map for visualization
     RemoteEnhancedImagingFrame depthFrame;
     slamtec_aurora_sdk_errorcode_t errorCode;
     if (!sdk_->enhancedImaging.peekDepthCameraFrame(
@@ -628,6 +643,81 @@ void SdkWorker::onDepthTimeout() {
     if (!img.isNull()) {
         emit depthFrameUpdated(img);
     }
+
+    // ─────────────────────────────────────────────────────────────────────
+    // Accumulate depth cloud (POINT3D)
+    // ─────────────────────────────────────────────────────────────────────
+
+    RemoteEnhancedImagingFrame pointCloud3D;
+    if (!sdk_->enhancedImaging.peekDepthCameraFrame(
+            pointCloud3D, SLAMTEC_AURORA_SDK_DEPTHCAM_FRAME_TYPE_POINT3D, &errorCode)) {
+        return;  // Camera does not support POINT3D or not ready
+    }
+
+    const auto& desc = pointCloud3D.image._desc;
+    if (desc.width == 0 || desc.height == 0) {
+        return;  // Invalid frame
+    }
+
+    const float* point_data = reinterpret_cast<const float*>(pointCloud3D.image._data);
+    if (!point_data) {
+        return;
+    }
+
+    // Build rotation matrix from RPY (Aurora: Rz(yaw) * Ry(pitch) * Rx(roll))
+    QMatrix4x4 rot;
+    rot.rotate(QQuaternion::fromEulerAngles(
+        lastPoseRoll_ * 180.0 / M_PI,    // roll in degrees
+        lastPosePitch_ * 180.0 / M_PI,   // pitch in degrees
+        lastPoseYaw_ * 180.0 / M_PI      // yaw in degrees
+    ));
+
+    // Downsample: sample every 8×8 pixels
+    const int step = 8;
+    const float distance_min = 0.3f;  // meters
+    const float distance_max = 6.0f;  // meters
+
+    for (uint32_t row = 0; row < desc.height; row += step) {
+        for (uint32_t col = 0; col < desc.width; col += step) {
+            uint32_t idx = (row * desc.width + col) * 3;  // 3 floats per pixel
+
+            // Camera frame: X right, Y down, Z forward
+            float cx = point_data[idx + 0];
+            float cy = point_data[idx + 1];
+            float cz = point_data[idx + 2];
+
+            // Check distance validity
+            float dist = std::sqrt(cx*cx + cy*cy + cz*cz);
+            if (dist < distance_min || dist > distance_max) {
+                continue;  // Skip invalid or too far/near
+            }
+
+            // Transform from camera frame to Aurora body frame
+            // Camera: X=right, Y=down, Z=forward
+            // Body:   X=forward, Y=right, Z=up
+            // Mapping: body = (camera_z, camera_x, -camera_y)
+            QVector3D pt_body(cz, cx, -cy);
+
+            // Apply pose rotation + translation (in Aurora world frame)
+            QVector3D pt_world = rot.map(pt_body) + QVector3D(lastPoseX_, lastPoseY_, lastPoseZ_);
+
+            // Convert Aurora frame (X,Y,Z up) to OpenGL frame (X,Z,Y up)
+            QVector3D pt_opengl(pt_world.x(), pt_world.z(), pt_world.y());
+
+            depthCloudAccum_.append(pt_opengl);
+        }
+    }
+
+    // Limit total points to avoid unbounded growth
+    const int max_points = 300000;
+    if (depthCloudAccum_.size() > max_points) {
+        // Remove oldest 20% of points
+        int remove_count = max_points / 5;
+        depthCloudAccum_.remove(0, remove_count);
+    }
+
+    // Emit accumulated cloud
+    emit depthCloudUpdated(depthCloudAccum_);
 }
 
 // Colorize segmentation map: each class gets a distinct color
@@ -705,4 +795,9 @@ void SdkWorker::onSegmentationTimeout() {
     if (!img.isNull()) {
         emit semanticSegmentationFrameUpdated(img, dominantLabel);
     }
+}
+
+void SdkWorker::clearDepthCloud() {
+    depthCloudAccum_.clear();
+    emit depthCloudUpdated(depthCloudAccum_);
 }

@@ -13,7 +13,7 @@ MainWindow::MainWindow()
     : ipEdit_(nullptr), portSpin_(nullptr), connectBtn_(nullptr),
       disconnectBtn_(nullptr), statusLabel_(nullptr),
       startMappingBtn_(nullptr), stopMappingBtn_(nullptr), resetMapBtn_(nullptr),
-      mappingStatusLabel_(nullptr),
+      clearDepthCloudBtn_(nullptr), mappingStatusLabel_(nullptr),
       startColmapBtn_(nullptr), stopColmapBtn_(nullptr), colmapStatusLabel_(nullptr),
       mapWidget_(nullptr), cameraWidget_(nullptr), depthWidget_(nullptr), segmentationWidget_(nullptr),
       centerSplitter_(nullptr), leftSubSplitter_(nullptr), rightSubSplitter_(nullptr),
@@ -154,6 +154,9 @@ void MainWindow::setupUI() {
     resetMapBtn_ = new QPushButton("Reset Map");
     mapCtrlLayout->addWidget(resetMapBtn_);
 
+    clearDepthCloudBtn_ = new QPushButton("Clear Depth Cloud");
+    mapCtrlLayout->addWidget(clearDepthCloudBtn_);
+
     mappingStatusLabel_ = new QLabel("Status: Idle");
     mappingStatusLabel_->setWordWrap(true);
     mapCtrlLayout->addWidget(mappingStatusLabel_);
@@ -281,6 +284,9 @@ void MainWindow::setupUI() {
     connect(startMappingBtn_, &QPushButton::clicked, this, &MainWindow::onStartMappingClicked);
     connect(stopMappingBtn_, &QPushButton::clicked, this, &MainWindow::onStopMappingClicked);
     connect(resetMapBtn_, &QPushButton::clicked, this, &MainWindow::onResetMapClicked);
+    connect(clearDepthCloudBtn_, &QPushButton::clicked, this, [this]() {
+        QMetaObject::invokeMethod(worker_, "clearDepthCloud", Qt::QueuedConnection);
+    });
 
     // COLMAP recording buttons
     connect(startColmapBtn_, &QPushButton::clicked, this, [this]() {
@@ -322,6 +328,8 @@ void MainWindow::setupWorker() {
     connect(worker_, &SdkWorker::cameraFrameUpdated, cameraWidget_, &CameraPreviewWidget::updateFrame,
             Qt::QueuedConnection);
     connect(worker_, &SdkWorker::depthFrameUpdated, depthWidget_, &DepthCamWidget::updateDepthFrame,
+            Qt::QueuedConnection);
+    connect(worker_, &SdkWorker::depthCloudUpdated, mapWidget_, &MapWidget::updateDepthCloud,
             Qt::QueuedConnection);
     connect(worker_, &SdkWorker::semanticSegmentationFrameUpdated, segmentationWidget_, &SemanticSegmentationWidget::updateSegmentationFrame,
             Qt::QueuedConnection);

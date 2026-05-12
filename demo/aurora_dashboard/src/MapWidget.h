@@ -20,6 +20,7 @@ public:
 public slots:
     void updateMapData(QVector<QVector3D> keyframes, QVector<QVector3D> mapPoints);
     void updateCurrentPose(double x, double y, double z, double yaw);
+    void updateDepthCloud(const QVector<QVector3D>& points);
     void setOccupancyMap(QImage, float, float, float) {}  // Placeholder
 
 protected:
@@ -36,6 +37,7 @@ private:
     void uploadPointsToGPU();
     void renderGrid();
     void renderPoints();
+    void renderDepthCloud();
     void renderTrajectory();
     void renderCurrentPose();
     void renderText();
@@ -57,6 +59,7 @@ private:
     // 3D Data
     QVector<QVector3D> mapPoints_;
     QVector<QVector3D> keyframes_;
+    QVector<QVector3D> depthCloud_;
     QVector3D currentPos_;
     double currentYaw_ = 0;
 
@@ -64,8 +67,10 @@ private:
     QOpenGLShaderProgram* shader_ = nullptr;
     GLuint vaoPoints_ = 0, vboPoints_ = 0;
     GLuint vaoTrail_  = 0, vboTrail_  = 0;
+    GLuint vaoDepthCloud_ = 0, vboDepthCloud_ = 0;
     int pointCount_ = 0;
     int trailCount_ = 0;
+    int depthCloudCount_ = 0;
     bool gpuDirty_ = false;
 
     // Viewport

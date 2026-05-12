@@ -78,6 +78,7 @@ private:
     QPushButton* startMappingBtn_;
     QPushButton* stopMappingBtn_;
     QPushButton* resetMapBtn_;
+    QPushButton* clearDepthCloudBtn_;
     QLabel* mappingStatusLabel_;
 
     // COLMAP 3D recording widgets

@@ -54,6 +54,8 @@ MapWidget::~MapWidget() {
     if (vboPoints_) glDeleteBuffers(1, &vboPoints_);
     if (vaoTrail_) glDeleteVertexArrays(1, &vaoTrail_);
     if (vboTrail_) glDeleteBuffers(1, &vboTrail_);
+    if (vaoDepthCloud_) glDeleteVertexArrays(1, &vaoDepthCloud_);
+    if (vboDepthCloud_) glDeleteBuffers(1, &vboDepthCloud_);
     doneCurrent();
 }
 
@@ -85,6 +87,15 @@ void MapWidget::updateCurrentPose(double x, double y, double z, double yaw) {
     currentPos_ = QVector3D(x, z, y);
     currentYaw_ = yaw;
     target_ = QVector3D(x, z, y);
+    update();
+    doneCurrent();
+}
+
+void MapWidget::updateDepthCloud(const QVector<QVector3D>& points) {
+    makeCurrent();
+    depthCloud_ = points;
+    depthCloudCount_ = points.size();
+    gpuDirty_ = true;
     update();
     doneCurrent();
 }
@@ -125,6 +136,16 @@ void MapWidget::initializeGL() {
     glEnableVertexAttribArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
+
+    // Create VAO/VBO for depth cloud
+    glGenVertexArrays(1, &vaoDepthCloud_);
+    glGenBuffers(1, &vboDepthCloud_);
+    glBindVertexArray(vaoDepthCloud_);
+    glBindBuffer(GL_ARRAY_BUFFER, vboDepthCloud_);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
 }
 
 void MapWidget::resizeGL(int w, int h) {
@@ -157,6 +178,9 @@ void MapWidget::paintGL() {
     // Render map points
     renderPoints();
 
+    // Render accumulated depth cloud
+    renderDepthCloud();
+
     // Render trajectory
     renderTrajectory();
 
@@ -184,6 +208,14 @@ void MapWidget::uploadPointsToGPU() {
         glBufferData(GL_ARRAY_BUFFER, keyframes_.size() * sizeof(QVector3D),
                      (const void*)keyframes_.constData(), GL_DYNAMIC_DRAW);
         trailCount_ = keyframes_.size();
+    }
+
+    // Depth cloud
+    if (!depthCloud_.isEmpty()) {
+        glBindBuffer(GL_ARRAY_BUFFER, vboDepthCloud_);
+        glBufferData(GL_ARRAY_BUFFER, depthCloud_.size() * sizeof(QVector3D),
+                     (const void*)depthCloud_.constData(), GL_DYNAMIC_DRAW);
+        depthCloudCount_ = depthCloud_.size();
     }
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -234,6 +266,17 @@ void MapWidget::renderPoints() {
     glBindVertexArray(vaoPoints_);
     shader_->setUniformValue("uColor", QVector3D(-1, -1, -1));  // Use height color
     glDrawArrays(GL_POINTS, 0, pointCount_);
+}
+
+void MapWidget::renderDepthCloud() {
+    if (depthCloudCount_ <= 0) return;
+
+    glBindVertexArray(vaoDepthCloud_);
+    // Use height-based coloring for depth cloud (orange gradient)
+    shader_->setUniformValue("uColor", QVector3D(-1, -1, -1));  // Height color
+    glPointSize(1.5f);
+    glDrawArrays(GL_POINTS, 0, depthCloudCount_);
+    glPointSize(1.0f);
 }
 
 void MapWidget::renderTrajectory() {
@@ -308,9 +351,10 @@ void MapWidget::renderText() {
     painter.setPen(QColor(255, 255, 255, 180));
     painter.setFont(QFont("monospace", 10));
 
-    QString info = QString("KF: %1 | MP: %2 | Az: %3 | El: %4 | Dist: %5m")
+    QString info = QString("KF: %1 | MP: %2 | DC: %3 | Az: %4 | El: %5 | Dist: %6m")
         .arg(keyframes_.size())
         .arg(mapPoints_.size())
+        .arg(depthCloudCount_)
         .arg((int)azimuth_)
         .arg((int)elevation_)
         .arg(distance_, 0, 'f', 1);

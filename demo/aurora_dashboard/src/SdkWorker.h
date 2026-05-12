@@ -48,6 +48,10 @@ signals:
     void connectionChanged(bool connected, QString message);
     void mapTransferProgress(float progress);
     void mapTransferFinished(bool success, QString message);
+    void depthCloudUpdated(QVector<QVector3D> points);
+
+public slots:
+    void clearDepthCloud();
 
 private slots:
     void onPollTimeout();
@@ -69,4 +73,13 @@ private:
     int lastFloorID_ = -999;
     int lastTotalFloors_ = -1;
     QString lastQuality_;
+
+    // Depth cloud accumulation
+    QVector<QVector3D> depthCloudAccum_;
+    double lastPoseX_ = 0;
+    double lastPoseY_ = 0;
+    double lastPoseZ_ = 0;
+    double lastPoseRoll_ = 0;
+    double lastPosePitch_ = 0;
+    double lastPoseYaw_ = 0;
 };
