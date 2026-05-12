@@ -38,6 +38,7 @@ signals:
                         QVector<QVector3D> mapPoints);
     void occupancyMapUpdated(QImage gridImage, float minX, float minY, float resolution);
     void lidarScanUpdated(QVector<QPointF> worldPoints);
+    void floorInfoUpdated(int currentFloorID, int totalFloors, float currentHeight, float confidence);
     void cameraFrameUpdated(QImage left, QImage right);
     void depthFrameUpdated(QImage img);
     void semanticSegmentationFrameUpdated(QImage img, QString dominantLabel);
@@ -66,4 +67,6 @@ private:
     bool mapRefreshRequested_ = false;
     LIDAR2DGridMapGenerationOptions mapGenOptions_;
     slamtec_aurora_sdk_semantic_segmentation_label_info_t segLabelInfo_;
+    int lastFloorID_ = -999;
+    int lastTotalFloors_ = -1;
 };

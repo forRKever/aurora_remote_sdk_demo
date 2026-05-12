@@ -114,6 +114,7 @@ void MainWindow::setupUI() {
     mapIdLabel_ = new QLabel("Map ID: --");
     kfLabel_ = new QLabel("Keyframes: --");
     mpLabel_ = new QLabel("Map Points: --");
+    floorLabel_ = new QLabel("Floor: --");
 
     devLayout->addWidget(slamStateLabel_);
     devLayout->addWidget(firmwareLabel_);
@@ -122,6 +123,7 @@ void MainWindow::setupUI() {
     devLayout->addWidget(mapIdLabel_);
     devLayout->addWidget(kfLabel_);
     devLayout->addWidget(mpLabel_);
+    devLayout->addWidget(floorLabel_);
 
     leftLayout->addWidget(devGroup);
 
@@ -275,6 +277,12 @@ void MainWindow::setupWorker() {
     connect(worker_, &SdkWorker::poseUpdated, lidarMapWidget_,
         [this](double x, double y, double z, double, double, double yaw) {
             lidarMapWidget_->updateCurrentPose(x, y, z, yaw);
+        }, Qt::QueuedConnection);
+    connect(worker_, &SdkWorker::floorInfoUpdated, this,
+        [this](int fid, int total, float h, float conf) {
+            floorLabel_->setText(
+                QString("Floor %1/%2 | H:%3m | %4%")
+                .arg(fid).arg(total).arg(h, 0, 'f', 2).arg((int)(conf * 100)));
         }, Qt::QueuedConnection);
     connect(worker_, &SdkWorker::connectionChanged, this, &MainWindow::updateConnectionUI);
     connect(worker_, &SdkWorker::mappingStatusChanged, this, &MainWindow::onMappingStatusChanged);

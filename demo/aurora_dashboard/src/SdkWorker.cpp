@@ -369,6 +369,26 @@ void SdkWorker::onPollTimeout() {
         }
     }
 
+    // ── Floor detection info ─────────────────────────────────────────────
+    std::vector<slamtec_aurora_sdk_floor_detection_desc_t> floors;
+    int curFloor = -1;
+    if (sdk_->floorDetector.getAllDetectionDesc(floors, curFloor)) {
+        int total = (int)floors.size();
+        float h = 0.0f, conf = 0.0f;
+        for (const auto& f : floors) {
+            if (f.floorID == curFloor) {
+                h = f.typical_height;
+                conf = f.confidence;
+                break;
+            }
+        }
+        if (curFloor != lastFloorID_ || total != lastTotalFloors_) {
+            lastFloorID_ = curFloor;
+            lastTotalFloors_ = total;
+            emit floorInfoUpdated(curFloor, total, h, conf);
+        }
+    }
+
     // ── Camera frame preview ─────────────────────────────────────────────
     // peekTrackingData returns the most recent tracking frame buffered by
     // the SDK. Returns false when no new frame is available.

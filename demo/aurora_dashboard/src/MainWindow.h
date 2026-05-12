@@ -68,6 +68,7 @@ private:
     QLabel* mapIdLabel_;
     QLabel* kfLabel_;
     QLabel* mpLabel_;
+    QLabel* floorLabel_;
 
     // Mapping control widgets
     QPushButton* startMappingBtn_;
