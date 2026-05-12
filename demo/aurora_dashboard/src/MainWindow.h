@@ -77,6 +77,11 @@ private:
     QPushButton* resetMapBtn_;
     QLabel* mappingStatusLabel_;
 
+    // COLMAP 3D recording widgets
+    QPushButton* startColmapBtn_;
+    QPushButton* stopColmapBtn_;
+    QLabel* colmapStatusLabel_;
+
     // Right panel widgets
     MapWidget* mapWidget_;
     LidarMapWidget* lidarMapWidget_;

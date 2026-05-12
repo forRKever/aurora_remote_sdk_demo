@@ -14,6 +14,7 @@ MainWindow::MainWindow()
       disconnectBtn_(nullptr), statusLabel_(nullptr),
       startMappingBtn_(nullptr), stopMappingBtn_(nullptr), resetMapBtn_(nullptr),
       mappingStatusLabel_(nullptr),
+      startColmapBtn_(nullptr), stopColmapBtn_(nullptr), colmapStatusLabel_(nullptr),
       mapWidget_(nullptr), lidarMapWidget_(nullptr), mapTabWidget_(nullptr),
       cameraWidget_(nullptr), depthWidget_(nullptr), segmentationWidget_(nullptr),
       centerSplitter_(nullptr), leftSubSplitter_(nullptr), rightSubSplitter_(nullptr),
@@ -150,6 +151,24 @@ void MainWindow::setupUI() {
     mapCtrlLayout->addWidget(mappingStatusLabel_);
 
     leftLayout->addWidget(mapCtrlGroup);
+
+    // COLMAP 3D Recording Control group
+    QGroupBox* colmapGroup = new QGroupBox("3D Recording (COLMAP)");
+    QVBoxLayout* colmapLayout = new QVBoxLayout(colmapGroup);
+
+    QHBoxLayout* colmapBtnLayout = new QHBoxLayout;
+    startColmapBtn_ = new QPushButton("Start Recording");
+    stopColmapBtn_ = new QPushButton("Stop Recording");
+    stopColmapBtn_->setEnabled(false);
+    colmapBtnLayout->addWidget(startColmapBtn_);
+    colmapBtnLayout->addWidget(stopColmapBtn_);
+    colmapLayout->addLayout(colmapBtnLayout);
+
+    colmapStatusLabel_ = new QLabel("Status: Idle");
+    colmapStatusLabel_->setWordWrap(true);
+    colmapLayout->addWidget(colmapStatusLabel_);
+
+    leftLayout->addWidget(colmapGroup);
     leftLayout->addStretch();
 
     mainLayout->addWidget(leftPanel);
@@ -259,6 +278,34 @@ void MainWindow::setupUI() {
     connect(startMappingBtn_, &QPushButton::clicked, this, &MainWindow::onStartMappingClicked);
     connect(stopMappingBtn_, &QPushButton::clicked, this, &MainWindow::onStopMappingClicked);
     connect(resetMapBtn_, &QPushButton::clicked, this, &MainWindow::onResetMapClicked);
+
+    // COLMAP recording buttons
+    connect(startColmapBtn_, &QPushButton::clicked, this, [this]() {
+        QString downloadDir = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+        QString defaultPath = downloadDir + "/aurora_colmap_dataset";
+
+        QString folderPath = QFileDialog::getExistingDirectory(
+            this, "Select COLMAP Output Folder", defaultPath
+        );
+
+        if (!folderPath.isEmpty()) {
+            colmapStatusLabel_->setText("Starting...");
+            startColmapBtn_->setEnabled(false);
+            stopColmapBtn_->setEnabled(true);
+
+            QMetaObject::invokeMethod(worker_, "startColmapRecording",
+                                      Qt::QueuedConnection,
+                                      Q_ARG(QString, folderPath));
+        }
+    });
+
+    connect(stopColmapBtn_, &QPushButton::clicked, this, [this]() {
+        startColmapBtn_->setEnabled(true);
+        stopColmapBtn_->setEnabled(false);
+        colmapStatusLabel_->setText("Stopping...");
+
+        QMetaObject::invokeMethod(worker_, "stopColmapRecording", Qt::QueuedConnection);
+    });
 }
 
 void MainWindow::setupWorker() {
@@ -299,6 +346,16 @@ void MainWindow::setupWorker() {
                 QString("Quality: %1 (±%2m)").arg(q).arg(r95, 0, 'f', 3));
             poseQualityLabel_->setStyleSheet(
                 QString("color:%1; font-weight:bold;").arg(colorMap.value(q, "gray")));
+        }, Qt::QueuedConnection);
+    connect(worker_, &SdkWorker::colmapRecordingStatus, this,
+        [this](bool isRecording, int kfCount, QString message) {
+            if (isRecording) {
+                colmapStatusLabel_->setText(QString("Recording... | %1").arg(message));
+            } else {
+                colmapStatusLabel_->setText("Status: " + message);
+                startColmapBtn_->setEnabled(true);
+                stopColmapBtn_->setEnabled(false);
+            }
         }, Qt::QueuedConnection);
     connect(worker_, &SdkWorker::connectionChanged, this, &MainWindow::updateConnectionUI);
     connect(worker_, &SdkWorker::mappingStatusChanged, this, &MainWindow::onMappingStatusChanged);

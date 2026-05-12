@@ -27,6 +27,8 @@ public slots:
     void startMapping();
     void stopMapping();
     void resetMap();
+    void startColmapRecording(QString folder);
+    void stopColmapRecording();
 
 signals:
     void poseUpdated(double x, double y, double z,
@@ -40,6 +42,7 @@ signals:
     void lidarScanUpdated(QVector<QPointF> worldPoints);
     void floorInfoUpdated(int currentFloorID, int totalFloors, float currentHeight, float confidence);
     void poseQualityUpdated(QString quality, float radius95);
+    void colmapRecordingStatus(bool isRecording, int kfCount, QString message);
     void cameraFrameUpdated(QImage left, QImage right);
     void depthFrameUpdated(QImage img);
     void semanticSegmentationFrameUpdated(QImage img, QString dominantLabel);
@@ -55,6 +58,7 @@ private slots:
     void onLidarScanTimeout();
     void onDepthTimeout();
     void onSegmentationTimeout();
+    void onColmapStatusTimeout();
 
 private:
     RemoteSDK* sdk_ = nullptr;
@@ -64,6 +68,7 @@ private:
     QTimer* lidarScanTimer_ = nullptr;  // 100ms polling for LIDAR scan points
     QTimer* depthTimer_ = nullptr;      // 200ms polling for depth camera
     QTimer* segmentationTimer_ = nullptr;  // 200ms polling for semantic segmentation
+    QTimer* colmapStatusTimer_ = nullptr;  // 2s polling for COLMAP recording status
     bool connected_ = false;
     bool mapRefreshRequested_ = false;
     LIDAR2DGridMapGenerationOptions mapGenOptions_;

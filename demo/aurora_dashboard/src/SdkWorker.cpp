@@ -179,6 +179,9 @@ SdkWorker::SdkWorker() {
     segmentationTimer_ = new QTimer(this);
     connect(segmentationTimer_, &QTimer::timeout, this, &SdkWorker::onSegmentationTimeout);
 
+    colmapStatusTimer_ = new QTimer(this);
+    connect(colmapStatusTimer_, &QTimer::timeout, this, &SdkWorker::onColmapStatusTimeout);
+
     // Initialize map generation options with explicit values
     mapGenOptions_.map_canvas_height = 150;
     mapGenOptions_.map_canvas_width = 150;
@@ -314,6 +317,10 @@ void SdkWorker::disconnectDevice() {
     lidarScanTimer_->stop();
     depthTimer_->stop();
     segmentationTimer_->stop();
+    colmapStatusTimer_->stop();
+
+    // Stop COLMAP recording if active
+    sdk_->colmapDataRecorder.stopRecording();
 
     sdk_->lidar2DMapBuilder.stopPreviewMapBackgroundUpdate();
     sdk_->disconnect();
@@ -636,6 +643,55 @@ void SdkWorker::resetMap() {
         emit mappingStatusChanged("Map reset");
     } else {
         emit mappingStatusChanged("Failed to reset map");
+    }
+}
+
+void SdkWorker::startColmapRecording(QString folder) {
+    if (!sdk_ || !connected_) {
+        emit colmapRecordingStatus(false, 0, "Not connected");
+        return;
+    }
+
+    std::string folderStd = folder.toStdString();
+
+    // Configure COLMAP options
+    sdk_->colmapDataRecorder.setOptionString("image_quality", "preview");
+    sdk_->colmapDataRecorder.setOptionBool("undistort", true);
+    sdk_->colmapDataRecorder.setOptionBool("stereo_recording", false);
+    sdk_->colmapDataRecorder.setOptionBool("undistort_force_focal_center", true);
+
+    // Start recording
+    if (sdk_->colmapDataRecorder.startRecording(folderStd.c_str())) {
+        logToFile(QString("✓ COLMAP recording started: %1").arg(folder));
+        colmapStatusTimer_->start(2000);  // Poll every 2 seconds
+        emit colmapRecordingStatus(true, 0, "Recording...");
+    } else {
+        logToFile("✗ Failed to start COLMAP recording");
+        emit colmapRecordingStatus(false, 0, "Failed to start");
+    }
+}
+
+void SdkWorker::stopColmapRecording() {
+    if (!sdk_ || !connected_) {
+        emit colmapRecordingStatus(false, 0, "Not connected");
+        return;
+    }
+
+    sdk_->colmapDataRecorder.stopRecording();
+    colmapStatusTimer_->stop();
+    logToFile("✓ COLMAP recording stopped");
+    emit colmapRecordingStatus(false, 0, "Recording stopped");
+}
+
+void SdkWorker::onColmapStatusTimeout() {
+    if (!sdk_ || !connected_) {
+        colmapStatusTimer_->stop();
+        return;
+    }
+
+    int64_t kfCount = 0;
+    if (sdk_->colmapDataRecorder.queryStatusInt64("kf_count", &kfCount)) {
+        emit colmapRecordingStatus(true, (int)kfCount, QString("KF: %1").arg(kfCount));
     }
 }
 
