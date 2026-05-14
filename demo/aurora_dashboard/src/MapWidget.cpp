@@ -5,6 +5,7 @@
 #include <QKeyEvent>
 #include <cmath>
 #include <algorithm>
+#include <vector>
 #define _USE_MATH_DEFINES
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
@@ -13,25 +14,34 @@
 const char* VERTEX_SHADER = R"(
 #version 330 core
 layout(location = 0) in vec3 aPos;
+layout(location = 1) in vec3 aColor;
 uniform mat4 uMVP;
 uniform float uYMin;
 uniform float uYRange;
+uniform float uUseVertexColor;
 out float vHeight;
+out vec3 vColor;
 void main() {
     gl_Position = uMVP * vec4(aPos, 1.0);
     gl_PointSize = 1.5;
     vHeight = (uYRange > 0.0001) ? (aPos.y - uYMin) / uYRange : 0.5;
+    vColor = aColor;
 }
 )";
 
 const char* FRAGMENT_SHADER = R"(
 #version 330 core
 in float vHeight;
+in vec3 vColor;
 uniform vec3 uColor;
+uniform float uUseVertexColor;
 out vec4 fragColor;
 void main() {
     if (uColor.r >= 0.0) {
         fragColor = vec4(uColor, 1.0);
+    } else if (uUseVertexColor > 0.5) {
+        // Per-vertex RGB color (colored depth cloud)
+        fragColor = vec4(vColor, 0.9);
     } else {
         // Height gradient: blue -> cyan -> green -> yellow -> red
         float h = clamp(vHeight, 0.0, 1.0);
@@ -91,10 +101,11 @@ void MapWidget::updateCurrentPose(double x, double y, double z, double yaw) {
     doneCurrent();
 }
 
-void MapWidget::updateDepthCloud(const QVector<QVector3D>& points) {
+void MapWidget::updateDepthCloud(QVector<QVector3D> positions, QVector<QVector3D> colors) {
     makeCurrent();
-    depthCloud_ = points;
-    depthCloudCount_ = points.size();
+    depthCloud_       = std::move(positions);
+    depthCloudColors_ = std::move(colors);
+    depthCloudCount_  = depthCloud_.size();
     gpuDirty_ = true;
     update();
     doneCurrent();
@@ -137,13 +148,15 @@ void MapWidget::initializeGL() {
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 
-    // Create VAO/VBO for depth cloud
+    // Create VAO/VBO for depth cloud (interleaved: XYZ + RGB, 6 floats/vertex)
     glGenVertexArrays(1, &vaoDepthCloud_);
     glGenBuffers(1, &vboDepthCloud_);
     glBindVertexArray(vaoDepthCloud_);
     glBindBuffer(GL_ARRAY_BUFFER, vboDepthCloud_);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 }
@@ -213,11 +226,28 @@ void MapWidget::uploadPointsToGPU() {
                      (const void*)keyframes_.constData(), GL_DYNAMIC_DRAW);
     }
 
-    // Depth cloud
+    // Depth cloud: interleaved XYZ + RGB (6 floats per vertex)
     if (!depthCloud_.isEmpty()) {
+        const bool hasColors = (depthCloudColors_.size() == depthCloud_.size());
+        std::vector<float> interleaved;
+        interleaved.reserve(depthCloud_.size() * 6);
+        for (int i = 0; i < depthCloud_.size(); ++i) {
+            interleaved.push_back(depthCloud_[i].x());
+            interleaved.push_back(depthCloud_[i].y());
+            interleaved.push_back(depthCloud_[i].z());
+            if (hasColors) {
+                interleaved.push_back(depthCloudColors_[i].x());
+                interleaved.push_back(depthCloudColors_[i].y());
+                interleaved.push_back(depthCloudColors_[i].z());
+            } else {
+                interleaved.push_back(0.5f);
+                interleaved.push_back(0.7f);
+                interleaved.push_back(0.9f);  // Fallback: light blue
+            }
+        }
         glBindBuffer(GL_ARRAY_BUFFER, vboDepthCloud_);
-        glBufferData(GL_ARRAY_BUFFER, depthCloudCount_ * sizeof(QVector3D),
-                     (const void*)depthCloud_.constData(), GL_DYNAMIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, interleaved.size() * sizeof(float),
+                     interleaved.data(), GL_DYNAMIC_DRAW);
     }
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -274,11 +304,13 @@ void MapWidget::renderDepthCloud() {
     if (depthCloudCount_ <= 0) return;
 
     glBindVertexArray(vaoDepthCloud_);
-    // Use height-based coloring for depth cloud (orange gradient)
-    shader_->setUniformValue("uColor", QVector3D(-1, -1, -1));  // Height color
+    // Use per-vertex RGB color (colored point cloud)
+    shader_->setUniformValue("uColor", QVector3D(-1, -1, -1));  // Not solid color
+    shader_->setUniformValue("uUseVertexColor", 1.0f);  // Use vColor from attribute 1
     glPointSize(1.5f);
     glDrawArrays(GL_POINTS, 0, depthCloudCount_);
     glPointSize(1.0f);
+    shader_->setUniformValue("uUseVertexColor", 0.0f);  // Reset for other renders
 }
 
 void MapWidget::renderTrajectory() {

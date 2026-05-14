@@ -48,7 +48,7 @@ signals:
     void connectionChanged(bool connected, QString message);
     void mapTransferProgress(float progress);
     void mapTransferFinished(bool success, QString message);
-    void depthCloudUpdated(QVector<QVector3D> points);
+    void depthCloudUpdated(QVector<QVector3D> positions, QVector<QVector3D> colors);
 
 public slots:
     void clearDepthCloud();
@@ -76,6 +76,7 @@ private:
 
     // Depth cloud accumulation
     QVector<QVector3D> depthCloudAccum_;
+    QVector<QVector3D> depthCloudColorAccum_;  // RGB colors for accumulated depth cloud
     double lastPoseX_ = 0;
     double lastPoseY_ = 0;
     double lastPoseZ_ = 0;

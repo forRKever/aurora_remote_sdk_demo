@@ -20,7 +20,7 @@ public:
 public slots:
     void updateMapData(QVector<QVector3D> keyframes, QVector<QVector3D> mapPoints);
     void updateCurrentPose(double x, double y, double z, double yaw);
-    void updateDepthCloud(const QVector<QVector3D>& points);
+    void updateDepthCloud(QVector<QVector3D> positions, QVector<QVector3D> colors);
     void setOccupancyMap(QImage, float, float, float) {}  // Placeholder
 
 protected:
@@ -60,6 +60,7 @@ private:
     QVector<QVector3D> mapPoints_;
     QVector<QVector3D> keyframes_;
     QVector<QVector3D> depthCloud_;
+    QVector<QVector3D> depthCloudColors_;  // RGB colors for depth cloud (per-vertex)
     QVector3D currentPos_;
     double currentYaw_ = 0;
 

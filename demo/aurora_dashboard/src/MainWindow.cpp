@@ -329,8 +329,10 @@ void MainWindow::setupWorker() {
             Qt::QueuedConnection);
     connect(worker_, &SdkWorker::depthFrameUpdated, depthWidget_, &DepthCamWidget::updateDepthFrame,
             Qt::QueuedConnection);
-    connect(worker_, &SdkWorker::depthCloudUpdated, mapWidget_, &MapWidget::updateDepthCloud,
-            Qt::QueuedConnection);
+    connect(worker_, &SdkWorker::depthCloudUpdated, mapWidget_,
+            [this](QVector<QVector3D> pos, QVector<QVector3D> colors) {
+                mapWidget_->updateDepthCloud(std::move(pos), std::move(colors));
+            }, Qt::QueuedConnection);
     connect(worker_, &SdkWorker::semanticSegmentationFrameUpdated, segmentationWidget_, &SemanticSegmentationWidget::updateSegmentationFrame,
             Qt::QueuedConnection);
     connect(worker_, &SdkWorker::floorInfoUpdated, this,

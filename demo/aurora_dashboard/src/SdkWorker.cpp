@@ -10,6 +10,7 @@
 #include <QMatrix4x4>
 #include <QVector3D>
 #include <QSet>
+#include <QPainter>
 #include <thread>
 #include <chrono>
 #include <cstring>
@@ -398,7 +399,26 @@ void SdkWorker::onPollTimeout() {
     if (sdk_->dataProvider.peekTrackingData(trackingFrame)) {
         QImage leftImg  = remoteImageRefToQImage(trackingFrame.leftImage);
         QImage rightImg = remoteImageRefToQImage(trackingFrame.rightImage);
-        // Emit even if one side is null — the widget handles partial data.
+
+        // ── Tracking keypoints overlay ────────────────────────────────────
+        // Draw matched (green) and unmatched (red) keypoints on the left image.
+        // QPainter on QImage is thread-safe as long as we own the QImage.
+        size_t kpCount = trackingFrame.getKeypointsLeftCount();
+        const slamtec_aurora_sdk_keypoint_t* kpts = trackingFrame.getKeypointsLeftBuffer();
+        if (!leftImg.isNull() && kpCount > 0 && kpts) {
+            // Grayscale images need conversion to RGB before colored drawing
+            if (leftImg.format() == QImage::Format_Grayscale8)
+                leftImg = leftImg.convertToFormat(QImage::Format_RGB888);
+            QPainter kp(&leftImg);
+            kp.setRenderHint(QPainter::Antialiasing);
+            for (size_t i = 0; i < kpCount; ++i) {
+                bool matched = (kpts[i].flags != 0);
+                kp.setPen(QPen(matched ? QColor(0, 230, 80) : QColor(255, 60, 60), 1));
+                kp.setBrush(Qt::NoBrush);
+                kp.drawEllipse(QPointF(kpts[i].x, kpts[i].y), 2.5, 2.5);
+            }
+        }
+
         emit cameraFrameUpdated(leftImg, rightImg);
     }
 }
@@ -516,7 +536,8 @@ void SdkWorker::resetMap() {
         emit mapDataUpdated(QVector<QVector3D>(), QVector<QVector3D>());
         // Also clear depth cloud
         depthCloudAccum_.clear();
-        emit depthCloudUpdated(depthCloudAccum_);
+        depthCloudColorAccum_.clear();
+        emit depthCloudUpdated(depthCloudAccum_, depthCloudColorAccum_);
     } else {
         logToFile("✗ FAILED to reset map!");
         emit mappingStatusChanged("Failed to reset map");
@@ -806,6 +827,24 @@ void SdkWorker::onDepthTimeout() {
     lastDepthZ_ = lastPoseZ_;
     lastDepthYaw_ = lastPoseYaw_;
 
+    // Fetch paired rectified RGB image for coloring depth points
+    const uint8_t* colorData = nullptr;
+    int colorFormat = -1;
+    uint32_t colorStride = 0;
+    uint32_t colorW = 0, colorH = 0;
+    {
+        RemoteEnhancedImagingFrame rectFrame;
+        bool hasColor = sdk_->enhancedImaging.peekDepthCameraRelatedRectifiedImage(
+            rectFrame, pointCloud3D.desc.timestamp_ns);
+        if (hasColor && rectFrame.image._data) {
+            colorData = reinterpret_cast<const uint8_t*>(rectFrame.image._data);
+            colorFormat = rectFrame.image._desc.format;
+            colorStride = rectFrame.image._desc.stride;
+            colorW = rectFrame.image._desc.width;
+            colorH = rectFrame.image._desc.height;
+        }
+    }
+
     // Build rotation matrix from RPY (Aurora: Rz(yaw) * Ry(pitch) * Rx(roll))
     QMatrix4x4 rot;
     rot.rotate(QQuaternion::fromEulerAngles(
@@ -847,7 +886,24 @@ void SdkWorker::onDepthTimeout() {
             // Convert Aurora frame (X,Y,Z up) to OpenGL frame (X,Z,Y up)
             QVector3D pt_opengl(pt_world.x(), pt_world.z(), pt_world.y());
 
+            // Sample RGB color at (col, row) if available
+            QVector3D color(0.5f, 0.7f, 0.9f);  // Default: light blue if no color data
+            if (colorData && col < colorW && row < colorH) {
+                if (colorFormat == 1) {  // BGR format
+                    uint32_t pixIdx = row * colorStride + col * 3;
+                    float b = colorData[pixIdx + 0] / 255.0f;
+                    float g = colorData[pixIdx + 1] / 255.0f;
+                    float r = colorData[pixIdx + 2] / 255.0f;
+                    color = QVector3D(r, g, b);
+                } else if (colorFormat == 0) {  // Grayscale
+                    uint32_t pixIdx = row * colorStride + col;
+                    float v = colorData[pixIdx] / 255.0f;
+                    color = QVector3D(v, v, v);
+                }
+            }
+
             depthCloudAccum_.append(pt_opengl);
+            depthCloudColorAccum_.append(color);
         }
     }
 
@@ -858,10 +914,13 @@ void SdkWorker::onDepthTimeout() {
         // Remove oldest 50% of points (changed from 20%) for better sliding-window effect
         int remove_count = max_points / 2;
         depthCloudAccum_.remove(0, remove_count);
+        if (depthCloudColorAccum_.size() >= remove_count) {
+            depthCloudColorAccum_.remove(0, remove_count);
+        }
     }
 
-    // Emit accumulated cloud
-    emit depthCloudUpdated(depthCloudAccum_);
+    // Emit accumulated cloud with colors
+    emit depthCloudUpdated(depthCloudAccum_, depthCloudColorAccum_);
 }
 
 // Colorize segmentation map: each class gets a distinct color
@@ -943,5 +1002,6 @@ void SdkWorker::onSegmentationTimeout() {
 
 void SdkWorker::clearDepthCloud() {
     depthCloudAccum_.clear();
-    emit depthCloudUpdated(depthCloudAccum_);
+    depthCloudColorAccum_.clear();
+    emit depthCloudUpdated(depthCloudAccum_, depthCloudColorAccum_);
 }
