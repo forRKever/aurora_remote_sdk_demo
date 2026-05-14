@@ -82,4 +82,8 @@ private:
 
     // UI State
     bool showHelp_ = false;
+
+    // Toggle modes
+    bool sliceMode_ = false;       // S: height slice filter (show only 0.3~1.8m band)
+    bool enhancedDepth_ = false;   // E: larger depth cloud points
 };

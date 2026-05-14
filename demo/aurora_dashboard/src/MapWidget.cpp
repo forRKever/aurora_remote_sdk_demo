@@ -20,11 +20,13 @@ uniform float uYMin;
 uniform float uYRange;
 uniform float uUseVertexColor;
 out float vHeight;
+out float vWorldY;
 out vec3 vColor;
 void main() {
     gl_Position = uMVP * vec4(aPos, 1.0);
     gl_PointSize = 1.5;
     vHeight = (uYRange > 0.0001) ? (aPos.y - uYMin) / uYRange : 0.5;
+    vWorldY = aPos.y;
     vColor = aColor;
 }
 )";
@@ -32,11 +34,19 @@ void main() {
 const char* FRAGMENT_SHADER = R"(
 #version 330 core
 in float vHeight;
+in float vWorldY;
 in vec3 vColor;
 uniform vec3 uColor;
 uniform float uUseVertexColor;
+uniform float uSliceMode;
+uniform float uSliceMinY;
+uniform float uSliceMaxY;
 out vec4 fragColor;
 void main() {
+    // Height slice filter: discard points outside the slice band
+    if (uSliceMode > 0.5 && uColor.r < 0.0) {
+        if (vWorldY < uSliceMinY || vWorldY > uSliceMaxY) discard;
+    }
     if (uColor.r >= 0.0) {
         fragColor = vec4(uColor, 1.0);
     } else if (uUseVertexColor > 0.5) {
@@ -184,6 +194,10 @@ void MapWidget::paintGL() {
     shader_->setUniformValue("uMVP", mvp);
     shader_->setUniformValue("uYMin", yMin_);
     shader_->setUniformValue("uYRange", yMax_ - yMin_);
+    // Toggle modes
+    shader_->setUniformValue("uSliceMode", sliceMode_ ? 1.0f : 0.0f);
+    shader_->setUniformValue("uSliceMinY", 0.3f);   // 30cm above floor
+    shader_->setUniformValue("uSliceMaxY", 1.8f);   // 180cm (wall features)
 
     // Render grid
     renderGrid();
@@ -304,13 +318,13 @@ void MapWidget::renderDepthCloud() {
     if (depthCloudCount_ <= 0) return;
 
     glBindVertexArray(vaoDepthCloud_);
-    // Use per-vertex RGB color (colored point cloud)
-    shader_->setUniformValue("uColor", QVector3D(-1, -1, -1));  // Not solid color
-    shader_->setUniformValue("uUseVertexColor", 1.0f);  // Use vColor from attribute 1
-    glPointSize(1.5f);
+    shader_->setUniformValue("uColor", QVector3D(-1, -1, -1));
+    shader_->setUniformValue("uUseVertexColor", 1.0f);
+    float ptSize = enhancedDepth_ ? 3.0f : 1.5f;
+    glPointSize(ptSize);
     glDrawArrays(GL_POINTS, 0, depthCloudCount_);
     glPointSize(1.0f);
-    shader_->setUniformValue("uUseVertexColor", 0.0f);  // Reset for other renders
+    shader_->setUniformValue("uUseVertexColor", 0.0f);
 }
 
 void MapWidget::renderTrajectory() {
@@ -408,7 +422,10 @@ void MapWidget::renderText() {
     // Help text
     painter.setFont(QFont("monospace", 9));
     painter.setPen(QColor(200, 200, 200, 150));
-    painter.drawText(5, 40, "LMB: Rotate | RMB: Pan | Wheel: Zoom | T: Top | R: Reset | H: Help");
+    QString modeHints;
+    if (sliceMode_) modeHints += " [S:SLICE ON]";
+    if (enhancedDepth_) modeHints += " [E:ENHANCE ON]";
+    painter.drawText(5, 40, "LMB: Rotate | RMB: Pan | Wheel: Zoom | T: Top | R: Reset | S: Slice | E: Enhance | H: Help" + modeHints);
 
     // Axis indicator
     renderAxisIndicator(painter);
@@ -417,10 +434,12 @@ void MapWidget::renderText() {
     if (showHelp_) {
         painter.setFont(QFont("monospace", 8));
         painter.setPen(QColor(150, 255, 150, 200));
-        painter.drawText(5, viewH_ - 120, "=== 幫助 ===");
-        painter.drawText(5, viewH_ - 105, "T = 俯視圖 (Top-down)");
-        painter.drawText(5, viewH_ - 90, "R = 重置視角 (Reset)");
-        painter.drawText(5, viewH_ - 75, "F = 前視圖 (Front)");
+        painter.drawText(5, viewH_ - 150, "=== 幫助 ===");
+        painter.drawText(5, viewH_ - 135, "T = 俯視圖 (Top-down)");
+        painter.drawText(5, viewH_ - 120, "R = 重置視角 (Reset)");
+        painter.drawText(5, viewH_ - 105, "F = 前視圖 (Front)");
+        painter.drawText(5, viewH_ - 90, QString("S = 高度切片 0.3~1.8m (") + (sliceMode_ ? "ON" : "OFF") + ")");
+        painter.drawText(5, viewH_ - 75, QString("E = 深度雲增強點大小 (") + (enhancedDepth_ ? "ON" : "OFF") + ")");
         painter.drawText(5, viewH_ - 60, "左鍵拖曳 = 旋轉");
         painter.drawText(5, viewH_ - 45, "右鍵拖曳 = 平移");
         painter.drawText(5, viewH_ - 30, "滾輪 = 縮放");
@@ -586,8 +605,19 @@ void MapWidget::keyPressEvent(QKeyEvent* event) {
         break;
 
     case Qt::Key_H:
-        // Toggle help
         showHelp_ = !showHelp_;
+        update();
+        break;
+
+    case Qt::Key_S:
+        // Toggle height slice mode (show only 0.3~1.8m band to reveal wall outlines)
+        sliceMode_ = !sliceMode_;
+        update();
+        break;
+
+    case Qt::Key_E:
+        // Toggle enhanced depth cloud (larger points for easier reading)
+        enhancedDepth_ = !enhancedDepth_;
         update();
         break;
 
