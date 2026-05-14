@@ -74,6 +74,9 @@ private:
     int lastTotalFloors_ = -1;
     QString lastQuality_;
 
+    // Latest VSLAM map points (for 3D-to-2D reprojection on camera image)
+    QVector<QVector3D> latestMapPoints_;
+
     // Depth cloud accumulation
     QVector<QVector3D> depthCloudAccum_;
     QVector<QVector3D> depthCloudColorAccum_;  // RGB colors for accumulated depth cloud
@@ -90,4 +93,10 @@ private:
     double lastDepthY_ = 1e9;
     double lastDepthZ_ = 1e9;
     double lastDepthYaw_ = 1e9;
+
+    // Camera calibration (for 3D-to-2D projection on camera image)
+    bool calibrationFetched_ = false;
+    float cameraFx_ = 0.0f, cameraFy_ = 0.0f;  // Focal length
+    float cameraCx_ = 0.0f, cameraCy_ = 0.0f;  // Principal point
+    int cameraWidth_ = 0, cameraHeight_ = 0;   // Resolution
 };

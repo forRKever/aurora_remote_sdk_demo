@@ -419,6 +419,89 @@ void SdkWorker::onPollTimeout() {
             }
         }
 
+        // ── Map point reprojection to camera image ─────────────────────────
+        // Project 3D VSLAM map points onto the camera image plane
+        if (!leftImg.isNull() && !latestMapPoints_.isEmpty()) {
+            // Fetch camera calibration once
+            if (!calibrationFetched_) {
+                slamtec_aurora_sdk_camera_calibration_t calib;
+                if (sdk_->dataProvider.getCameraCalibration(calib)) {
+                    cameraFx_ = calib.camera_calibration[0].intrinsics[0];
+                    cameraFy_ = calib.camera_calibration[0].intrinsics[1];
+                    cameraCx_ = calib.camera_calibration[0].intrinsics[2];
+                    cameraCy_ = calib.camera_calibration[0].intrinsics[3];
+                    cameraWidth_  = calib.camera_calibration[0].width;
+                    cameraHeight_ = calib.camera_calibration[0].height;
+                    calibrationFetched_ = true;
+                }
+            }
+
+            if (calibrationFetched_ && cameraFx_ > 0) {
+                // Build inverse rotation matrix from body pose (Aurora frame)
+                double roll_r = lastPoseRoll_;
+                double pitch_r = lastPosePitch_;
+                double yaw_r = lastPoseYaw_;
+
+                double cr = std::cos(roll_r), sr = std::sin(roll_r);
+                double cp = std::cos(pitch_r), sp = std::sin(pitch_r);
+                double cy = std::cos(yaw_r), sy = std::sin(yaw_r);
+
+                // Rotation matrix Rz(yaw) * Ry(pitch) * Rx(roll)
+                double r11 = cy*cp, r12 = cy*sp*sr - sy*cr, r13 = cy*sp*cr + sy*sr;
+                double r21 = sy*cp, r22 = sy*sp*sr + cy*cr, r23 = sy*sp*cr - cy*sr;
+                double r31 = -sp,   r32 = cp*sr,           r33 = cp*cr;
+
+                // Body position in world (Aurora frame)
+                double bx = lastPoseX_, by = lastPoseY_, bz = lastPoseZ_;
+
+                // Convert body position to OpenGL frame: Aurora(x,y,z) → OpenGL(y,z,x)
+                double body_gx = by, body_gy = bz, body_gz = bx;
+
+                if (leftImg.format() == QImage::Format_Grayscale8)
+                    leftImg = leftImg.convertToFormat(QImage::Format_RGB888);
+
+                QPainter painter(&leftImg);
+                painter.setRenderHint(QPainter::Antialiasing);
+
+                for (const QVector3D& p_opengl : latestMapPoints_) {
+                    // Vector from camera to map point (in OpenGL frame)
+                    double px_rel = p_opengl.x() - body_gx;
+                    double py_rel = p_opengl.y() - body_gy;
+                    double pz_rel = p_opengl.z() - body_gz;
+
+                    // Transform from OpenGL to Aurora frame
+                    // OpenGL(x,y,z) → Aurora(z,x,y)
+                    double p_aurora_x = pz_rel;
+                    double p_aurora_y = px_rel;
+                    double p_aurora_z = py_rel;
+
+                    // Apply inverse rotation (R^T) to get to camera frame (assume camera = body)
+                    double p_cam_x = r11*p_aurora_x + r21*p_aurora_y + r31*p_aurora_z;
+                    double p_cam_y = r12*p_aurora_x + r22*p_aurora_y + r32*p_aurora_z;
+                    double p_cam_z = r13*p_aurora_x + r23*p_aurora_y + r33*p_aurora_z;
+
+                    // Project to 2D
+                    if (p_cam_z > 0.1) {  // Only project points in front of camera
+                        double u = cameraFx_ * p_cam_x / p_cam_z + cameraCx_;
+                        double v = cameraFy_ * p_cam_y / p_cam_z + cameraCy_;
+
+                        if (u >= 0 && u < cameraWidth_ && v >= 0 && v < cameraHeight_) {
+                            // Distance-based coloring: near=yellow, far=purple
+                            double dist = std::sqrt(p_cam_x*p_cam_x + p_cam_y*p_cam_y + p_cam_z*p_cam_z);
+                            double t = std::min(1.0, dist / 10.0);  // Normalize to 0-1 over 10m
+                            int r = (int)(255 * t);
+                            int g = (int)(255 * (1.0 - std::abs(t - 0.5) * 2.0));
+                            int b = (int)(255 * (1.0 - t));
+
+                            painter.setPen(QPen(QColor(r, g, b), 2));
+                            painter.setBrush(Qt::NoBrush);
+                            painter.drawEllipse(QPointF(u, v), 2.0, 2.0);
+                        }
+                    }
+                }
+            }
+        }
+
         emit cameraFrameUpdated(leftImg, rightImg);
     }
 }
@@ -480,6 +563,9 @@ void SdkWorker::onMapRefreshTimeout() {
     if (keyframes.isEmpty() && mapPoints.isEmpty()) {
         logToFile("  WARNING: Both KF and MP are empty, still emitting signal");
     }
+
+    // Store for reprojection on camera image in onPollTimeout
+    latestMapPoints_ = mapPoints;
 
     emit mapDataUpdated(keyframes, mapPoints);
 }
