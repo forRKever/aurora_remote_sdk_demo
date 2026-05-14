@@ -317,8 +317,18 @@ void MapWidget::renderTrajectory() {
     if (trailCount_ <= 1) return;
 
     glBindVertexArray(vaoTrail_);
+
+    // Draw trajectory with gap detection (skip jumps > 5m) to prevent wild lines during SLAM glitches
+    const float MAX_SEGMENT = 5.0f;
     shader_->setUniformValue("uColor", QVector3D(1.0f, 0.4f, 0.2f));  // Orange
-    glDrawArrays(GL_LINE_STRIP, 0, trailCount_);
+    for (int i = 0; i + 1 < (int)keyframes_.size(); ++i) {
+        float dx = keyframes_[i+1].x() - keyframes_[i].x();
+        float dy = keyframes_[i+1].y() - keyframes_[i].y();
+        float dz = keyframes_[i+1].z() - keyframes_[i].z();
+        if (dx*dx + dy*dy + dz*dz < MAX_SEGMENT * MAX_SEGMENT) {
+            glDrawArrays(GL_LINES, i, 2);
+        }
+    }
 
     // Draw keyframe circles
     glPointSize(6.0f);

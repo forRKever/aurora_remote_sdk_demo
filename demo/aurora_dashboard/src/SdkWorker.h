@@ -99,4 +99,7 @@ private:
     float cameraFx_ = 0.0f, cameraFy_ = 0.0f;  // Focal length
     float cameraCx_ = 0.0f, cameraCy_ = 0.0f;  // Principal point
     int cameraWidth_ = 0, cameraHeight_ = 0;   // Resolution
+
+    // Tracking status (for controlling depth cloud accumulation during tracking loss)
+    bool trackingLost_ = false;
 };

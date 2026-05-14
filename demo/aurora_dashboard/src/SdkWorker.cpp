@@ -335,6 +335,7 @@ void SdkWorker::onPollTimeout() {
         slamtec_aurora_sdk_mapping_flag_t flags;
         sdk_->dataProvider.getMappingFlags(flags);
         bool trackingLost = (flags & SLAMTEC_AURORA_SDK_MAPPING_FLAG_LOSTED) != 0;
+        trackingLost_ = trackingLost;  // Store for depth cloud guard
 
         slamtec_aurora_sdk_global_map_desc_t globalDesc;
         sdk_->dataProvider.getGlobalMappingInfo(globalDesc);
@@ -845,6 +846,9 @@ void SdkWorker::onDepthTimeout() {
     if (!sdk_ || !connected_) {
         return;
     }
+
+    // Skip depth cloud accumulation during tracking loss to avoid invalid points
+    if (trackingLost_) return;
 
     // Fetch depth map for visualization
     RemoteEnhancedImagingFrame depthFrame;
