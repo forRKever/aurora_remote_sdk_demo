@@ -9,6 +9,7 @@
 #include <QStandardPaths>
 #include <QMatrix4x4>
 #include <QVector3D>
+#include <QSet>
 #include <thread>
 #include <chrono>
 #include <cstring>
@@ -415,7 +416,8 @@ void SdkWorker::onMapRefreshTimeout() {
     }
 
     QVector<QVector3D> keyframes;
-    QVector<QVector3D> mapPoints;
+    QVector<QVector3D> allMapPoints;  // All raw points from SDK
+    QVector<QVector3D> mapPoints;     // Downsampled points for display
 
     RemoteMapDataVisitor visitor;
 
@@ -427,12 +429,32 @@ void SdkWorker::onMapRefreshTimeout() {
     });
 
     visitor.subscribeMapPointData([&](const slamtec_aurora_sdk_map_point_desc_t& mp) {
-        mapPoints.append(QVector3D(mp.position.x, mp.position.z, mp.position.y));
+        allMapPoints.append(QVector3D(mp.position.x, mp.position.z, mp.position.y));
     });
 
     sdk_->dataProvider.accessMapData(visitor, {(uint32_t)globalDesc.activeMapID});
 
-    logToFile(QString("VSLAM: KF=%1 MP=%2").arg(keyframes.size()).arg(mapPoints.size()));
+    // Voxel grid downsampling at 5cm to reduce visual clutter
+    {
+        const float VOXEL = 0.05f;
+        QSet<quint64> seen;
+        seen.reserve(allMapPoints.size());
+        for (const QVector3D& p : allMapPoints) {
+            int ix = (int)std::round(p.x() / VOXEL) + 2000;
+            int iy = (int)std::round(p.y() / VOXEL) + 2000;
+            int iz = (int)std::round(p.z() / VOXEL) + 2000;
+            quint64 key = ((quint64)(ix & 0xFFF))
+                        | ((quint64)(iy & 0xFFF) << 12)
+                        | ((quint64)(iz & 0xFFF) << 24);
+            if (!seen.contains(key)) {
+                seen.insert(key);
+                mapPoints.append(p);
+            }
+        }
+    }
+
+    logToFile(QString("VSLAM: KF=%1 MP=%2 (downsampled from %3)")
+        .arg(keyframes.size()).arg(mapPoints.size()).arg(allMapPoints.size()));
 
     // Log signal emission
     if (keyframes.isEmpty() && mapPoints.isEmpty()) {
@@ -486,9 +508,17 @@ void SdkWorker::resetMap() {
         return;
     }
 
+    logToFile(">>> Attempting to reset map...");
     if (sdk_->controller.requireMapReset(5000)) {
+        logToFile("✓ Map reset successful");
         emit mappingStatusChanged("Map reset");
+        // Clear MapWidget display by emitting empty map data
+        emit mapDataUpdated(QVector<QVector3D>(), QVector<QVector3D>());
+        // Also clear depth cloud
+        depthCloudAccum_.clear();
+        emit depthCloudUpdated(depthCloudAccum_);
     } else {
+        logToFile("✗ FAILED to reset map!");
         emit mappingStatusChanged("Failed to reset map");
     }
 }
@@ -544,85 +574,163 @@ void SdkWorker::onColmapStatusTimeout() {
 
 void SdkWorker::downloadMap(const QString& savePath) {
     if (!sdk_ || !connected_) {
+        logToFile("✗ downloadMap: Not connected");
         emit mapTransferFinished(false, "Not connected");
         return;
     }
 
     std::string pathStd = savePath.toStdString();
+    logToFile(QString(">>> Starting map download to: %1").arg(savePath));
 
-    std::promise<bool> done;
-    auto future = done.get_future();
+    // Use shared_ptr to manage promise lifecycle - prevent broken_promise exception
+    auto sharedDone = std::make_shared<std::promise<bool>>();
+    auto future = sharedDone->get_future();
 
+    // Lambda that will be called by SDK - captures shared_ptr for lifetime extension
     auto callback = [](void* ud, int ok) {
-        auto* p = reinterpret_cast<std::promise<bool>*>(ud);
-        p->set_value(ok != 0);
+        auto* p = reinterpret_cast<std::shared_ptr<std::promise<bool>>*>(ud);
+        logToFile(QString(">>> Download callback invoked with status: %1").arg(ok));
+        if (p) {
+            (*p)->set_value(ok != 0);
+            delete p;  // Clean up heap-allocated shared_ptr copy
+        }
     };
 
     emit mapTransferProgress(0.f);
 
-    if (!sdk_->mapManager.startDownloadSession(pathStd.c_str(), callback, &done)) {
+    // Heap-allocate a copy of shared_ptr to pass to C-style callback
+    auto* cbArg = new std::shared_ptr<std::promise<bool>>(sharedDone);
+
+    logToFile(">>> Calling startDownloadSession...");
+    if (!sdk_->mapManager.startDownloadSession(pathStd.c_str(), callback, cbArg)) {
+        logToFile("✗ Failed to start download session");
+        delete cbArg;  // Clean up if start failed
         emit mapTransferFinished(false, "Failed to start download");
         return;
     }
 
+    logToFile("✓ Download session started successfully");
+
     // Poll progress in background thread
     std::thread([this]() {
-        if (!sdk_) return;
+        logToFile(">>> Progress polling thread started");
+        try {
+            if (!sdk_) {
+                logToFile("✗ SDK is null in polling thread");
+                return;
+            }
 
-        while (sdk_->mapManager.isSessionActive()) {
-            slamtec_aurora_sdk_mapstorage_session_status_t status;
-            sdk_->mapManager.querySessionStatus(status);
-            emit mapTransferProgress(status.progress);
-            std::this_thread::sleep_for(std::chrono::milliseconds(500));
+            int pollCount = 0;
+            while (sdk_ && sdk_->mapManager.isSessionActive()) {
+                slamtec_aurora_sdk_mapstorage_session_status_t status;
+                sdk_->mapManager.querySessionStatus(status);
+                logToFile(QString("  [Poll %1] Progress: %2%").arg(++pollCount).arg(status.progress, 0, 'f', 1));
+                emit mapTransferProgress(status.progress);
+                std::this_thread::sleep_for(std::chrono::milliseconds(500));
+            }
+            logToFile(">>> Progress polling thread ended (session inactive)");
+        } catch (const std::exception& e) {
+            logToFile(QString("✗ Exception in polling thread: %1").arg(e.what()));
+        } catch (...) {
+            logToFile("✗ Unknown exception in polling thread");
         }
     }).detach();
 
     // Wait for completion
     std::thread([this, future = std::move(future)]() mutable {
-        bool ok = future.get();
-        emit mapTransferFinished(ok, ok ? "Download complete" : "Download failed");
+        try {
+            logToFile(">>> Completion wait thread started");
+            bool ok = future.get();
+            logToFile(QString("✓ Download completed with status: %1").arg(ok ? "SUCCESS" : "FAILED"));
+            emit mapTransferFinished(ok, ok ? "Download complete" : "Download failed");
+        } catch (const std::exception& e) {
+            logToFile(QString("✗ Exception in completion thread: %1").arg(e.what()));
+            emit mapTransferFinished(false, QString("Error: %1").arg(e.what()));
+        } catch (...) {
+            logToFile("✗ Unknown exception in completion thread");
+            emit mapTransferFinished(false, "Unknown error");
+        }
     }).detach();
 }
 
 void SdkWorker::uploadMap(const QString& filePath) {
     if (!sdk_ || !connected_) {
+        logToFile("✗ uploadMap: Not connected");
         emit mapTransferFinished(false, "Not connected");
         return;
     }
 
     std::string pathStd = filePath.toStdString();
+    logToFile(QString(">>> Starting map upload from: %1").arg(filePath));
 
-    std::promise<bool> done;
-    auto future = done.get_future();
+    // Use shared_ptr to manage promise lifecycle - prevent broken_promise exception
+    auto sharedDone = std::make_shared<std::promise<bool>>();
+    auto future = sharedDone->get_future();
 
+    // Lambda that will be called by SDK - captures shared_ptr for lifetime extension
     auto callback = [](void* ud, int ok) {
-        auto* p = reinterpret_cast<std::promise<bool>*>(ud);
-        p->set_value(ok != 0);
+        auto* p = reinterpret_cast<std::shared_ptr<std::promise<bool>>*>(ud);
+        logToFile(QString(">>> Upload callback invoked with status: %1").arg(ok));
+        if (p) {
+            (*p)->set_value(ok != 0);
+            delete p;  // Clean up heap-allocated shared_ptr copy
+        }
     };
 
     emit mapTransferProgress(0.f);
 
-    if (!sdk_->mapManager.startUploadSession(pathStd.c_str(), callback, &done)) {
+    // Heap-allocate a copy of shared_ptr to pass to C-style callback
+    auto* cbArg = new std::shared_ptr<std::promise<bool>>(sharedDone);
+
+    logToFile(">>> Calling startUploadSession...");
+    if (!sdk_->mapManager.startUploadSession(pathStd.c_str(), callback, cbArg)) {
+        logToFile("✗ Failed to start upload session");
+        delete cbArg;  // Clean up if start failed
         emit mapTransferFinished(false, "Failed to start upload");
         return;
     }
 
+    logToFile("✓ Upload session started successfully");
+
     // Poll progress in background thread
     std::thread([this]() {
-        if (!sdk_) return;
+        logToFile(">>> Progress polling thread started (upload)");
+        try {
+            if (!sdk_) {
+                logToFile("✗ SDK is null in polling thread");
+                return;
+            }
 
-        while (sdk_->mapManager.isSessionActive()) {
-            slamtec_aurora_sdk_mapstorage_session_status_t status;
-            sdk_->mapManager.querySessionStatus(status);
-            emit mapTransferProgress(status.progress);
-            std::this_thread::sleep_for(std::chrono::milliseconds(500));
+            int pollCount = 0;
+            while (sdk_ && sdk_->mapManager.isSessionActive()) {
+                slamtec_aurora_sdk_mapstorage_session_status_t status;
+                sdk_->mapManager.querySessionStatus(status);
+                logToFile(QString("  [Poll %1] Progress: %2%").arg(++pollCount).arg(status.progress, 0, 'f', 1));
+                emit mapTransferProgress(status.progress);
+                std::this_thread::sleep_for(std::chrono::milliseconds(500));
+            }
+            logToFile(">>> Progress polling thread ended (session inactive)");
+        } catch (const std::exception& e) {
+            logToFile(QString("✗ Exception in polling thread: %1").arg(e.what()));
+        } catch (...) {
+            logToFile("✗ Unknown exception in polling thread");
         }
     }).detach();
 
     // Wait for completion
     std::thread([this, future = std::move(future)]() mutable {
-        bool ok = future.get();
-        emit mapTransferFinished(ok, ok ? "Upload complete" : "Upload failed");
+        try {
+            logToFile(">>> Completion wait thread started (upload)");
+            bool ok = future.get();
+            logToFile(QString("✓ Upload completed with status: %1").arg(ok ? "SUCCESS" : "FAILED"));
+            emit mapTransferFinished(ok, ok ? "Upload complete" : "Upload failed");
+        } catch (const std::exception& e) {
+            logToFile(QString("✗ Exception in completion thread: %1").arg(e.what()));
+            emit mapTransferFinished(false, QString("Error: %1").arg(e.what()));
+        } catch (...) {
+            logToFile("✗ Unknown exception in completion thread");
+            emit mapTransferFinished(false, "Unknown error");
+        }
     }).detach();
 }
 
@@ -664,6 +772,40 @@ void SdkWorker::onDepthTimeout() {
         return;
     }
 
+    // Log camera resolution once
+    static bool camResLogged = false;
+    if (!camResLogged) {
+        const int step = 16;
+        int maxPtsPerFrame = (desc.width / step) * (desc.height / step);
+        logToFile(QString("Depth camera resolution: %1 x %2, step=%3, max pts/frame=%4")
+            .arg(desc.width).arg(desc.height).arg(step).arg(maxPtsPerFrame));
+        camResLogged = true;
+    }
+
+    // Movement threshold: only append if moved >15cm OR rotated >20 degrees
+    const double MOVE_THRESHOLD = 0.15;  // meters
+    const double YAW_THRESHOLD = 20.0 * M_PI / 180.0;  // radians
+
+    double dx = lastPoseX_ - lastDepthX_;
+    double dy = lastPoseY_ - lastDepthY_;
+    double dz = lastPoseZ_ - lastDepthZ_;
+    double dyaw = std::abs(lastPoseYaw_ - lastDepthYaw_);
+
+    // Handle angle wrapping (±π)
+    if (dyaw > M_PI) dyaw = 2 * M_PI - dyaw;
+
+    double dist = std::sqrt(dx*dx + dy*dy + dz*dz);
+    if (dist < MOVE_THRESHOLD && dyaw < YAW_THRESHOLD) {
+        // Not enough movement, skip this frame
+        return;
+    }
+
+    // Update last depth sampling pose
+    lastDepthX_ = lastPoseX_;
+    lastDepthY_ = lastPoseY_;
+    lastDepthZ_ = lastPoseZ_;
+    lastDepthYaw_ = lastPoseYaw_;
+
     // Build rotation matrix from RPY (Aurora: Rz(yaw) * Ry(pitch) * Rx(roll))
     QMatrix4x4 rot;
     rot.rotate(QQuaternion::fromEulerAngles(
@@ -672,8 +814,9 @@ void SdkWorker::onDepthTimeout() {
         lastPoseYaw_ * 180.0 / M_PI      // yaw in degrees
     ));
 
-    // Downsample: sample every 8×8 pixels
-    const int step = 8;
+    // Downsample: sample every 16×16 pixels (reduced from 8×8 for less density)
+    // This reduces points per frame from ~4800 to ~1200, keeping cloud cleaner
+    const int step = 16;
     const float distance_min = 0.3f;  // meters
     const float distance_max = 6.0f;  // meters
 
@@ -709,10 +852,11 @@ void SdkWorker::onDepthTimeout() {
     }
 
     // Limit total points to avoid unbounded growth
-    const int max_points = 300000;
+    // Reduced from 300000 to 50000 for tighter sliding window (~8 sec history)
+    const int max_points = 50000;
     if (depthCloudAccum_.size() > max_points) {
-        // Remove oldest 20% of points
-        int remove_count = max_points / 5;
+        // Remove oldest 50% of points (changed from 20%) for better sliding-window effect
+        int remove_count = max_points / 2;
         depthCloudAccum_.remove(0, remove_count);
     }
 

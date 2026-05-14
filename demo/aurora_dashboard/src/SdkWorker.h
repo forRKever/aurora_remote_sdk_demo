@@ -82,4 +82,11 @@ private:
     double lastPoseRoll_ = 0;
     double lastPosePitch_ = 0;
     double lastPoseYaw_ = 0;
+
+    // Last pose when depth cloud was appended (for movement threshold)
+    // Initialized to extreme values to ensure first frame is always appended
+    double lastDepthX_ = 1e9;
+    double lastDepthY_ = 1e9;
+    double lastDepthZ_ = 1e9;
+    double lastDepthYaw_ = 1e9;
 };

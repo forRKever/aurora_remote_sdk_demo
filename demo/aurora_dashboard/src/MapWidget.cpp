@@ -19,7 +19,7 @@ uniform float uYRange;
 out float vHeight;
 void main() {
     gl_Position = uMVP * vec4(aPos, 1.0);
-    gl_PointSize = 2.5;
+    gl_PointSize = 1.5;
     vHeight = (uYRange > 0.0001) ? (aPos.y - uYMin) / uYRange : 0.5;
 }
 )";
@@ -194,28 +194,30 @@ void MapWidget::paintGL() {
 }
 
 void MapWidget::uploadPointsToGPU() {
+    // Always update counts first — even when empty — so render functions skip correctly
+    pointCount_ = mapPoints_.size();
+    trailCount_ = keyframes_.size();
+    depthCloudCount_ = depthCloud_.size();
+
     // Points
     if (!mapPoints_.isEmpty()) {
         glBindBuffer(GL_ARRAY_BUFFER, vboPoints_);
-        glBufferData(GL_ARRAY_BUFFER, mapPoints_.size() * sizeof(QVector3D),
+        glBufferData(GL_ARRAY_BUFFER, pointCount_ * sizeof(QVector3D),
                      (const void*)mapPoints_.constData(), GL_DYNAMIC_DRAW);
-        pointCount_ = mapPoints_.size();
     }
 
     // Trail
     if (!keyframes_.isEmpty()) {
         glBindBuffer(GL_ARRAY_BUFFER, vboTrail_);
-        glBufferData(GL_ARRAY_BUFFER, keyframes_.size() * sizeof(QVector3D),
+        glBufferData(GL_ARRAY_BUFFER, trailCount_ * sizeof(QVector3D),
                      (const void*)keyframes_.constData(), GL_DYNAMIC_DRAW);
-        trailCount_ = keyframes_.size();
     }
 
     // Depth cloud
     if (!depthCloud_.isEmpty()) {
         glBindBuffer(GL_ARRAY_BUFFER, vboDepthCloud_);
-        glBufferData(GL_ARRAY_BUFFER, depthCloud_.size() * sizeof(QVector3D),
+        glBufferData(GL_ARRAY_BUFFER, depthCloudCount_ * sizeof(QVector3D),
                      (const void*)depthCloud_.constData(), GL_DYNAMIC_DRAW);
-        depthCloudCount_ = depthCloud_.size();
     }
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
