@@ -49,8 +49,10 @@ signals:
     void mapTransferProgress(float progress);
     void mapTransferFinished(bool success, QString message);
     void depthCloudUpdated(QVector<QVector3D> positions, QVector<QVector3D> colors);
+    void relocalizationResult(bool success);
 
 public slots:
+    Q_INVOKABLE void relocalizeMap();
     void clearDepthCloud();
 
 private slots:

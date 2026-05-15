@@ -78,6 +78,7 @@ private:
     QPushButton* startMappingBtn_;
     QPushButton* stopMappingBtn_;
     QPushButton* resetMapBtn_;
+    QPushButton* relocateBtn_;
     QPushButton* clearDepthCloudBtn_;
     QLabel* mappingStatusLabel_;
 

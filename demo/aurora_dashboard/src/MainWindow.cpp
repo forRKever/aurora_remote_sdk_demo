@@ -102,7 +102,7 @@ void MainWindow::setupUI() {
     posePitchLabel_ = new QLabel("Pitch: --");
     poseYawLabel_ = new QLabel("Yaw: --");
     poseQualityLabel_ = new QLabel("Quality: --");
-    poseQualityLabel_->setFont(QFont("monospace", 9, QFont::Bold));
+    poseQualityLabel_->setFont(QFont("monospace", 12, QFont::Bold));
 
     poseLayout->addWidget(poseXLabel_);
     poseLayout->addWidget(poseYLabel_);
@@ -153,6 +153,10 @@ void MainWindow::setupUI() {
 
     resetMapBtn_ = new QPushButton("Reset Map");
     mapCtrlLayout->addWidget(resetMapBtn_);
+
+    relocateBtn_ = new QPushButton("Relocalize");
+    relocateBtn_->setToolTip("Upload map first, then click to auto-localize the device in the loaded map");
+    mapCtrlLayout->addWidget(relocateBtn_);
 
     clearDepthCloudBtn_ = new QPushButton("Clear Depth Cloud");
     mapCtrlLayout->addWidget(clearDepthCloudBtn_);
@@ -284,6 +288,12 @@ void MainWindow::setupUI() {
     connect(startMappingBtn_, &QPushButton::clicked, this, &MainWindow::onStartMappingClicked);
     connect(stopMappingBtn_, &QPushButton::clicked, this, &MainWindow::onStopMappingClicked);
     connect(resetMapBtn_, &QPushButton::clicked, this, &MainWindow::onResetMapClicked);
+    connect(relocateBtn_, &QPushButton::clicked, this, [this]() {
+        mappingStatusLabel_->setText("Status: Relocalizing...");
+        mappingStatusLabel_->setStyleSheet("color: blue; font-weight: bold;");
+        relocateBtn_->setEnabled(false);
+        QMetaObject::invokeMethod(worker_, "relocalizeMap", Qt::QueuedConnection);
+    });
     connect(clearDepthCloudBtn_, &QPushButton::clicked, this, [this]() {
         QMetaObject::invokeMethod(worker_, "clearDepthCloud", Qt::QueuedConnection);
     });
@@ -349,10 +359,30 @@ void MainWindow::setupWorker() {
                 {"FAIR", "orange"},
                 {"POOR", "red"}
             };
+            static const QMap<QString, QString> bgMap = {
+                {"EXCELLENT", "#e6ffe6"},
+                {"GOOD",      "#f0f9cc"},
+                {"FAIR",      "#fff3e0"},
+                {"POOR",      "#ffe6e6"}
+            };
             poseQualityLabel_->setText(
                 QString("Quality: %1 (±%2m)").arg(q).arg(r95, 0, 'f', 3));
             poseQualityLabel_->setStyleSheet(
-                QString("color:%1; font-weight:bold;").arg(colorMap.value(q, "gray")));
+                QString("color:%1; font-weight:bold; font-size:12pt;"
+                        "padding:4px 8px; background:%2; border-radius:4px;")
+                    .arg(colorMap.value(q, "gray"))
+                    .arg(bgMap.value(q, "#f0f0f0")));
+        }, Qt::QueuedConnection);
+    connect(worker_, &SdkWorker::relocalizationResult, this,
+        [this](bool ok) {
+            relocateBtn_->setEnabled(true);
+            if (ok) {
+                mappingStatusLabel_->setText("Status: Relocalization OK");
+                mappingStatusLabel_->setStyleSheet("color: green; font-weight: bold;");
+            } else {
+                mappingStatusLabel_->setText("Status: Relocalization FAILED");
+                mappingStatusLabel_->setStyleSheet("color: red; font-weight: bold;");
+            }
         }, Qt::QueuedConnection);
     connect(worker_, &SdkWorker::colmapRecordingStatus, this,
         [this](bool isRecording, int kfCount, QString message) {

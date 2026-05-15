@@ -1095,3 +1095,19 @@ void SdkWorker::clearDepthCloud() {
     depthCloudColorAccum_.clear();
     emit depthCloudUpdated(depthCloudAccum_, depthCloudColorAccum_);
 }
+
+void SdkWorker::relocalizeMap() {
+    if (!sdk_ || !connected_) {
+        emit relocalizationResult(false);
+        return;
+    }
+
+    logToFile(">>> Attempting relocalization...");
+    bool ok = sdk_->controller.requireRelocalization();
+    if (ok) {
+        logToFile("? Relocalization succeeded");
+    } else {
+        logToFile("? Relocalization failed");
+    }
+    emit relocalizationResult(ok);
+}
