@@ -53,10 +53,10 @@ void main() {
         // Per-vertex RGB color (colored depth cloud)
         fragColor = vec4(vColor, 0.9);
     } else {
-        // Height gradient: blue -> cyan -> green -> yellow -> red
+        // Green heatmap style (matching demo map_render)
         float h = clamp(vHeight, 0.0, 1.0);
-        vec3 c = mix(vec3(0.0, 0.3, 1.0), vec3(1.0, 0.3, 0.0), h);
-        fragColor = vec4(c, 0.8);
+        float intensity = 0.4 + h * 0.6;
+        fragColor = vec4(0.0, intensity, 0.0, 0.8);
     }
 }
 )";
@@ -124,7 +124,7 @@ void MapWidget::updateDepthCloud(QVector<QVector3D> positions, QVector<QVector3D
 void MapWidget::initializeGL() {
     initializeOpenGLFunctions();
 
-    glClearColor(0.06f, 0.06f, 0.11f, 1.0f);  // #0f0f1a
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);  // Pure black (matching demo)
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_PROGRAM_POINT_SIZE);
     glEnable(GL_BLEND);
@@ -332,9 +332,9 @@ void MapWidget::renderTrajectory() {
 
     glBindVertexArray(vaoTrail_);
 
-    // Draw trajectory with gap detection (skip jumps > 5m) to prevent wild lines during SLAM glitches
+    // Draw trajectory with gap detection (skip jumps > 5m)
     const float MAX_SEGMENT = 5.0f;
-    shader_->setUniformValue("uColor", QVector3D(1.0f, 0.4f, 0.2f));  // Orange
+    shader_->setUniformValue("uColor", QVector3D(0.39f, 0.0f, 0.0f));  // Dark red (matching demo)
     for (int i = 0; i + 1 < (int)keyframes_.size(); ++i) {
         float dx = keyframes_[i+1].x() - keyframes_[i].x();
         float dy = keyframes_[i+1].y() - keyframes_[i].y();
@@ -344,18 +344,15 @@ void MapWidget::renderTrajectory() {
         }
     }
 
-    // Draw keyframe circles
-    glPointSize(6.0f);
-    shader_->setUniformValue("uColor", QVector3D(1.0f, 0.3f, 0.3f));  // Red
+    // Draw keyframe markers (small, matching demo style)
+    glPointSize(2.0f);
+    shader_->setUniformValue("uColor", QVector3D(0.39f, 0.0f, 0.0f));  // Dark red
     glDrawArrays(GL_POINTS, 0, trailCount_);
     glPointSize(1.0f);
 }
 
 void MapWidget::renderCurrentPose() {
-    // Draw current position as yellow sphere (simplified: just a larger point)
-    std::vector<QVector3D> poseVerts;
-    poseVerts.push_back(currentPos_);
-
+    // Draw current position as red dot (matching demo style)
     GLuint poseVao, poseVbo;
     glGenVertexArrays(1, &poseVao);
     glGenBuffers(1, &poseVbo);
@@ -365,85 +362,49 @@ void MapWidget::renderCurrentPose() {
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 
-    glPointSize(12.0f);
-    shader_->setUniformValue("uColor", QVector3D(1.0f, 0.85f, 0.0f));  // Yellow
+    glPointSize(6.0f);
+    shader_->setUniformValue("uColor", QVector3D(0.78f, 0.0f, 0.0f));  // Red (matching demo)
     glDrawArrays(GL_POINTS, 0, 1);
     glPointSize(1.0f);
-
-    glDeleteBuffers(1, &poseVbo);
-    glDeleteVertexArrays(1, &poseVao);
-
-    // Draw yaw arrow (simple line)
-    // Aurora yaw 圍繞 Z 軸（向上），前進方向在 Aurora X-Y 平面：(cos(yaw), sin(yaw), 0)
-    // 轉換為 OpenGL：Aurora Y → OpenGL Z，所以方向變為 (cos(yaw), 0, sin(yaw))
-    float arrowLen = 0.5f;
-    QVector3D arrowEnd = currentPos_ + QVector3D(
-        arrowLen * cos(currentYaw_),
-        0,
-        arrowLen * sin(currentYaw_)
-    );
-
-    std::vector<QVector3D> arrowVerts = {currentPos_, arrowEnd};
-    glGenVertexArrays(1, &poseVao);
-    glGenBuffers(1, &poseVbo);
-    glBindVertexArray(poseVao);
-    glBindBuffer(GL_ARRAY_BUFFER, poseVbo);
-    glBufferData(GL_ARRAY_BUFFER, arrowVerts.size() * sizeof(QVector3D), arrowVerts.data(), GL_STATIC_DRAW);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-
-    glLineWidth(2.0f);
-    shader_->setUniformValue("uColor", QVector3D(1.0f, 0.85f, 0.0f));
-    glDrawArrays(GL_LINES, 0, arrowVerts.size());
-    glLineWidth(1.0f);
 
     glDeleteBuffers(1, &poseVbo);
     glDeleteVertexArrays(1, &poseVao);
 }
 
 void MapWidget::renderText() {
-    // Use QPainter to render text overlay
+    // Use QPainter to render text overlay (matching demo style)
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
-    painter.setPen(QColor(255, 255, 255, 180));
+    painter.setPen(QColor(255, 255, 255, 200));
     painter.setFont(QFont("monospace", 10));
 
-    QString info = QString("KF: %1 | MP: %2 | DC: %3 | Az: %4 | El: %5 | Dist: %6m")
-        .arg(keyframes_.size())
-        .arg(mapPoints_.size())
-        .arg(depthCloudCount_)
-        .arg((int)azimuth_)
-        .arg((int)elevation_)
-        .arg(distance_, 0, 'f', 1);
-
-    painter.drawText(5, 20, info);
-
-    // Help text
-    painter.setFont(QFont("monospace", 9));
-    painter.setPen(QColor(200, 200, 200, 150));
-    QString modeHints;
-    if (sliceMode_) modeHints += " [S:SLICE ON]";
-    if (enhancedDepth_) modeHints += " [E:ENHANCE ON]";
-    painter.drawText(5, 40, "LMB: Rotate | RMB: Pan | Wheel: Zoom | T: Top | R: Reset | S: Slice | E: Enhance | H: Help" + modeHints);
+    // Match demo: Map Points, Keyframes, Active Map ID
+    painter.drawText(10, 30, QString("Map Points: %1").arg(mapPoints_.size()));
+    painter.drawText(10, 60, QString("Keyframes: %1").arg(keyframes_.size()));
+    painter.drawText(10, 90, QString("Active Map ID: %1").arg(activeMapId_));
 
     // Axis indicator
     renderAxisIndicator(painter);
+
+    // Minimal help hint at bottom
+    painter.setFont(QFont("monospace", 8));
+    painter.setPen(QColor(200, 200, 200, 120));
+    painter.drawText(5, viewH_ - 5, "T:Top R:Reset F:Front S:Slice H:Help | LMB:Rotate RMB:Pan Wheel:Zoom");
 
     // Extended help
     if (showHelp_) {
         painter.setFont(QFont("monospace", 8));
         painter.setPen(QColor(150, 255, 150, 200));
-        painter.drawText(5, viewH_ - 150, "=== 幫助 ===");
-        painter.drawText(5, viewH_ - 135, "T = 俯視圖 (Top-down)");
-        painter.drawText(5, viewH_ - 120, "R = 重置視角 (Reset)");
-        painter.drawText(5, viewH_ - 105, "F = 前視圖 (Front)");
-        painter.drawText(5, viewH_ - 90, QString("S = 高度切片 0.3~1.8m (") + (sliceMode_ ? "ON" : "OFF") + ")");
-        painter.drawText(5, viewH_ - 75, QString("E = 深度雲增強點大小 (") + (enhancedDepth_ ? "ON" : "OFF") + ")");
-        painter.drawText(5, viewH_ - 60, "左鍵拖曳 = 旋轉");
-        painter.drawText(5, viewH_ - 45, "右鍵拖曳 = 平移");
-        painter.drawText(5, viewH_ - 30, "滾輪 = 縮放");
-        painter.drawText(5, viewH_ - 15, "按 H 關閉幫助");
+        int y = viewH_ - 160;
+        painter.drawText(5, y,      "=== Help ===");
+        painter.drawText(5, y + 15, "T = Top-down view");
+        painter.drawText(5, y + 30, "R = Reset view");
+        painter.drawText(5, y + 45, "F = Front view");
+        painter.drawText(5, y + 60, QString("S = Height slice 0.3~1.8m (%1)").arg(sliceMode_ ? "ON" : "OFF"));
+        painter.drawText(5, y + 75, QString("E = Enhanced depth (%1)").arg(enhancedDepth_ ? "ON" : "OFF"));
+        painter.drawText(5, y + 90, "LMB = Rotate | RMB = Pan | Wheel = Zoom");
+        painter.drawText(5, y + 105, "Press H to close");
     }
 }
 

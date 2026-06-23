@@ -253,3 +253,7 @@ target_compile_definitions(camera_mask PRIVATE AURORA_SDK_HAS_OPENCV)
 target_link_libraries(camera_mask ${AURORA_LIB_NAME}  ${OpenCV_LIBS})
 
 endif()
+
+## Aurora diagnostic tool (no OpenCV dependency)
+add_executable(aurora_diagnostic demo/aurora_diagnostic/src/aurora_diagnostic.cpp)
+target_link_libraries(aurora_diagnostic ${AURORA_LIB_NAME})

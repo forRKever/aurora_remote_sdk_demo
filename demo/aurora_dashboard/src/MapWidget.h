@@ -21,6 +21,7 @@ public slots:
     void updateMapData(QVector<QVector3D> keyframes, QVector<QVector3D> mapPoints);
     void updateCurrentPose(double x, double y, double z, double yaw);
     void updateDepthCloud(QVector<QVector3D> positions, QVector<QVector3D> colors);
+    void setActiveMapId(int id) { activeMapId_ = id; }
     void setOccupancyMap(QImage, float, float, float) {}  // Placeholder
 
 protected:
@@ -45,9 +46,9 @@ private:
     QMatrix4x4 viewMatrix() const;
     QMatrix4x4 projMatrix() const;
 
-    // Camera (Orbit)
-    float azimuth_   = 45.0f;     // Horizontal rotation (degrees)
-    float elevation_ = 30.0f;     // Vertical tilt (degrees)
+    // Camera (Orbit) - default top-down view matching demo
+    float azimuth_   = 0.0f;      // Horizontal rotation (degrees)
+    float elevation_ = 89.0f;     // Vertical tilt (degrees) - top-down
     float distance_  = 10.0f;     // Distance from target (m)
     QVector3D target_;             // Camera target point
 
@@ -79,6 +80,9 @@ private:
 
     // Bounds for height coloring
     float yMin_ = 0.0f, yMax_ = 0.0f;
+
+    // Map info (matching demo display)
+    int activeMapId_ = -1;
 
     // UI State
     bool showHelp_ = false;

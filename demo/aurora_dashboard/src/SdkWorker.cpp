@@ -184,6 +184,12 @@ SdkWorker::SdkWorker() {
     colmapStatusTimer_ = new QTimer(this);
     connect(colmapStatusTimer_, &QTimer::timeout, this, &SdkWorker::onColmapStatusTimeout);
 
+    lidarTimer_ = new QTimer(this);
+    connect(lidarTimer_, &QTimer::timeout, this, &SdkWorker::onLidarTimeout);
+
+    gridMapTimer_ = new QTimer(this);
+    connect(gridMapTimer_, &QTimer::timeout, this, &SdkWorker::onGridMapTimeout);
+
     // Initialize segmentation label info
     segLabelInfo_.label_count = 0;
 }
@@ -240,8 +246,28 @@ void SdkWorker::connectToDevice(const QString& ip, int port) {
 
     pollTimer_->start(100);        // 100ms polling for pose/device info
     mapTimer_->start(10000);       // 10s for VSLAM map data
+    lidarTimer_->start(200);       // 200ms polling for LIDAR scan data
+    lidarReceiveCount_ = 0;
+    lidarHzStartMs_ = QDateTime::currentMSecsSinceEpoch();
+    lastLidarTimestamp_ = 0;
 
-    logToFile("✓ Timers started: poll=100ms, map=10s");
+    logToFile("✓ Timers started: poll=100ms, map=10s, lidar=200ms");
+
+    // Start LIDAR 2D occupancy grid preview
+    {
+        LIDAR2DGridMapGenerationOptions genOption;
+        genOption.map_canvas_width  = 150;
+        genOption.map_canvas_height = 150;
+        genOption.resolution        = 0.05f;
+        if (sdk_->lidar2DMapBuilder.startPreviewMapBackgroundUpdate(genOption)) {
+            sdk_->lidar2DMapBuilder.setPreviewMapAutoFloorDetection(true);
+            sdk_->lidar2DMapBuilder.requireRedrawPreviewMap();
+            gridMapTimer_->start(500);
+            logToFile("✓ LIDAR 2D grid map builder started");
+        } else {
+            logToFile("✗ Failed to start LIDAR 2D grid map builder");
+        }
+    }
 
     // Subscribe to depth camera (graceful if unsupported)
     if (sdk_->enhancedImaging.isDepthCameraSupported()) {
@@ -290,6 +316,10 @@ void SdkWorker::disconnectDevice() {
     depthTimer_->stop();
     segmentationTimer_->stop();
     colmapStatusTimer_->stop();
+    lidarTimer_->stop();
+    gridMapTimer_->stop();
+
+    sdk_->lidar2DMapBuilder.stopPreviewMapBackgroundUpdate();
 
     // Stop COLMAP recording if active
     sdk_->colmapDataRecorder.stopRecording();
@@ -537,6 +567,12 @@ void SdkWorker::onMapRefreshTimeout() {
     });
 
     sdk_->dataProvider.accessMapData(visitor, {(uint32_t)globalDesc.activeMapID});
+
+    // Emit active map ID for display (matching demo)
+    emit activeMapIdUpdated(globalDesc.activeMapID);
+
+    // Force resync map data periodically (matching demo behavior)
+    sdk_->controller.resyncMapData();
 
     // Voxel grid downsampling at 5cm to reduce visual clutter
     {
@@ -1090,6 +1126,66 @@ void SdkWorker::onSegmentationTimeout() {
     }
 }
 
+void SdkWorker::onLidarTimeout() {
+    if (!sdk_ || !connected_) {
+        return;
+    }
+
+    SingleLayerLIDARScan scan;
+    slamtec_aurora_sdk_pose_se3_t poseSE3;
+
+    if (!sdk_->dataProvider.peekRecentLIDARScanSingleLayer(scan, poseSE3)) {
+        // No new scan data — check if we've been silent for a while
+        qint64 now = QDateTime::currentMSecsSinceEpoch();
+        if (now - lidarHzStartMs_ > 2000 && lidarReceiveCount_ == 0) {
+            emit lidarStatusUpdated(false, 0, 0.0);
+        }
+        return;
+    }
+
+    // Skip if same timestamp as last scan (no new data)
+    if (scan.info.timestamp_ns == lastLidarTimestamp_) {
+        return;
+    }
+    lastLidarTimestamp_ = scan.info.timestamp_ns;
+
+    // Calculate update rate
+    lidarReceiveCount_++;
+    qint64 now = QDateTime::currentMSecsSinceEpoch();
+    double elapsedSec = (now - lidarHzStartMs_) / 1000.0;
+    double hz = 0.0;
+    if (elapsedSec > 0.5) {
+        hz = lidarReceiveCount_ / elapsedSec;
+        // Reset counter periodically to keep Hz estimate fresh
+        if (elapsedSec > 3.0) {
+            lidarReceiveCount_ = 0;
+            lidarHzStartMs_ = now;
+        }
+    }
+
+    emit lidarStatusUpdated(true, (int)scan.info.scan_count, hz);
+
+    // Convert scan points to world-frame XY for LidarMapWidget
+    QVector<QPointF> worldPoints;
+    worldPoints.reserve(scan.info.scan_count);
+    for (uint32_t i = 0; i < scan.info.scan_count; ++i) {
+        const auto& pt = scan.scanData[i];
+        if (pt.quality > 0 && pt.dist > 0.01f) {
+            // Polar to local XY
+            float lx = pt.dist * std::cos(pt.angle);
+            float ly = pt.dist * std::sin(pt.angle);
+            // Transform to world using pose
+            float cosYaw = std::cos(lastPoseYaw_);
+            float sinYaw = std::sin(lastPoseYaw_);
+            float wx = lastPoseX_ + cosYaw * lx - sinYaw * ly;
+            float wy = lastPoseY_ + sinYaw * lx + cosYaw * ly;
+            worldPoints.append(QPointF(wx, wy));
+        }
+    }
+
+    emit lidarScanUpdated(worldPoints);
+}
+
 void SdkWorker::clearDepthCloud() {
     depthCloudAccum_.clear();
     depthCloudColorAccum_.clear();
@@ -1110,4 +1206,45 @@ void SdkWorker::relocalizeMap() {
         logToFile("? Relocalization failed");
     }
     emit relocalizationResult(ok);
+}
+
+void SdkWorker::onGridMapTimeout() {
+    if (!sdk_ || !connected_) return;
+
+    // Check if the preview map has a dirty (updated) region
+    slamtec_aurora_sdk_rect_t dirtyRect;
+    bool mapBigChange = false;
+    sdk_->lidar2DMapBuilder.getAndResetPreviewMapDirtyRect(dirtyRect, mapBigChange);
+
+    if (dirtyRect.width <= 0 || dirtyRect.height <= 0) return;
+
+    // If a major change occurred, request a full redraw for the next cycle
+    if (mapBigChange) {
+        sdk_->lidar2DMapBuilder.requireRedrawPreviewMap();
+    }
+
+    // Get the preview map and its full dimension
+    auto& prevMap = sdk_->lidar2DMapBuilder.getPreviewMap();
+    slamtec_aurora_sdk_2dmap_dimension_t mapDim;
+    prevMap.getMapDimension(mapDim);
+
+    slamtec_aurora_sdk_rect_t fetchRect;
+    fetchRect.x      = mapDim.min_x;
+    fetchRect.y      = mapDim.min_y;
+    fetchRect.width  = mapDim.max_x - mapDim.min_x;
+    fetchRect.height = mapDim.max_y - mapDim.min_y;
+    if (fetchRect.width <= 0 || fetchRect.height <= 0) return;
+
+    slamtec_aurora_sdk_2d_gridmap_fetch_info_t fetchInfo;
+    std::vector<uint8_t> cellData;
+    if (!prevMap.readCellData(fetchRect, fetchInfo, cellData)) return;
+    if (fetchInfo.cell_width <= 0 || fetchInfo.cell_height <= 0) return;
+
+    // Convert cell data to QImage (8-bit grayscale, row-major)
+    QImage img(cellData.data(), fetchInfo.cell_width, fetchInfo.cell_height,
+               fetchInfo.cell_width, QImage::Format_Grayscale8);
+    img = img.copy();  // deep copy - cellData will go out of scope
+
+    emit occupancyMapUpdated(img, fetchInfo.real_x, fetchInfo.real_y,
+                             prevMap.getResolution());
 }

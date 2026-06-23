@@ -15,6 +15,7 @@
 #include "CameraPreviewWidget.h"
 #include "DepthCamWidget.h"
 #include "SemanticSegmentationWidget.h"
+#include "LidarMapWidget.h"
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -82,6 +83,11 @@ private:
     QPushButton* clearDepthCloudBtn_;
     QLabel* mappingStatusLabel_;
 
+    // LIDAR status widgets
+    QLabel* lidarStatusLabel_;
+    QLabel* lidarScanCountLabel_;
+    QLabel* lidarHzLabel_;
+
     // COLMAP 3D recording widgets
     QPushButton* startColmapBtn_;
     QPushButton* stopColmapBtn_;
@@ -92,6 +98,7 @@ private:
     CameraPreviewWidget* cameraWidget_;
     DepthCamWidget* depthWidget_;
     SemanticSegmentationWidget* segmentationWidget_;
+    LidarMapWidget* lidarMapWidget_;
     QSplitter* centerSplitter_;   // horizontal splitter
     QSplitter* leftSubSplitter_;  // vertical splitter for depth + seg
     QSplitter* rightSubSplitter_; // vertical splitter for VSLAM + camera + mapOps

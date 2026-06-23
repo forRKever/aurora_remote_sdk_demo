@@ -15,7 +15,9 @@ MainWindow::MainWindow()
       startMappingBtn_(nullptr), stopMappingBtn_(nullptr), resetMapBtn_(nullptr),
       clearDepthCloudBtn_(nullptr), mappingStatusLabel_(nullptr),
       startColmapBtn_(nullptr), stopColmapBtn_(nullptr), colmapStatusLabel_(nullptr),
+      lidarStatusLabel_(nullptr), lidarScanCountLabel_(nullptr), lidarHzLabel_(nullptr),
       mapWidget_(nullptr), cameraWidget_(nullptr), depthWidget_(nullptr), segmentationWidget_(nullptr),
+      lidarMapWidget_(nullptr),
       centerSplitter_(nullptr), leftSubSplitter_(nullptr), rightSubSplitter_(nullptr),
       worker_(nullptr), workerThread_(nullptr) {
     setWindowTitle("Aurora Dashboard");
@@ -139,6 +141,21 @@ void MainWindow::setupUI() {
 
     leftLayout->addWidget(devGroup);
 
+    // LIDAR status group
+    QGroupBox* lidarGroup = new QGroupBox("LIDAR Status");
+    QVBoxLayout* lidarLayout = new QVBoxLayout(lidarGroup);
+
+    lidarStatusLabel_ = new QLabel("LIDAR: --");
+    lidarStatusLabel_->setStyleSheet("color: gray; font-weight: bold;");
+    lidarScanCountLabel_ = new QLabel("Scan Points: --");
+    lidarHzLabel_ = new QLabel("Update Rate: --");
+
+    lidarLayout->addWidget(lidarStatusLabel_);
+    lidarLayout->addWidget(lidarScanCountLabel_);
+    lidarLayout->addWidget(lidarHzLabel_);
+
+    leftLayout->addWidget(lidarGroup);
+
     // Mapping control group
     QGroupBox* mapCtrlGroup = new QGroupBox("Mapping Control");
     QVBoxLayout* mapCtrlLayout = new QVBoxLayout(mapCtrlGroup);
@@ -210,7 +227,11 @@ void MainWindow::setupUI() {
     segmentationWidget_->setMinimumHeight(0);
     leftSubSplitter_->addWidget(segmentationWidget_);
 
-    leftSubSplitter_->setSizes({400, 400});
+    lidarMapWidget_ = new LidarMapWidget;
+    lidarMapWidget_->setMinimumHeight(0);
+    leftSubSplitter_->addWidget(lidarMapWidget_);
+
+    leftSubSplitter_->setSizes({300, 300, 300});
 
     // Right sub-pane: vertical splitter with [mapWidget_, cameraWidget_, mapOpsGroup]
     rightSubSplitter_ = new QSplitter(Qt::Vertical);
@@ -335,6 +356,7 @@ void MainWindow::setupWorker() {
     connect(worker_, &SdkWorker::poseUpdated, this, &MainWindow::updatePoseUI, Qt::QueuedConnection);
     connect(worker_, &SdkWorker::deviceInfoUpdated, this, &MainWindow::updateDeviceUI, Qt::QueuedConnection);
     connect(worker_, &SdkWorker::mapDataUpdated, mapWidget_, &MapWidget::updateMapData, Qt::QueuedConnection);
+    connect(worker_, &SdkWorker::activeMapIdUpdated, mapWidget_, &MapWidget::setActiveMapId, Qt::QueuedConnection);
     connect(worker_, &SdkWorker::cameraFrameUpdated, cameraWidget_, &CameraPreviewWidget::updateFrame,
             Qt::QueuedConnection);
     connect(worker_, &SdkWorker::depthFrameUpdated, depthWidget_, &DepthCamWidget::updateDepthFrame,
@@ -393,6 +415,29 @@ void MainWindow::setupWorker() {
                 startColmapBtn_->setEnabled(true);
                 stopColmapBtn_->setEnabled(false);
             }
+        }, Qt::QueuedConnection);
+    connect(worker_, &SdkWorker::lidarStatusUpdated, this,
+        [this](bool receiving, int scanCount, double hz) {
+            if (receiving) {
+                lidarStatusLabel_->setText("LIDAR: Receiving");
+                lidarStatusLabel_->setStyleSheet("color: green; font-weight: bold;");
+                lidarScanCountLabel_->setText(QString("Scan Points: %1").arg(scanCount));
+                lidarHzLabel_->setText(QString("Update Rate: %1 Hz").arg(hz, 0, 'f', 1));
+            } else {
+                lidarStatusLabel_->setText("LIDAR: No Data");
+                lidarStatusLabel_->setStyleSheet("color: red; font-weight: bold;");
+                lidarScanCountLabel_->setText("Scan Points: --");
+                lidarHzLabel_->setText("Update Rate: --");
+            }
+        }, Qt::QueuedConnection);
+    connect(worker_, &SdkWorker::lidarScanUpdated, lidarMapWidget_,
+            &LidarMapWidget::updateLidarScan, Qt::QueuedConnection);
+    connect(worker_, &SdkWorker::occupancyMapUpdated, lidarMapWidget_,
+            &LidarMapWidget::setOccupancyMap, Qt::QueuedConnection);
+    connect(worker_, &SdkWorker::poseUpdated, lidarMapWidget_,
+        [this](double x, double y, double z, double roll, double pitch, double yaw) {
+            Q_UNUSED(roll); Q_UNUSED(pitch);
+            lidarMapWidget_->updateCurrentPose(x, y, z, yaw);
         }, Qt::QueuedConnection);
     connect(worker_, &SdkWorker::connectionChanged, this, &MainWindow::updateConnectionUI);
     connect(worker_, &SdkWorker::mappingStatusChanged, this, &MainWindow::onMappingStatusChanged);

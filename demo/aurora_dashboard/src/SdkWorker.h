@@ -49,7 +49,11 @@ signals:
     void mapTransferProgress(float progress);
     void mapTransferFinished(bool success, QString message);
     void depthCloudUpdated(QVector<QVector3D> positions, QVector<QVector3D> colors);
+    void activeMapIdUpdated(int mapId);
     void relocalizationResult(bool success);
+    void lidarStatusUpdated(bool receiving, int scanCount, double updateHz);
+    void lidarScanUpdated(QVector<QPointF> worldPoints);
+    void occupancyMapUpdated(QImage img, float minX, float minY, float resolution);
 
 public slots:
     Q_INVOKABLE void relocalizeMap();
@@ -61,6 +65,8 @@ private slots:
     void onDepthTimeout();
     void onSegmentationTimeout();
     void onColmapStatusTimeout();
+    void onLidarTimeout();
+    void onGridMapTimeout();
 
 private:
     RemoteSDK* sdk_ = nullptr;
@@ -69,6 +75,8 @@ private:
     QTimer* depthTimer_ = nullptr;      // 200ms polling for depth camera
     QTimer* segmentationTimer_ = nullptr;  // 200ms polling for semantic segmentation
     QTimer* colmapStatusTimer_ = nullptr;  // 2s polling for COLMAP recording status
+    QTimer* lidarTimer_ = nullptr;         // 200ms polling for LIDAR scan data
+    QTimer* gridMapTimer_ = nullptr;       // 500ms polling for 2D occupancy grid
     bool connected_ = false;
     bool mapRefreshRequested_ = false;
     slamtec_aurora_sdk_semantic_segmentation_label_info_t segLabelInfo_;
@@ -104,4 +112,9 @@ private:
 
     // Tracking status (for controlling depth cloud accumulation during tracking loss)
     bool trackingLost_ = false;
+
+    // LIDAR scan tracking
+    uint64_t lastLidarTimestamp_ = 0;
+    int lidarReceiveCount_ = 0;
+    qint64 lidarHzStartMs_ = 0;
 };

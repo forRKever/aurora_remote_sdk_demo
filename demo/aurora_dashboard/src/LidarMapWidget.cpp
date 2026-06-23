@@ -58,11 +58,9 @@ void LidarMapWidget::paintEvent(QPaintEvent* event) {
 
     int displayW, displayH;
     if (imgAspect > widgetAspect) {
-        // Image is wider, fit to width
         displayW = widgetW;
         displayH = (int)(widgetW / imgAspect);
     } else {
-        // Image is taller, fit to height
         displayH = widgetH;
         displayW = (int)(widgetH * imgAspect);
     }
@@ -72,16 +70,17 @@ void LidarMapWidget::paintEvent(QPaintEvent* event) {
 
     QRect destRect(offsetX, offsetY, displayW, displayH);
 
-    // Draw occupancy grid map
+    // Draw occupancy grid map — no flipping, matching SDK reference demo
     painter.drawImage(destRect, gridImage_);
+
+    // Scale factors for world-to-screen mapping
+    float scaleX = (float)displayW / imgW;
+    float scaleY = (float)displayH / imgH;
 
     // Draw LIDAR scan points overlay
     if (!scanPoints_.empty()) {
-        painter.setBrush(QColor(255, 80, 80, 200));  // Red semi-transparent
+        painter.setBrush(QColor(255, 80, 80, 200));
         painter.setPen(Qt::NoPen);
-
-        float scaleX = (float)displayW / imgW;
-        float scaleY = (float)displayH / imgH;
 
         for (const QPointF& wp : scanPoints_) {
             float imgX = (float)(wp.x() - minX_) / resolution_;
@@ -90,7 +89,6 @@ void LidarMapWidget::paintEvent(QPaintEvent* event) {
             int screenX = offsetX + (int)(imgX * scaleX);
             int screenY = offsetY + (int)(imgY * scaleY);
 
-            // Check bounds before drawing
             if (screenX >= offsetX && screenX < offsetX + displayW &&
                 screenY >= offsetY && screenY < offsetY + displayH) {
                 painter.drawEllipse(QPoint(screenX, screenY), 2, 2);
@@ -100,13 +98,8 @@ void LidarMapWidget::paintEvent(QPaintEvent* event) {
 
     // Draw current pose if available
     if (hasPose_) {
-        // Calculate grid image coordinates
         float imgX = (float)(poseX_ - minX_) / resolution_;
         float imgY = (float)(poseY_ - minY_) / resolution_;
-
-        // Convert to widget coordinates
-        float scaleX = (float)displayW / imgW;
-        float scaleY = (float)displayH / imgH;
 
         int screenX = offsetX + (int)(imgX * scaleX);
         int screenY = offsetY + (int)(imgY * scaleY);
@@ -117,22 +110,30 @@ void LidarMapWidget::paintEvent(QPaintEvent* event) {
         painter.drawEllipse(QPoint(screenX, screenY), 8, 8);
 
         // Draw heading arrow
-        int arrowLen = 20;
-        int arrowEndX = screenX + (int)(arrowLen * sin(poseYaw_));
-        int arrowEndY = screenY - (int)(arrowLen * cos(poseYaw_));
+        // SDK yaw: standard math convention (0 = +X, CCW positive)
+        // Screen: X right, Y down
+        int arrowLen = 30;
+        int arrowEndX = screenX + (int)(arrowLen * cos(poseYaw_));
+        int arrowEndY = screenY + (int)(arrowLen * sin(poseYaw_));
 
-        painter.setPen(QPen(QColor(255, 200, 0), 2));
+        painter.setPen(QPen(QColor(255, 200, 0), 3));
         painter.drawLine(screenX, screenY, arrowEndX, arrowEndY);
 
-        // Draw small arrowhead
-        double angle = poseYaw_;
-        int headLen = 6;
-        int head1X = arrowEndX - (int)(headLen * sin(angle - 0.4));
-        int head1Y = arrowEndY + (int)(headLen * cos(angle - 0.4));
-        int head2X = arrowEndX - (int)(headLen * sin(angle + 0.4));
-        int head2Y = arrowEndY + (int)(headLen * cos(angle + 0.4));
-        painter.drawLine(arrowEndX, arrowEndY, head1X, head1Y);
-        painter.drawLine(arrowEndX, arrowEndY, head2X, head2Y);
+        // Draw arrowhead
+        double dx = arrowEndX - screenX;
+        double dy = arrowEndY - screenY;
+        double len = sqrt(dx * dx + dy * dy);
+        if (len > 0) {
+            dx /= len; dy /= len;
+            double px = -dy, py = dx;  // perpendicular
+            int headLen = 8;
+            int h1x = arrowEndX - (int)(headLen * (dx * 0.7 + px * 0.4));
+            int h1y = arrowEndY - (int)(headLen * (dy * 0.7 + py * 0.4));
+            int h2x = arrowEndX - (int)(headLen * (dx * 0.7 - px * 0.4));
+            int h2y = arrowEndY - (int)(headLen * (dy * 0.7 - py * 0.4));
+            painter.drawLine(arrowEndX, arrowEndY, h1x, h1y);
+            painter.drawLine(arrowEndX, arrowEndY, h2x, h2y);
+        }
     }
 
     // Draw info text overlay
