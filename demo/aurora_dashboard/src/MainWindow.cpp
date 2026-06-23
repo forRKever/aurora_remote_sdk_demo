@@ -17,7 +17,7 @@ MainWindow::MainWindow()
       startColmapBtn_(nullptr), stopColmapBtn_(nullptr), colmapStatusLabel_(nullptr),
       lidarStatusLabel_(nullptr), lidarScanCountLabel_(nullptr), lidarHzLabel_(nullptr),
       mapWidget_(nullptr), cameraWidget_(nullptr), depthWidget_(nullptr), segmentationWidget_(nullptr),
-      lidarMapWidget_(nullptr),
+      lidarMapWidget_(nullptr), navigationWidget_(nullptr),
       centerSplitter_(nullptr), leftSubSplitter_(nullptr), rightSubSplitter_(nullptr),
       worker_(nullptr), workerThread_(nullptr) {
     setWindowTitle("Aurora Dashboard");
@@ -154,6 +154,17 @@ void MainWindow::setupUI() {
     lidarLayout->addWidget(lidarScanCountLabel_);
     lidarLayout->addWidget(lidarHzLabel_);
 
+    QHBoxLayout* navMinDistLayout = new QHBoxLayout;
+    navMinDistLayout->addWidget(new QLabel("Ignore <"));
+    navMinDistSpin_ = new QDoubleSpinBox;
+    navMinDistSpin_->setRange(0.0, 2.0);
+    navMinDistSpin_->setSingleStep(0.05);
+    navMinDistSpin_->setValue(0.25);
+    navMinDistSpin_->setSuffix(" m");
+    navMinDistSpin_->setToolTip("Ignore LIDAR points closer than this distance (filter out user's body when hand-held)");
+    navMinDistLayout->addWidget(navMinDistSpin_);
+    lidarLayout->addLayout(navMinDistLayout);
+
     leftLayout->addWidget(lidarGroup);
 
     // Mapping control group
@@ -219,6 +230,10 @@ void MainWindow::setupUI() {
     leftSubSplitter_ = new QSplitter(Qt::Vertical);
     leftSubSplitter_->setChildrenCollapsible(true);
 
+    navigationWidget_ = new NavigationWidget;
+    navigationWidget_->setMinimumHeight(0);
+    leftSubSplitter_->addWidget(navigationWidget_);
+
     depthWidget_ = new DepthCamWidget;
     depthWidget_->setMinimumHeight(0);
     leftSubSplitter_->addWidget(depthWidget_);
@@ -231,7 +246,7 @@ void MainWindow::setupUI() {
     lidarMapWidget_->setMinimumHeight(0);
     leftSubSplitter_->addWidget(lidarMapWidget_);
 
-    leftSubSplitter_->setSizes({300, 300, 300});
+    leftSubSplitter_->setSizes({350, 200, 200, 250});
 
     // Right sub-pane: vertical splitter with [mapWidget_, cameraWidget_, mapOpsGroup]
     rightSubSplitter_ = new QSplitter(Qt::Vertical);
@@ -434,6 +449,11 @@ void MainWindow::setupWorker() {
             &LidarMapWidget::updateLidarScan, Qt::QueuedConnection);
     connect(worker_, &SdkWorker::occupancyMapUpdated, lidarMapWidget_,
             &LidarMapWidget::setOccupancyMap, Qt::QueuedConnection);
+    connect(worker_, &SdkWorker::navigationGuidanceUpdated, navigationWidget_,
+            &NavigationWidget::updateGuidance, Qt::QueuedConnection);
+    connect(navMinDistSpin_, QOverload<double>::of(&QDoubleSpinBox::valueChanged),
+            worker_, [this](double val) { worker_->setNavMinScanDist((float)val); },
+            Qt::QueuedConnection);
     connect(worker_, &SdkWorker::poseUpdated, lidarMapWidget_,
         [this](double x, double y, double z, double roll, double pitch, double yaw) {
             Q_UNUSED(roll); Q_UNUSED(pitch);

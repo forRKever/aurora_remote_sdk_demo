@@ -105,6 +105,9 @@ if(Qt5_FOUND)
         demo/aurora_dashboard/src/DepthCamWidget.h
         demo/aurora_dashboard/src/SemanticSegmentationWidget.cpp
         demo/aurora_dashboard/src/SemanticSegmentationWidget.h
+        demo/aurora_dashboard/src/NavigationGuidance.h
+        demo/aurora_dashboard/src/NavigationWidget.cpp
+        demo/aurora_dashboard/src/NavigationWidget.h
     )
     target_link_libraries(aurora_dashboard
         ${AURORA_LIB_NAME}

@@ -8,6 +8,7 @@
 #include <QString>
 #include <QImage>
 #include "aurora_pubsdk_inc.h"
+#include "NavigationGuidance.h"
 
 using namespace rp::standalone::aurora;
 
@@ -54,10 +55,12 @@ signals:
     void lidarStatusUpdated(bool receiving, int scanCount, double updateHz);
     void lidarScanUpdated(QVector<QPointF> worldPoints);
     void occupancyMapUpdated(QImage img, float minX, float minY, float resolution);
+    void navigationGuidanceUpdated(NavigationGuidance guidance);
 
 public slots:
     Q_INVOKABLE void relocalizeMap();
     void clearDepthCloud();
+    void setNavMinScanDist(float meters) { navMinScanDist_ = meters; }
 
 private slots:
     void onPollTimeout();
@@ -112,6 +115,9 @@ private:
 
     // Tracking status (for controlling depth cloud accumulation during tracking loss)
     bool trackingLost_ = false;
+
+    // Navigation scan filter
+    float navMinScanDist_ = 0.25f;  // ignore points closer than this (default 25cm)
 
     // LIDAR scan tracking
     uint64_t lastLidarTimestamp_ = 0;

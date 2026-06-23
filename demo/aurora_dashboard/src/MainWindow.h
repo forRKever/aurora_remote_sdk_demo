@@ -5,6 +5,7 @@
 #include <QPushButton>
 #include <QLineEdit>
 #include <QSpinBox>
+#include <QDoubleSpinBox>
 #include <QProgressBar>
 #include <QFileDialog>
 #include <QSplitter>
@@ -16,6 +17,7 @@
 #include "DepthCamWidget.h"
 #include "SemanticSegmentationWidget.h"
 #include "LidarMapWidget.h"
+#include "NavigationWidget.h"
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -87,6 +89,7 @@ private:
     QLabel* lidarStatusLabel_;
     QLabel* lidarScanCountLabel_;
     QLabel* lidarHzLabel_;
+    QDoubleSpinBox* navMinDistSpin_;
 
     // COLMAP 3D recording widgets
     QPushButton* startColmapBtn_;
@@ -99,6 +102,7 @@ private:
     DepthCamWidget* depthWidget_;
     SemanticSegmentationWidget* segmentationWidget_;
     LidarMapWidget* lidarMapWidget_;
+    NavigationWidget* navigationWidget_;
     QSplitter* centerSplitter_;   // horizontal splitter
     QSplitter* leftSubSplitter_;  // vertical splitter for depth + seg
     QSplitter* rightSubSplitter_; // vertical splitter for VSLAM + camera + mapOps

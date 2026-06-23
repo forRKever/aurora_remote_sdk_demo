@@ -167,6 +167,7 @@ static QImage depthFrameToColorQImage(const RemoteEnhancedImagingFrame& frame) {
 }
 
 SdkWorker::SdkWorker() {
+    qRegisterMetaType<NavigationGuidance>("NavigationGuidance");
     sdk_ = RemoteSDK::CreateSession();
 
     pollTimer_ = new QTimer(this);
@@ -1184,6 +1185,122 @@ void SdkWorker::onLidarTimeout() {
     }
 
     emit lidarScanUpdated(worldPoints);
+
+    // Navigation guidance analysis on raw scan
+    {
+        NavigationGuidance nav;
+        nav.sectorMinDist.fill(FLT_MAX);
+        nav.sectorZone.fill(ZONE_SAFE);
+        nav.sectorObstacleCount.fill(0);
+
+        // Assign each scan point to a sector based on angle
+        for (uint32_t i = 0; i < scan.info.scan_count; ++i) {
+            const auto& pt = scan.scanData[i];
+            if (pt.quality == 0 || pt.dist < navMinScanDist_) continue;
+
+            // Normalize angle to [-180, 180] degrees
+            float deg = pt.angle * 180.0f / 3.14159265f;
+            while (deg > 180.0f) deg -= 360.0f;
+            while (deg < -180.0f) deg += 360.0f;
+
+            int sector;
+            if      (deg >= -30  && deg < 30)   sector = SECTOR_FRONT;
+            else if (deg >= 30   && deg < 90)   sector = SECTOR_FRONT_LEFT;
+            else if (deg >= 90   && deg < 150)  sector = SECTOR_LEFT;
+            else if (deg >= 150  || deg < -150) sector = SECTOR_REAR;
+            else if (deg >= -150 && deg < -90)  sector = SECTOR_RIGHT;
+            else                                sector = SECTOR_FRONT_RIGHT;
+
+            if (pt.dist < nav.sectorMinDist[sector])
+                nav.sectorMinDist[sector] = pt.dist;
+            nav.sectorObstacleCount[sector]++;
+        }
+
+        // Classify zones
+        for (int s = 0; s < SECTOR_COUNT; ++s) {
+            if (nav.sectorMinDist[s] < NAV_DANGER_THRESHOLD)
+                nav.sectorZone[s] = ZONE_DANGER;
+            else if (nav.sectorMinDist[s] < NAV_WARNING_THRESHOLD)
+                nav.sectorZone[s] = ZONE_WARNING;
+            else
+                nav.sectorZone[s] = ZONE_SAFE;
+        }
+
+        nav.frontDistance = nav.sectorMinDist[SECTOR_FRONT];
+
+        // Determine overall zone (worst of front 3 sectors)
+        nav.overallZone = ZONE_SAFE;
+        int fwdSectors[] = { SECTOR_FRONT, SECTOR_FRONT_LEFT, SECTOR_FRONT_RIGHT };
+        for (int s : fwdSectors) {
+            if (nav.sectorZone[s] > nav.overallZone)
+                nav.overallZone = nav.sectorZone[s];
+        }
+
+        // Decision logic
+        NavZone zF  = nav.sectorZone[SECTOR_FRONT];
+        NavZone zFL = nav.sectorZone[SECTOR_FRONT_LEFT];
+        NavZone zFR = nav.sectorZone[SECTOR_FRONT_RIGHT];
+        NavZone zL  = nav.sectorZone[SECTOR_LEFT];
+        NavZone zR  = nav.sectorZone[SECTOR_RIGHT];
+
+        float dFL = nav.sectorMinDist[SECTOR_FRONT_LEFT];
+        float dFR = nav.sectorMinDist[SECTOR_FRONT_RIGHT];
+        float dL  = nav.sectorMinDist[SECTOR_LEFT];
+        float dR  = nav.sectorMinDist[SECTOR_RIGHT];
+
+        if (zF == ZONE_DANGER) {
+            // Front blocked
+            if (zFL == ZONE_DANGER && zFR == ZONE_DANGER) {
+                // All forward sectors blocked — try sides
+                if (dL > dR) {
+                    nav.command = NAV_TURN_LEFT;
+                    nav.recommendedTurnDeg = 90;
+                } else if (dR > dL) {
+                    nav.command = NAV_TURN_RIGHT;
+                    nav.recommendedTurnDeg = -90;
+                } else {
+                    nav.command = NAV_STOP;
+                    nav.recommendedTurnDeg = 0;
+                }
+            } else if (dFL >= dFR) {
+                nav.command = NAV_TURN_LEFT;
+                nav.recommendedTurnDeg = 60;
+            } else {
+                nav.command = NAV_TURN_RIGHT;
+                nav.recommendedTurnDeg = -60;
+            }
+        } else if (zF == ZONE_WARNING) {
+            if (dFL >= dFR) {
+                nav.command = NAV_TURN_LEFT;
+                nav.recommendedTurnDeg = 30;
+            } else {
+                nav.command = NAV_TURN_RIGHT;
+                nav.recommendedTurnDeg = -30;
+            }
+        } else {
+            // Front is safe
+            if (zFL == ZONE_DANGER || zFR == ZONE_DANGER) {
+                nav.command = NAV_SLOW_DOWN;
+                nav.recommendedTurnDeg = 0;
+            } else {
+                nav.command = NAV_GO_STRAIGHT;
+                nav.recommendedTurnDeg = 0;
+            }
+        }
+
+        // Command text
+        switch (nav.command) {
+            case NAV_GO_STRAIGHT: nav.commandText = "GO STRAIGHT"; break;
+            case NAV_TURN_LEFT:   nav.commandText = "TURN LEFT"; break;
+            case NAV_TURN_RIGHT:  nav.commandText = "TURN RIGHT"; break;
+            case NAV_SLOW_DOWN:   nav.commandText = "SLOW DOWN"; break;
+            case NAV_STOP:        nav.commandText = "STOP"; break;
+        }
+
+        nav.valid = (lastQuality_ != "POOR" && lastQuality_ != "");
+
+        emit navigationGuidanceUpdated(nav);
+    }
 }
 
 void SdkWorker::clearDepthCloud() {
